@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "MDN Global School Kaithal"
+version = "1.0.0"
+id = "artifacts/mdn-school"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26263
+
+[services.development]
+run = "pnpm --filter @workspace/mdn-school run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mdn-school", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mdn-school/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26263"
+BASE_PATH = "/"
