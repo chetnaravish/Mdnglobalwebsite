@@ -31,40 +31,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { name: 'Contact', path: '/contact' },
   ];
 
-  const isHome = location === '/';
-
   return (
     <div className="flex min-h-screen flex-col font-sans">
       <header
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
-          isScrolled
-            ? 'bg-[#1a3a6b] text-white shadow-xl py-3'
-            : isHome
-            ? 'bg-transparent text-white py-5'
-            : 'bg-[#1a3a6b] text-white py-3'
-        )}
+        className="fixed top-0 left-0 right-0 z-50 bg-[#1a3a6b] text-white shadow-lg py-3 border-b border-white/10"
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 z-50 group" data-testid="link-logo">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f5a623] rounded-lg flex items-center justify-center text-[#1a3a6b] font-serif font-bold text-xl md:text-2xl shadow-lg group-hover:scale-105 transition-transform">
-              M
-            </div>
-            <div className="flex flex-col text-white">
-              <span className="text-2xl md:text-3xl font-serif font-bold leading-none tracking-tight">MDN</span>
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-100 text-[#f5a623]">Global School Kaithal</span>
+          <Link href="/" className="flex items-center gap-2 z-50" data-testid="link-logo">
+            <div className="flex items-center gap-1 text-white">
+              <span className="text-xl md:text-2xl font-serif font-bold leading-none tracking-tight">MDN</span>
+              <span className="text-xl md:text-2xl font-serif font-bold leading-none text-[#f5a623] tracking-tight">Global School</span>
+              <span className="text-xl md:text-2xl font-serif font-bold leading-none tracking-tight ml-1">Kaithal</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
                 className={cn(
                   'text-sm font-medium transition-colors hover:text-[#f5a623] relative py-1',
-                  location === link.path && 'text-[#f5a623]'
+                  location === link.path ? 'text-[#f5a623]' : 'text-white'
                 )}
                 data-testid={`nav-link-${link.name.toLowerCase()}`}
               >
@@ -79,13 +68,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 )}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e09612] px-6 py-2.5 rounded-full text-sm font-bold transition-transform hover:scale-105 active:scale-95 shadow-md"
-              data-testid="button-admissions"
-            >
-              Admissions
-            </Link>
           </nav>
 
           {/* Mobile Menu Toggle */}

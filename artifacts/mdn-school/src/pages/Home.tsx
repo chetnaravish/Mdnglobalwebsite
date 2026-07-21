@@ -31,109 +31,113 @@ function Counter({ end, suffix = "" }: { end: number, suffix?: string }) {
 }
 
 export default function Home() {
-  const name1 = "MDN GLOBAL SCHOOL";
-  const name2 = "KAITHAL";
-
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
+  const wordVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i: number) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.2 }
-    }
-  };
-  
-  const letter = {
-    hidden: { opacity: 0, y: 50, filter: "blur(10px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)" }
+      y: 0,
+      transition: { duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }
+    })
   };
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section 
-        className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden bg-[#1a3a6b]"
-        style={{ 
-          backgroundImage: `linear-gradient(to bottom, rgba(26,58,107,0.85) 0%, rgba(26,58,107,0.7) 60%, rgba(26,58,107,0.95) 100%), url('/images/hero-bg.jpg')`, 
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+      <section
+        className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#1a3a6b]"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(10,28,70,0.82) 0%, rgba(15,40,90,0.68) 50%, rgba(10,28,70,0.92) 100%), url('/images/hero-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
         }}
       >
-        {/* Floating decorative elements */}
-        <motion.div animate={{ y: [0, -30, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/4 left-[5%] w-32 h-32 bg-[#f5a623]/20 rounded-full blur-[50px]"></motion.div>
-        <motion.div animate={{ y: [0, 40, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-1/4 right-[5%] w-64 h-64 bg-blue-400/20 rounded-full blur-[80px]"></motion.div>
-        
-        <div className="container relative z-10 mx-auto px-4 text-center mt-16">
-          <motion.div variants={container} initial="hidden" animate="visible" className="flex flex-col items-center">
-            
-            <div className="flex flex-wrap justify-center mb-1 text-center">
-              {name1.split(" ").map((word, i) => (
-                <span key={i} className="inline-block mr-4 md:mr-8 overflow-hidden last:mr-0">
-                  {word.split("").map((char, j) => (
-                    <motion.span variants={letter} key={j} className="inline-block text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
-                      {char}
-                    </motion.span>
-                  ))}
-                </span>
+        {/* Floating glow blobs */}
+        <motion.div animate={{ y: [0, -25, 0], scale: [1, 1.1, 1] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/3 left-[8%] w-48 h-48 bg-[#f5a623]/15 rounded-full blur-[70px] pointer-events-none" />
+        <motion.div animate={{ y: [0, 30, 0], scale: [1, 1.15, 1] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-1/3 right-[8%] w-72 h-72 bg-blue-300/15 rounded-full blur-[90px] pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 text-center pt-20">
+
+          {/* CBSE Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-2 bg-white/10 border border-white/25 backdrop-blur-sm rounded-full px-5 py-2 text-white/90 text-xs font-semibold tracking-widest uppercase mb-8"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-pulse" />
+            CBSE Affiliated · Est. 2000 · Kaithal, Haryana
+          </motion.div>
+
+          {/* School Name — word by word */}
+          <div className="mb-3 overflow-hidden">
+            <div className="flex flex-wrap justify-center gap-x-5 md:gap-x-8 gap-y-1">
+              {["MDN", "GLOBAL", "SCHOOL"].map((word, i) => (
+                <motion.span
+                  key={word}
+                  custom={i}
+                  variants={wordVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-black text-white leading-tight tracking-tight drop-shadow-[0_6px_16px_rgba(0,0,0,0.6)]"
+                >
+                  {word}
+                </motion.span>
               ))}
             </div>
-            
-            <div className="flex flex-wrap justify-center mb-8 text-center">
-              <span className="inline-block overflow-hidden">
-                {name2.split("").map((char, j) => (
-                  <motion.span variants={letter} key={j} className="inline-block text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-[#f5a623] tracking-[0.2em] drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] ml-1 md:ml-3">
-                    {char}
-                  </motion.span>
-                ))}
-              </span>
-            </div>
+          </div>
 
-            <motion.div 
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-              className="h-[2px] w-full max-w-md bg-gradient-to-r from-transparent via-[#f5a623] to-transparent mb-6"
-            ></motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-              className="text-white/90 text-xs md:text-sm tracking-[0.3em] uppercase mb-8 font-medium drop-shadow-md"
+          {/* KAITHAL */}
+          <div className="mb-8 overflow-hidden">
+            <motion.span
+              custom={3}
+              variants={wordVariants}
+              initial="hidden"
+              animate="visible"
+              className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-black text-[#f5a623] tracking-[0.18em] drop-shadow-[0_4px_12px_rgba(245,166,35,0.4)]"
             >
-              CBSE Affiliated | Est. 2000 | Kaithal, Haryana
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, filter: "blur(10px)", scale: 0.9 }}
-              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-              transition={{ delay: 1.8, duration: 1 }}
-              className="text-white text-xl md:text-3xl font-light italic mb-12 drop-shadow-lg"
-            >
-              Shaping Leaders · Nurturing Minds · Building Futures
-            </motion.div>
+              KAITHAL
+            </motion.span>
+          </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.2, duration: 0.5 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
+          {/* Golden divider */}
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="h-[2px] w-48 md:w-72 mx-auto bg-gradient-to-r from-transparent via-[#f5a623] to-transparent mb-6"
+          />
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.7 }}
+            className="text-white/80 text-lg md:text-2xl font-light italic mb-12 drop-shadow-lg"
+          >
+            Shaping Leaders · Nurturing Minds · Building Futures
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-5"
+          >
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto bg-[#f5a623] text-[#1a3a6b] px-10 py-4 rounded-full text-lg font-bold hover:bg-[#e09612] transition-all hover:scale-105 active:scale-95 shadow-[0_0_24px_rgba(245,166,35,0.45)]"
+              data-testid="hero-apply-btn"
             >
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto bg-[#f5a623] text-[#1a3a6b] px-10 py-4 rounded-full text-lg font-bold hover:bg-[#e09612] transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(245,166,35,0.4)]"
-                data-testid="hero-apply-btn"
-              >
-                Apply Now
-              </Link>
-              <Link
-                href="/about"
-                className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all backdrop-blur-sm"
-                data-testid="hero-explore-btn"
-              >
-                Explore School
-              </Link>
-            </motion.div>
+              Apply Now
+            </Link>
+            <Link
+              href="/about"
+              className="w-full sm:w-auto bg-transparent border-2 border-white/70 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all backdrop-blur-sm"
+              data-testid="hero-explore-btn"
+            >
+              Explore School
+            </Link>
           </motion.div>
         </div>
         
