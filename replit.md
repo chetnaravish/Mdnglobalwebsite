@@ -1,45 +1,35 @@
-# [Project name]
+# MDN Global School Kaithal
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
-
-## Run & Operate
-
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+A school website for MDN Global School Kaithal, Haryana — CBSE affiliated, est. 2000.
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- **Frontend** (`artifacts/mdn-school`): React + Vite + Tailwind CSS v4, Wouter routing, shadcn/ui components
+- **API Server** (`artifacts/api-server`): Express 5 + TypeScript, built with esbuild, logged with pino
+- **Database** (`lib/db`): PostgreSQL via Drizzle ORM (Replit managed, `DATABASE_URL` auto-provisioned)
+- **Shared libs**: `lib/api-zod` (Zod schemas), `lib/api-client-react` (React Query hooks), `lib/api-spec` (OpenAPI spec + orval codegen)
 
-## Where things live
+## Pages
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+Home, About, Academics, Facilities, Events, Contact
 
-## Architecture decisions
+## Running the project
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+Dependencies are managed with pnpm (monorepo). Install with:
 
-## Product
+```sh
+pnpm install
+```
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Workflows start automatically:
+- **Frontend** (`artifacts/mdn-school: web`): Vite dev server
+- **API Server** (`artifacts/api-server: API Server`): builds with esbuild then starts with Node
+
+## Environment variables
+
+- `DATABASE_URL` — automatically provided by Replit (do not set manually)
+- `SESSION_SECRET` — already configured as a Replit secret
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+_None recorded yet._
