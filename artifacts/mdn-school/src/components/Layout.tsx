@@ -37,12 +37,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         className="fixed top-0 left-0 right-0 z-50 bg-[#1a3a6b] text-white shadow-lg py-3 border-b border-white/10"
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 z-50" data-testid="link-logo">
-            <div className="flex items-center gap-1 text-white">
-              <span className="text-xl md:text-2xl font-serif font-bold leading-none tracking-tight">MDN</span>
-              <span className="text-xl md:text-2xl font-serif font-bold leading-none text-[#f5a623] tracking-tight">Global School</span>
-              <span className="text-xl md:text-2xl font-serif font-bold leading-none tracking-tight ml-1">Kaithal</span>
-            </div>
+          <Link href="/" className="flex items-center z-50 shrink-0" data-testid="link-logo">
+            <img
+              src="/images/mdn-logo.svg"
+              alt="MDN Global School Kaithal"
+              className="h-12 md:h-14 w-auto"
+              style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
+            />
           </Link>
 
           {/* Desktop Nav */}
