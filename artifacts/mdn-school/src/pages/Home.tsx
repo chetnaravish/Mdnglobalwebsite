@@ -1,73 +1,137 @@
-import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Users, Trophy, GraduationCap, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { BookOpen, Users, Trophy, GraduationCap, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
+function Counter({ end, suffix = "" }: { end: number, suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
 
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
-};
+  useEffect(() => {
+    if (isInView) {
+      let startTime: number | null = null;
+      const duration = 2000;
+      
+      const step = (timestamp: number) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        setCount(Math.floor(progress * end));
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          setCount(end);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+  }, [isInView, end]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 
 export default function Home() {
+  const name1 = "MDN GLOBAL SCHOOL";
+  const name2 = "KAITHAL";
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.2 }
+    }
+  };
+  
+  const letter = {
+    hidden: { opacity: 0, y: 50, filter: "blur(10px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)" }
+  };
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-foreground">
-        {/* Abstract Background Elements */}
-        <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,_rgba(30,86,160,0.8)_0%,_transparent_50%)]" />
-          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,_rgba(245,166,35,0.4)_0%,_transparent_50%)]" />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        </div>
+      <section 
+        className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden bg-[#1a3a6b]"
+        style={{ 
+          backgroundImage: `linear-gradient(to bottom, rgba(26,58,107,0.85) 0%, rgba(26,58,107,0.7) 60%, rgba(26,58,107,0.95) 100%), url('/images/hero-bg.jpg')`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        {/* Floating decorative elements */}
+        <motion.div animate={{ y: [0, -30, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/4 left-[5%] w-32 h-32 bg-[#f5a623]/20 rounded-full blur-[50px]"></motion.div>
+        <motion.div animate={{ y: [0, 40, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-1/4 right-[5%] w-64 h-64 bg-blue-400/20 rounded-full blur-[80px]"></motion.div>
+        
+        <div className="container relative z-10 mx-auto px-4 text-center mt-16">
+          <motion.div variants={container} initial="hidden" animate="visible" className="flex flex-col items-center">
+            
+            <div className="flex flex-wrap justify-center mb-1 text-center">
+              {name1.split(" ").map((word, i) => (
+                <span key={i} className="inline-block mr-4 md:mr-8 overflow-hidden last:mr-0">
+                  {word.split("").map((char, j) => (
+                    <motion.span variants={letter} key={j} className="inline-block text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
+            </div>
+            
+            <div className="flex flex-wrap justify-center mb-8 text-center">
+              <span className="inline-block overflow-hidden">
+                {name2.split("").map((char, j) => (
+                  <motion.span variants={letter} key={j} className="inline-block text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-[#f5a623] tracking-[0.2em] drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] ml-1 md:ml-3">
+                    {char}
+                  </motion.span>
+                ))}
+              </span>
+            </div>
 
-        <div className="container relative z-10 mx-auto px-4 pt-20 pb-12 flex flex-col items-center text-center">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="max-w-4xl"
-          >
-            <motion.div variants={fadeIn} className="mb-6 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full text-white/90 text-sm font-medium">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-              Admissions Open for 2025-26
+            <motion.div 
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="h-[2px] w-full max-w-md bg-gradient-to-r from-transparent via-[#f5a623] to-transparent mb-6"
+            ></motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              className="text-white/90 text-xs md:text-sm tracking-[0.3em] uppercase mb-8 font-medium drop-shadow-md"
+            >
+              CBSE Affiliated | Est. 2000 | Kaithal, Haryana
             </motion.div>
             
-            <motion.h1 
-              variants={fadeIn}
-              className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-tight tracking-tight mb-6"
+            <motion.div
+              initial={{ opacity: 0, filter: "blur(10px)", scale: 0.9 }}
+              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+              transition={{ delay: 1.8, duration: 1 }}
+              className="text-white text-xl md:text-3xl font-light italic mb-12 drop-shadow-lg"
             >
-              Excellence in <br />
-              <span className="text-accent italic">Education</span>
-            </motion.h1>
-            
-            <motion.p 
-              variants={fadeIn}
-              className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 font-light"
+              Shaping Leaders · Nurturing Minds · Building Futures
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2, duration: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
             >
-              Nurturing young minds to become global citizens of tomorrow. A premier CBSE affiliated institution in Kaithal.
-            </motion.p>
-            
-            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="w-full sm:w-auto bg-accent text-primary-foreground px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent/90 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/20 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-[#f5a623] text-[#1a3a6b] px-10 py-4 rounded-full text-lg font-bold hover:bg-[#e09612] transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(245,166,35,0.4)]"
                 data-testid="hero-apply-btn"
               >
-                Apply Now <ArrowRight size={20} />
+                Apply Now
               </Link>
               <Link
                 href="/about"
-                className="w-full sm:w-auto bg-white/10 text-white border border-white/30 px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all backdrop-blur-sm flex items-center justify-center"
+                className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all backdrop-blur-sm"
                 data-testid="hero-explore-btn"
               >
-                Explore MDN
+                Explore School
               </Link>
             </motion.div>
           </motion.div>
@@ -77,37 +141,39 @@ export default function Home() {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
+          transition={{ delay: 3, duration: 1 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
         >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <span className="text-xs uppercase tracking-widest font-bold">Scroll</span>
           <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent"></div>
         </motion.div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white relative z-20 -mt-8 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+      <section className="py-16 bg-white relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-gray-200">
             {[
-              { icon: BookOpen, count: "25+", label: "Years of Excellence" },
-              { icon: Users, count: "2000+", label: "Students Enrolled" },
-              { icon: GraduationCap, count: "150+", label: "Expert Faculty" },
-              { icon: Trophy, count: "100%", label: "CBSE Pass Rate" },
+              { icon: BookOpen, count: 25, suffix: "+", label: "Years of Excellence" },
+              { icon: Users, count: 2000, suffix: "+", label: "Students Enrolled" },
+              { icon: GraduationCap, count: 150, suffix: "+", label: "Expert Faculty" },
+              { icon: Trophy, count: 100, suffix: "%", label: "CBSE Pass Rate" },
             ].map((stat, i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: i * 0.1 }}
                 className="flex flex-col items-center text-center p-4 pt-8 md:pt-4"
               >
-                <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-[#1a3a6b]/10 text-[#1a3a6b] flex items-center justify-center mb-4">
                   <stat.icon size={32} />
                 </div>
-                <h3 className="text-4xl font-serif font-bold text-foreground mb-2">{stat.count}</h3>
-                <p className="text-muted-foreground font-medium uppercase tracking-wider text-sm">{stat.label}</p>
+                <h3 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-2">
+                  <Counter end={stat.count} suffix={stat.suffix} />
+                </h3>
+                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs md:text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -115,29 +181,29 @@ export default function Home() {
       </section>
 
       {/* About Teaser */}
-      <section className="py-24 bg-secondary">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="text-accent font-bold tracking-widest uppercase mb-4 text-sm flex items-center gap-4">
-                <div className="w-12 h-px bg-accent"></div>
+              <div className="text-[#f5a623] font-bold tracking-widest uppercase mb-4 text-sm flex items-center gap-4">
+                <div className="w-12 h-px bg-[#f5a623]"></div>
                 Welcome to MDN
               </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-6 leading-tight">
                 Shaping the Leaders <br />of Tomorrow
               </h2>
-              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                 At MDN Global School, we believe that education is not just about academic excellence, but about character building and holistic development. Our state-of-the-art campus in Kaithal provides the perfect ecosystem for children to discover their true potential.
               </p>
               <ul className="space-y-4 mb-8">
                 {['Innovative teaching methodologies', 'World-class sports facilities', 'Focus on moral values and ethics'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-foreground font-medium">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <li key={i} className="flex items-center gap-3 text-gray-800 font-medium">
+                    <div className="w-6 h-6 rounded-full bg-[#1a3a6b]/10 text-[#1a3a6b] flex items-center justify-center shrink-0">
                       <ChevronRight size={14} />
                     </div>
                     {item}
@@ -146,29 +212,33 @@ export default function Home() {
               </ul>
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group"
+                className="inline-flex items-center gap-2 text-[#1a3a6b] font-bold hover:text-[#f5a623] transition-colors group"
                 data-testid="link-read-more"
               >
                 Read our full story 
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
+            
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 1.05 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden relative shadow-2xl">
-                {/* Placeholder for real school image */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary to-primary/40 flex items-center justify-center p-8 text-center">
-                  <span className="text-white/50 font-serif text-2xl border border-white/20 p-8 rounded-xl backdrop-blur-sm">School Building Image</span>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden relative shadow-2xl group">
+                <img 
+                  src="/images/about-school.jpg" 
+                  alt="School Campus" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
+                  <div className="text-white">
+                    <div className="text-4xl font-serif font-bold mb-2 text-[#f5a623]">100%</div>
+                    <div className="text-sm font-medium opacity-90">Board Results for the last 5 consecutive years.</div>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-xl shadow-xl max-w-xs hidden md:block">
-                <div className="text-4xl font-serif font-bold text-primary mb-2">100%</div>
-                <div className="text-sm text-muted-foreground font-medium">Board Results for the last 5 consecutive years.</div>
               </div>
             </motion.div>
           </div>
@@ -179,8 +249,8 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Discover the MDN Edge</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Everything your child needs to thrive academically, physically, and emotionally.</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Discover the MDN Edge</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Everything your child needs to thrive academically, physically, and emotionally.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -209,22 +279,22 @@ export default function Home() {
             ].map((feature, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: i * 0.2 }}
-                className={`group rounded-2xl p-8 ${feature.color} border border-black/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-2`}
+                className={`group rounded-2xl p-8 ${feature.color} border border-black/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col`}
               >
-                <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center mb-6 text-foreground group-hover:scale-110 transition-transform">
-                  <feature.icon size={28} />
+                <div className="w-16 h-16 rounded-xl bg-white shadow-sm flex items-center justify-center mb-6 text-[#1a3a6b] group-hover:scale-110 group-hover:text-[#f5a623] transition-all">
+                  <feature.icon size={32} />
                 </div>
-                <h3 className="text-2xl font-serif font-bold text-foreground mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground mb-8 line-clamp-3">{feature.desc}</p>
+                <h3 className="text-2xl font-serif font-bold text-[#1a3a6b] mb-4">{feature.title}</h3>
+                <p className="text-gray-600 mb-8 flex-1 leading-relaxed">{feature.desc}</p>
                 <Link
                   href={feature.link}
-                  className="inline-flex items-center gap-2 text-foreground font-bold hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-2 text-[#1a3a6b] font-bold hover:text-[#f5a623] transition-colors"
                 >
-                  Explore <ArrowRight size={16} />
+                  Explore <ChevronRight size={16} />
                 </Link>
               </motion.div>
             ))}
@@ -232,45 +302,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 bg-foreground text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary rounded-full blur-[100px] opacity-50"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent rounded-full blur-[100px] opacity-20"></div>
-        
+      {/* Image Banner Section */}
+      <section className="py-24 bg-[#1a3a6b] relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">What Parents Say</h2>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto">Trust is earned. Hear from the families who have chosen MDN Global School.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { text: "The transformation in my child's confidence is remarkable. The teachers here don't just teach, they mentor.", author: "Rajesh Kumar", role: "Parent of Class 8 Student" },
-              { text: "Best infrastructure in Kaithal. The balance between academics and sports is exactly what we were looking for.", author: "Priya Sharma", role: "Parent of Class 5 Student" },
-              { text: "During board exams, the school provided exceptional support. My daughter scored 96% thanks to the dedicated faculty.", author: "Sandeep Singh", role: "Parent of Class 12 Student" }
-            ].map((testimonial, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm"
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true, amount: 0.2 }}
+              className="order-2 md:order-1"
+            >
+              <img src="/images/students-happy.jpg" alt="Happy Students" className="w-full rounded-3xl shadow-2xl" />
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true, amount: 0.2 }}
+              className="order-1 md:order-2 text-white"
+            >
+              <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">A Community of Happy Learners</h2>
+              <p className="text-white/80 text-lg mb-8 leading-relaxed">
+                At MDN Global School, we foster an environment where learning is joyous and every student feels valued. Our campus resonates with the energy and enthusiasm of bright young minds ready to take on the world.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-block bg-white text-[#1a3a6b] px-8 py-3 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors shadow-lg"
               >
-                <div className="flex text-accent mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-white/90 text-lg mb-6 leading-relaxed italic">"{testimonial.text}"</p>
-                <div>
-                  <div className="font-bold text-white">{testimonial.author}</div>
-                  <div className="text-white/60 text-sm">{testimonial.role}</div>
-                </div>
-              </motion.div>
-            ))}
+                Join Our Family
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>

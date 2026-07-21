@@ -39,20 +39,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
           isScrolled
-            ? 'bg-primary text-primary-foreground shadow-md py-3'
+            ? 'bg-[#1a3a6b] text-white shadow-xl py-3'
             : isHome
             ? 'bg-transparent text-white py-5'
-            : 'bg-primary text-primary-foreground py-3'
+            : 'bg-[#1a3a6b] text-white py-3'
         )}
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 z-50" data-testid="link-logo">
-            <div className={cn(
-              "flex flex-col",
-              isScrolled || !isHome ? "text-white" : "text-white"
-            )}>
+          <Link href="/" className="flex items-center gap-3 z-50 group" data-testid="link-logo">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#f5a623] rounded-lg flex items-center justify-center text-[#1a3a6b] font-serif font-bold text-xl md:text-2xl shadow-lg group-hover:scale-105 transition-transform">
+              M
+            </div>
+            <div className="flex flex-col text-white">
               <span className="text-2xl md:text-3xl font-serif font-bold leading-none tracking-tight">MDN</span>
-              <span className="text-xs md:text-sm font-medium tracking-widest uppercase opacity-90">Global School</span>
+              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-100 text-[#f5a623]">Global School Kaithal</span>
             </div>
           </Link>
 
@@ -63,8 +63,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 key={link.path}
                 href={link.path}
                 className={cn(
-                  'text-sm font-medium transition-colors hover:text-accent relative py-1',
-                  location === link.path && 'text-accent'
+                  'text-sm font-medium transition-colors hover:text-[#f5a623] relative py-1',
+                  location === link.path && 'text-[#f5a623]'
                 )}
                 data-testid={`nav-link-${link.name.toLowerCase()}`}
               >
@@ -72,7 +72,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {location === link.path && (
                   <motion.div
                     layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#f5a623]"
                     initial={false}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
@@ -81,7 +81,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
             <Link
               href="/contact"
-              className="bg-accent text-primary-foreground hover:bg-accent/90 px-5 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105 active:scale-95"
+              className="bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e09612] px-6 py-2.5 rounded-full text-sm font-bold transition-transform hover:scale-105 active:scale-95 shadow-md"
               data-testid="button-admissions"
             >
               Admissions
@@ -90,12 +90,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden z-50 p-2 text-current"
+            className="md:hidden z-50 p-2 text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Menu"
             data-testid="button-mobile-menu"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </header>
@@ -107,7 +107,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-primary flex flex-col pt-24 px-6 pb-6 overflow-y-auto"
+            className="fixed inset-0 z-40 bg-[#1a3a6b] flex flex-col pt-24 px-6 pb-6 overflow-y-auto"
           >
             <nav className="flex flex-col gap-6 text-center">
               {navLinks.map((link) => (
@@ -115,8 +115,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   key={link.path}
                   href={link.path}
                   className={cn(
-                    'text-2xl font-serif text-white hover:text-accent transition-colors',
-                    location === link.path && 'text-accent font-bold'
+                    'text-2xl font-serif text-white hover:text-[#f5a623] transition-colors',
+                    location === link.path && 'text-[#f5a623] font-bold'
                   )}
                   data-testid={`mobile-nav-link-${link.name.toLowerCase()}`}
                 >
@@ -126,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="mt-8 pt-8 border-t border-white/20">
                 <Link
                   href="/contact"
-                  className="inline-block bg-accent text-primary-foreground px-8 py-3 rounded-full text-lg font-bold w-full"
+                  className="inline-block bg-[#f5a623] text-[#1a3a6b] px-8 py-3 rounded-full text-lg font-bold w-full shadow-lg"
                   data-testid="button-mobile-admissions"
                 >
                   Apply Now
@@ -141,14 +141,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="bg-foreground text-white pt-16 pb-8">
+      <footer className="bg-[#1a3a6b] text-white pt-16 pb-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="mb-6">
                 <span className="text-3xl font-serif font-bold block mb-1">MDN</span>
-                <span className="text-sm font-medium tracking-widest uppercase opacity-80 block mb-4">Global School</span>
-                <div className="inline-block border border-white/30 rounded px-3 py-1 text-xs font-semibold">
+                <span className="text-xs font-bold tracking-widest uppercase opacity-100 text-[#f5a623] block mb-4">Global School Kaithal</span>
+                <div className="inline-block border border-white/30 rounded px-3 py-1 text-xs font-semibold text-white">
                   Affiliated to CBSE
                 </div>
               </div>
@@ -156,16 +156,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Empowering minds and shaping futures. We provide a holistic educational environment that nurtures intellectual, physical, and emotional growth.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent hover:text-primary-foreground transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#f5a623] hover:text-[#1a3a6b] transition-colors">
                   <Facebook size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent hover:text-primary-foreground transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#f5a623] hover:text-[#1a3a6b] transition-colors">
                   <Twitter size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent hover:text-primary-foreground transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#f5a623] hover:text-[#1a3a6b] transition-colors">
                   <Instagram size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent hover:text-primary-foreground transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#f5a623] hover:text-[#1a3a6b] transition-colors">
                   <Linkedin size={18} />
                 </a>
               </div>
@@ -176,8 +176,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-3">
                 {navLinks.map((link) => (
                   <li key={link.path}>
-                    <Link href={link.path} className="text-white/70 hover:text-accent transition-colors flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                    <Link href={link.path} className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>
                       {link.name}
                     </Link>
                   </li>
@@ -188,11 +188,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-lg font-serif font-bold mb-6 border-b border-white/20 pb-2 inline-block">Academics</h3>
               <ul className="space-y-3">
-                <li><Link href="/academics" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent"></span>Pre-Primary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent"></span>Primary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent"></span>Middle School</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent"></span>Secondary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-accent transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent"></span>Senior Secondary</Link></li>
+                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Pre-Primary</Link></li>
+                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Primary</Link></li>
+                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Middle School</Link></li>
+                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Secondary</Link></li>
+                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Senior Secondary</Link></li>
               </ul>
             </div>
 
@@ -200,7 +200,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <h3 className="text-lg font-serif font-bold mb-6 border-b border-white/20 pb-2 inline-block">Contact Info</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <MapPin className="text-accent shrink-0 mt-1" size={18} />
+                  <MapPin className="text-[#f5a623] shrink-0 mt-1" size={18} />
                   <span className="text-white/70 text-sm leading-relaxed">
                     MDN Global School,<br />
                     Kaithal, Haryana,<br />
@@ -208,11 +208,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Phone className="text-accent shrink-0" size={18} />
+                  <Phone className="text-[#f5a623] shrink-0" size={18} />
                   <span className="text-white/70 text-sm">+91 XXXXXXXXXX</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Mail className="text-accent shrink-0" size={18} />
+                  <Mail className="text-[#f5a623] shrink-0" size={18} />
                   <span className="text-white/70 text-sm">info@mdnglobalschool.com</span>
                 </li>
               </ul>
