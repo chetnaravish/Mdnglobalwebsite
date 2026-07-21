@@ -1,21 +1,80 @@
-import { motion } from 'framer-motion';
-import { Award, BookOpen, Heart, Star, Users, Target, Eye, Lightbulb, Shield } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Award, BookOpen, Heart, Star, Users, Target, Eye, Lightbulb, Shield, CheckCircle } from 'lucide-react';
 import { Link } from 'wouter';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } })
 };
-
 const fadeLeft = {
   hidden: { opacity: 0, x: -40 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
 };
-
 const fadeRight = {
   hidden: { opacity: 0, x: 40 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
 };
+
+/* ── Milestone Timeline ─────────────────────────────────── */
+const milestones = [
+  { year: '2000', title: 'School Founded', desc: 'MDN Global School established in Kaithal with a vision of accessible, quality education.' },
+  { year: '2005', title: 'CBSE Affiliation', desc: 'Received full CBSE affiliation, marking our commitment to national academic standards.' },
+  { year: '2010', title: '1000 Students', desc: 'Crossed 1,000 students enrolled — a milestone that proved the community\'s trust in us.' },
+  { year: '2015', title: 'Senior Secondary', desc: 'Launched Class XI–XII with Science, Commerce, and Humanities streams.' },
+  { year: '2020', title: 'Smart Campus', desc: 'Completed full campus digitisation with smart classrooms and high-speed internet.' },
+  { year: '2024', title: '2000+ Students', desc: 'Today we proudly serve 2,000+ students, 150+ faculty, and thousands of alumni.' },
+];
+
+/* ── Vision & Mission card ─────────────────────────────── */
+function VisionMissionCard({ delay, icon: Icon, iconBg, badge, title, text, items, reverse }: {
+  delay: number; icon: React.ElementType; iconBg: string; badge: string; title: string; text: string;
+  items: string[]; reverse?: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, x: reverse ? 60 : -60, scale: 0.96 }}
+      animate={inView ? { opacity: 1, x: 0, scale: 1 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="relative bg-white/12 backdrop-blur-md border border-white/20 rounded-3xl p-10 hover:bg-white/18 transition-all duration-400 group overflow-hidden"
+    >
+      {/* Glowing corner */}
+      <div className={`absolute -top-16 ${reverse ? '-right-16' : '-left-16'} w-48 h-48 rounded-full blur-3xl opacity-20 ${iconBg} pointer-events-none`} />
+
+      <div className="relative z-10">
+        {/* Badge */}
+        <div className="flex items-center gap-3 mb-7">
+          <div className={`w-14 h-14 ${iconBg} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+            <Icon size={28} className="text-[#1a3a6b]" />
+          </div>
+          <span className="text-xs font-black tracking-[0.2em] uppercase text-[#f5a623] bg-[#f5a623]/15 px-3 py-1.5 rounded-full border border-[#f5a623]/30">
+            {badge}
+          </span>
+        </div>
+
+        <h3 className="text-3xl font-serif font-black text-white mb-5">{title}</h3>
+        <p className="text-white/75 leading-relaxed mb-7 text-base">{text}</p>
+
+        {/* Items */}
+        <ul className="space-y-3">
+          {items.map((item, j) => (
+            <motion.li key={j}
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.4, delay: delay + 0.2 + j * 0.08 }}
+              className="flex items-center gap-3 text-white/85 text-sm font-medium"
+            >
+              <CheckCircle size={15} className="text-[#f5a623] shrink-0" /> {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function About() {
   return (
@@ -23,13 +82,8 @@ export default function About() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        {/* Background image */}
-        <img
-          src="/images/about-school.jpg"
-          alt="MDN Global School Campus"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        {/* Lighter overlay so image is clearly visible */}
+        <img src="/images/about-school.jpg" alt="MDN Global School Campus"
+          className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/85 via-[#0a1c46]/60 to-[#0a1c46]/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/70 via-transparent to-[#0a1c46]/30" />
 
@@ -67,15 +121,15 @@ export default function About() {
                 Two Decades of<br />Excellence & Legacy
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-5">
-                Founded in the year 2000, MDN Global School Kaithal began with a simple yet powerful vision: to provide world-class education rooted in Indian values to the children of Haryana.
+                Founded in 2000, MDN Global School Kaithal began with a clear purpose: to deliver world-class, values-rooted education to the children of Haryana. What started as a modest institution has grown into a landmark of academic excellence.
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                Today, with over 2,000 students and 150+ dedicated faculty members, we stand as one of the most trusted CBSE-affiliated schools in the region — a beacon of academic excellence and holistic development.
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Today, with over 2,000 students and 150+ dedicated faculty members, we are one of the most trusted CBSE-affiliated schools in the region — recognised for academic rigour, holistic development, and a community that cares.
               </p>
               <div className="grid grid-cols-3 gap-6 p-6 bg-[#f8f9ff] rounded-2xl">
                 {[
                   { num: '25+', label: 'Years of Trust' },
-                  { num: '2000+', label: 'Alumni Worldwide' },
+                  { num: '2000+', label: 'Students Enrolled' },
                   { num: '100%', label: 'Board Results' },
                 ].map((s, i) => (
                   <div key={i} className="text-center">
@@ -86,8 +140,7 @@ export default function About() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-              className="relative">
+            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/5]">
                 <img src="/images/about-school.jpg" alt="MDN Global School Campus" className="w-full h-full object-cover" />
               </div>
@@ -105,50 +158,107 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Vision & Mission ─────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-[#0f2557] to-[#1a3a6b] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '48px 48px' }} />
+      {/* ── Timeline ─────────────────────────────────────────── */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Our Journey</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Key Milestones</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Two decades of growth, one milestone at a time</p>
+          </motion.div>
+          <div className="relative max-w-3xl mx-auto">
+            {/* Vertical line */}
+            <div className="absolute left-[50%] top-0 bottom-0 w-px bg-gradient-to-b from-[#1a3a6b]/30 via-[#f5a623] to-[#1a3a6b]/30 hidden md:block" />
+            <div className="flex flex-col gap-8">
+              {milestones.map((m, i) => (
+                <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
+                  className={`flex items-center gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                >
+                  {/* Content */}
+                  <div className={`flex-1 ${i % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                    <div className={`bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 ${i % 2 === 0 ? 'md:ml-auto' : ''}`}>
+                      <span className="text-[#f5a623] font-black text-xl font-serif">{m.year}</span>
+                      <h3 className="text-lg font-serif font-bold text-[#1a3a6b] mt-1 mb-2">{m.title}</h3>
+                      <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
+                    </div>
+                  </div>
+                  {/* Dot */}
+                  <div className="shrink-0 hidden md:flex w-5 h-5 rounded-full bg-[#f5a623] border-4 border-white shadow-lg z-10" />
+                  {/* Empty spacer */}
+                  <div className="flex-1 hidden md:block" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Vision & Mission — Enhanced ──────────────────────── */}
+      <section className="py-28 bg-gradient-to-br from-[#0a1635] via-[#0f2557] to-[#1a3a6b] relative overflow-hidden">
+        {/* Animated dots grid */}
+        <div className="absolute inset-0 opacity-[0.06]"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        {/* Glowing blobs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-[120px] opacity-15 bg-blue-400 pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full blur-[100px] opacity-10 bg-[#f5a623] pointer-events-none" />
+
         <div className="container mx-auto px-6 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-[#f5a623]/15 border border-[#f5a623]/30 rounded-full px-5 py-2 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] animate-pulse" /> Guiding Principles
+            </div>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Vision & Mission</h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto">The guiding principles that shape every decision we make</p>
+            <p className="text-white/55 text-lg max-w-xl mx-auto">The beliefs that shape every decision we make and every life we touch</p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-8">
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <VisionMissionCard
+              delay={0.1}
+              icon={Eye}
+              iconBg="bg-[#f5a623]"
+              badge="Our Vision"
+              title="See the Future We're Building"
+              text="To be a globally recognised institution that empowers every student with the knowledge, skills, and values to lead with integrity and contribute meaningfully to society."
+              items={[
+                'Global academic standards, local roots',
+                'Character-led leadership in every child',
+                'An inclusive environment where all belong',
+                'Lifelong learners who think critically'
+              ]}
+            />
+            <VisionMissionCard
+              delay={0.25}
+              icon={Target}
+              iconBg="bg-white"
+              badge="Our Mission"
+              title="How We Deliver Every Day"
+              text="To deliver exceptional CBSE education through innovative pedagogy, experienced faculty, and world-class infrastructure — nurturing curious, compassionate, and confident learners."
+              items={[
+                'Holistic child development at every stage',
+                'Balance of academics and co-curricular',
+                'Community values and ethical grounding',
+                'Personalised attention and mentoring'
+              ]}
+              reverse
+            />
+          </div>
+
+          {/* Animated stats row */}
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {[
-              {
-                icon: Eye,
-                title: 'Our Vision',
-                color: 'bg-[#f5a623]',
-                text: 'To be a globally recognised institution that empowers every student with the knowledge, skills, and values needed to lead with integrity and contribute meaningfully to society.',
-                items: ['Global Academic Standards', 'Character-Led Leadership', 'Inclusive Learning Environment']
-              },
-              {
-                icon: Target,
-                title: 'Our Mission',
-                color: 'bg-white',
-                textColor: 'text-[#1a3a6b]',
-                text: 'To deliver exceptional CBSE education through innovative pedagogy, experienced faculty, and world-class infrastructure — nurturing curious, compassionate, and confident learners.',
-                items: ['Holistic Child Development', 'Academic & Co-curricular Balance', 'Community & Value Education']
-              }
-            ].map((card, i) => (
-              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-10 hover:bg-white/15 transition-all duration-300">
-                <div className={`w-14 h-14 ${card.color} rounded-2xl flex items-center justify-center mb-6`}>
-                  <card.icon size={28} className={card.textColor || 'text-[#1a3a6b]'} />
-                </div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-4">{card.title}</h3>
-                <p className="text-white/70 leading-relaxed mb-6">{card.text}</p>
-                <ul className="space-y-2">
-                  {card.items.map((item, j) => (
-                    <li key={j} className="flex items-center gap-3 text-white/80 text-sm font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] shrink-0" /> {item}
-                    </li>
-                  ))}
-                </ul>
+              { num: '25+', label: 'Years of Trust' },
+              { num: '150+', label: 'Expert Faculty' },
+              { num: '2000+', label: 'Happy Students' },
+              { num: '100%', label: 'Board Results' },
+            ].map((s, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
+                className="text-center p-5 bg-white/08 rounded-2xl border border-white/10">
+                <div className="text-3xl font-serif font-black text-[#f5a623] mb-1">{s.num}</div>
+                <div className="text-white/55 text-xs font-semibold uppercase tracking-widest">{s.label}</div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -158,18 +268,18 @@ export default function About() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">What We Stand For</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Our Core Values</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Principles that define our culture and guide our community every single day</p>
+            <p className="text-gray-500 max-w-xl mx-auto">Principles that define our culture and guide every student, teacher, and decision at MDN</p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: BookOpen, title: 'Academic Excellence', desc: 'We set high standards and provide every resource students need to achieve them.', color: 'bg-blue-50 text-blue-700', border: 'border-blue-100' },
-              { icon: Heart, title: 'Compassion & Care', desc: 'Every child is valued. We build empathy and kindness from the classroom outward.', color: 'bg-red-50 text-red-600', border: 'border-red-100' },
-              { icon: Shield, title: 'Integrity & Ethics', desc: 'Honesty, transparency, and moral courage are non-negotiable in our community.', color: 'bg-green-50 text-green-700', border: 'border-green-100' },
-              { icon: Lightbulb, title: 'Innovation', desc: 'We encourage curiosity and creative thinking across all subjects and activities.', color: 'bg-amber-50 text-amber-700', border: 'border-amber-100' },
-              { icon: Users, title: 'Teamwork & Inclusion', desc: "Diverse backgrounds make us stronger. We celebrate every student's unique identity.", color: 'bg-purple-50 text-purple-700', border: 'border-purple-100' },
-              { icon: Star, title: 'Striving for Greatness', desc: 'We inspire students to aim beyond the ordinary in academics, sports, and life.', color: 'bg-teal-50 text-teal-700', border: 'border-teal-100' },
+              { icon: BookOpen, title: 'Academic Excellence', desc: 'We set high standards and provide every resource students need to surpass them — day after day.', color: 'bg-blue-50 text-blue-700', border: 'border-blue-100' },
+              { icon: Heart, title: 'Compassion & Care', desc: 'Every child is valued. We build empathy and kindness in the classroom and beyond.', color: 'bg-red-50 text-red-600', border: 'border-red-100' },
+              { icon: Shield, title: 'Integrity & Ethics', desc: 'Honesty, transparency, and moral courage are non-negotiable in everything we do.', color: 'bg-green-50 text-green-700', border: 'border-green-100' },
+              { icon: Lightbulb, title: 'Innovation', desc: 'We encourage curiosity and creative thinking across all subjects, all ages, all activities.', color: 'bg-amber-50 text-amber-700', border: 'border-amber-100' },
+              { icon: Users, title: 'Teamwork & Inclusion', desc: 'Diverse backgrounds make us stronger. Every student\'s identity is celebrated here.', color: 'bg-purple-50 text-purple-700', border: 'border-purple-100' },
+              { icon: Star, title: 'Pursuit of Greatness', desc: 'We inspire students to reach beyond the ordinary — in academics, sport, and life.', color: 'bg-teal-50 text-teal-700', border: 'border-teal-100' },
             ].map((v, i) => (
-              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.5}
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
                 className={`rounded-2xl p-8 border ${v.border} bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group`}>
                 <div className={`w-14 h-14 rounded-xl ${v.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
                   <v.icon size={28} />
@@ -193,7 +303,7 @@ export default function About() {
               <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur rounded-2xl p-5 shadow-lg">
                 <div className="font-serif font-bold text-[#1a3a6b] text-lg">Dr. Rajesh Kumar</div>
                 <div className="text-[#f5a623] text-sm font-semibold">Principal, MDN Global School</div>
-                <div className="text-gray-500 text-xs mt-1">M.Ed | Ph.D. in Education | 20+ Years Experience</div>
+                <div className="text-gray-500 text-xs mt-1">M.Ed · Ph.D. in Education · 20+ Years Experience</div>
               </div>
             </motion.div>
             <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -207,11 +317,14 @@ export default function About() {
               <p className="text-gray-700 text-lg leading-relaxed mb-5 italic">
                 Education is not the filling of a pail, but the lighting of a fire. At MDN Global School, we don't just teach — we inspire, guide, and ignite the potential within every child who walks through our gates.
               </p>
+              <p className="text-gray-600 leading-relaxed mb-5">
+                We are committed to an environment where academic rigour meets creative freedom, where tradition meets innovation, and where every student is seen, heard, and celebrated for who they truly are.
+              </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                We are committed to providing an environment where academic rigour meets creative freedom, where tradition meets innovation, and where every student is seen, heard, and celebrated for who they truly are. Together, we build the leaders of tomorrow.
+                Our teachers are not just instructors; they are mentors, role models, and lifelong supporters of every child's journey. Together, we build the leaders, thinkers, and changemakers of tomorrow.
               </p>
               <div className="border-l-4 border-[#f5a623] pl-6 bg-[#fffbf0] py-4 pr-4 rounded-r-xl">
-                <p className="text-[#1a3a6b] font-bold italic">"Our goal: every student leaves MDN not just educated — but transformed."</p>
+                <p className="text-[#1a3a6b] font-bold italic">"Our goal is simple: every student leaves MDN not just educated — but transformed."</p>
               </div>
             </motion.div>
           </div>
@@ -227,9 +340,10 @@ export default function About() {
           </motion.h2>
           <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
             className="text-[#1a3a6b]/75 text-lg mb-8 max-w-xl mx-auto">
-            Admissions are open for the 2025–26 academic session. Take the first step today.
+            Admissions open for 2025–26. Take the first step today.
           </motion.p>
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} className="flex flex-col sm:flex-row gap-4 justify-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+            className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="bg-[#1a3a6b] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#0f2557] transition-all hover:scale-105 shadow-xl">
               Apply Now
             </Link>

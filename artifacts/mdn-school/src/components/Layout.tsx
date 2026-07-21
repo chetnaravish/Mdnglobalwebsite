@@ -28,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { name: 'Academics', path: '/academics' },
     { name: 'Facilities', path: '/facilities' },
     { name: 'Events', path: '/events' },
+    { name: 'Gallery', path: '/gallery' },
     { name: 'Contact', path: '/contact' },
   ];
 
