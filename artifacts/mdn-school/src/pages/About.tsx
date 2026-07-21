@@ -163,7 +163,7 @@ export default function About() {
               { icon: Heart, title: 'Compassion & Care', desc: 'Every child is valued. We build empathy and kindness from the classroom outward.', color: 'bg-red-50 text-red-600', border: 'border-red-100' },
               { icon: Shield, title: 'Integrity & Ethics', desc: 'Honesty, transparency, and moral courage are non-negotiable in our community.', color: 'bg-green-50 text-green-700', border: 'border-green-100' },
               { icon: Lightbulb, title: 'Innovation', desc: 'We encourage curiosity and creative thinking across all subjects and activities.', color: 'bg-amber-50 text-amber-700', border: 'border-amber-100' },
-              { icon: Users, title: 'Teamwork & Inclusion', desc: 'Diverse backgrounds make us stronger. We celebrate every student's unique identity.', color: 'bg-purple-50 text-purple-700', border: 'border-purple-100' },
+              { icon: Users, title: 'Teamwork & Inclusion', desc: "Diverse backgrounds make us stronger. We celebrate every student's unique identity.", color: 'bg-purple-50 text-purple-700', border: 'border-purple-100' },
               { icon: Star, title: 'Striving for Greatness', desc: 'We inspire students to aim beyond the ordinary in academics, sports, and life.', color: 'bg-teal-50 text-teal-700', border: 'border-teal-100' },
             ].map((v, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.5}
