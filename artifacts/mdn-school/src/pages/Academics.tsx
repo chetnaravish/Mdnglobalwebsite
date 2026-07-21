@@ -1,212 +1,224 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Calculator, FlaskConical, Globe, Palette, Monitor, ChevronRight } from 'lucide-react';
+import { BookOpen, FlaskConical, Calculator, Globe, Microscope, TrendingUp, GraduationCap, CheckCircle, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] } })
+};
+
+const stages = [
+  { label: 'Pre-Primary', classes: 'Nursery – KG 2', age: '3–5 yrs', color: 'bg-pink-50 border-pink-200', accent: 'bg-pink-500', desc: 'Play-based learning through stories, music, art, and discovery activities.' },
+  { label: 'Primary', classes: 'Class I – V', age: '6–10 yrs', color: 'bg-blue-50 border-blue-200', accent: 'bg-blue-500', desc: 'Strong foundation in core subjects with activity-based, child-centred pedagogy.' },
+  { label: 'Middle School', classes: 'Class VI – VIII', age: '11–13 yrs', color: 'bg-purple-50 border-purple-200', accent: 'bg-purple-500', desc: 'Deeper subject exploration with introduction to labs, projects, and debates.' },
+  { label: 'Secondary', classes: 'Class IX – X', age: '14–15 yrs', color: 'bg-amber-50 border-amber-200', accent: 'bg-amber-500', desc: 'CBSE Board preparation with focused academics, mock tests, and counselling.' },
+  { label: 'Senior Secondary', classes: 'Class XI – XII', age: '16–17 yrs', color: 'bg-green-50 border-green-200', accent: 'bg-green-500', desc: 'Specialised streams with career guidance, college prep, and competitive exam coaching.' },
+];
+
+const streams = [
+  {
+    name: 'Science', icon: Microscope, color: 'from-blue-600 to-blue-800',
+    subjects: ['Physics', 'Chemistry', 'Biology / Mathematics', 'English', 'Physical Education / Computer Science'],
+    careers: ['Engineering', 'Medicine', 'Research', 'Technology']
+  },
+  {
+    name: 'Commerce', icon: TrendingUp, color: 'from-emerald-600 to-emerald-800',
+    subjects: ['Accountancy', 'Business Studies', 'Economics', 'Mathematics / Informatics', 'English'],
+    careers: ['CA', 'MBA', 'Banking', 'Entrepreneurship']
+  },
+  {
+    name: 'Humanities', icon: Globe, color: 'from-amber-600 to-amber-700',
+    subjects: ['History', 'Political Science', 'Geography / Psychology', 'Sociology', 'English / Hindi'],
+    careers: ['Civil Services', 'Law', 'Journalism', 'Social Work']
+  },
+];
+
+const methods = [
+  { icon: BookOpen, title: 'Smart Classrooms', desc: 'Every classroom is equipped with interactive whiteboards and digital learning tools for immersive lessons.' },
+  { icon: FlaskConical, title: 'Lab-Based Learning', desc: 'Hands-on experiments in Physics, Chemistry, Biology, and Computer labs reinforce theoretical concepts.' },
+  { icon: Calculator, title: 'Conceptual Maths', desc: 'Our structured Maths programme builds strong fundamentals through problem-solving and real-world application.' },
+  { icon: GraduationCap, title: 'Board Excellence Programme', desc: 'Dedicated revision cycles, mock exams, and expert mentoring for Class X & XII board success.' },
+];
 
 export default function Academics() {
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      {/* Page Banner */}
-      <section 
-        className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden flex flex-col items-center justify-center text-center"
-        style={{ 
-          backgroundImage: `linear-gradient(to bottom, rgba(26,58,107,0.85), rgba(26,58,107,0.95)), url('/images/academics.jpg')`, 
-          backgroundSize: 'cover', 
+    <div className="flex flex-col">
+
+      {/* ── Hero Banner ─────────────────────────────────────── */}
+      <section
+        className="relative min-h-[65vh] flex items-end overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(120deg, rgba(10,28,70,0.95) 35%, rgba(30,86,160,0.6) 100%), url('/images/academics.jpg')`,
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
         }}
       >
-        <div className="container relative z-10 px-4">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif font-bold text-white mb-6"
-          >
-            Academics
+        <div className="container mx-auto px-6 py-20 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> CBSE Curriculum
+          </motion.div>
+          <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            Academic <span className="text-[#f5a623]">Excellence</span>
           </motion.h1>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex items-center justify-center gap-2 text-white/80 text-sm md:text-base font-medium tracking-wider uppercase"
-          >
-            <Link href="/" className="hover:text-[#f5a623] transition-colors">Home</Link>
-            <ChevronRight size={16} />
-            <span className="text-[#f5a623]">Academics</span>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
+            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            A rigorous CBSE curriculum enriched with modern pedagogy, smart technology, and passionate educators who inspire every learner.
+          </motion.p>
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
+            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
+            <div className="h-1 w-8 bg-white/30 rounded-full" />
           </motion.div>
         </div>
       </section>
 
-      {/* Curriculum Overview */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 max-w-5xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-8">CBSE Affiliated Curriculum</h2>
-            <p className="text-xl text-gray-600 leading-relaxed mb-10">
-              Our academic program strictly adheres to the guidelines set by the Central Board of Secondary Education (CBSE), New Delhi. We seamlessly blend traditional teaching methodologies with modern, experiential learning techniques to ensure holistic academic development for every child.
-            </p>
-            <div className="inline-block bg-[#1a3a6b] text-[#f5a623] px-8 py-4 rounded-full font-bold text-sm tracking-[0.2em] uppercase shadow-lg">
-              Affiliation No: XXXXXX
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 1.05 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="mt-20 rounded-[2.5rem] overflow-hidden shadow-2xl relative group"
-          >
-            <img src="/images/academics.jpg" alt="Smart Classroom" className="w-full h-auto object-cover max-h-[600px] group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8 md:p-12">
-              <h3 className="text-white text-3xl md:text-4xl font-serif font-bold text-left drop-shadow-md">Technology-Integrated Smart Learning</h3>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Class Structure */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-6">Academic Structure</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">A carefully designed developmental approach to education, from early years to senior secondary.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* ── Overview Strip ───────────────────────────────────── */}
+      <section className="py-14 bg-[#1a3a6b]">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { stage: "Pre-Primary", classes: "Nursery to UKG", focus: "Play-way method, motor skills development, basic numeracy and literacy.", color: "border-t-pink-500", text: "text-pink-600", bg: "bg-pink-50" },
-              { stage: "Primary", classes: "Class 1 to 5", focus: "Foundation building, interactive learning, environmental awareness.", color: "border-t-[#f5a623]", text: "text-[#d98c14]", bg: "bg-amber-50" },
-              { stage: "Middle", classes: "Class 6 to 8", focus: "Exploratory learning, critical thinking, introduction to varied subjects.", color: "border-t-green-500", text: "text-green-600", bg: "bg-green-50" },
-              { stage: "Secondary", classes: "Class 9 to 12", focus: "Board exam preparation, career counseling, specialized streams.", color: "border-t-[#1a3a6b]", text: "text-[#1a3a6b]", bg: "bg-blue-50" },
-            ].map((structure, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: i * 0.1 }}
-                className={`bg-white rounded-3xl p-8 shadow-md border-t-[6px] ${structure.color} hover:shadow-2xl transition-all duration-300 hover:-translate-y-2`}
-              >
-                <h3 className="text-3xl font-serif font-bold text-[#1a3a6b] mb-4">{structure.stage}</h3>
-                <div className={`text-sm font-bold ${structure.text} ${structure.bg} inline-block px-4 py-2 rounded-full mb-6 uppercase tracking-wider`}>
-                  {structure.classes}
-                </div>
-                <p className="text-gray-600 text-base leading-relaxed">{structure.focus}</p>
+              { num: 'CBSE', label: 'Board Affiliation' },
+              { num: 'KG–XII', label: 'Classes Offered' },
+              { num: '100%', label: 'Pass Rate (5 Yrs)' },
+              { num: '150+', label: 'Qualified Faculty' },
+            ].map((s, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.5}>
+                <div className="text-3xl md:text-4xl font-serif font-black text-[#f5a623] mb-2">{s.num}</div>
+                <div className="text-white/60 text-sm font-semibold uppercase tracking-wider">{s.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Senior Secondary Streams */}
-      <section className="py-24 bg-[#1a3a6b] text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Senior Secondary Streams</h2>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">Specialized pathways for Classes 11 & 12 to prepare students for higher education and future careers.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Science */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              className="bg-white/10 border border-white/20 rounded-[2.5rem] p-10 backdrop-blur-sm hover:bg-white/15 transition-colors"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-blue-400/20 text-blue-300 flex items-center justify-center mb-8">
-                <FlaskConical size={32} />
-              </div>
-              <h3 className="text-3xl font-serif font-bold mb-8">Science</h3>
-              <ul className="space-y-4 mb-8 text-white/90 text-lg">
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-blue-300" /> Physics</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-blue-300" /> Chemistry</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-blue-300" /> Mathematics / Biology</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-blue-300" /> English Core</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-blue-300" /> Optional Subject</li>
-              </ul>
-            </motion.div>
-
-            {/* Commerce */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.1 }}
-              className="bg-[#f5a623] text-[#1a3a6b] rounded-[2.5rem] p-10 shadow-2xl relative transform md:-translate-y-6 border-4 border-[#1a3a6b]"
-            >
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#1a3a6b] text-white text-sm font-bold px-6 py-2 rounded-full uppercase tracking-widest shadow-lg border-2 border-[#f5a623]">
-                Most Popular
-              </div>
-              <div className="w-16 h-16 rounded-2xl bg-[#1a3a6b]/10 text-[#1a3a6b] flex items-center justify-center mb-8">
-                <Calculator size={32} />
-              </div>
-              <h3 className="text-3xl font-serif font-bold mb-8">Commerce</h3>
-              <ul className="space-y-4 mb-8 text-[#1a3a6b]/90 text-lg font-medium">
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-[#1a3a6b]" /> Accountancy</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-[#1a3a6b]" /> Business Studies</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-[#1a3a6b]" /> Economics</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-[#1a3a6b]" /> English Core</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-[#1a3a6b]" /> Mathematics / IP</li>
-              </ul>
-            </motion.div>
-
-            {/* Humanities */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white/10 border border-white/20 rounded-[2.5rem] p-10 backdrop-blur-sm hover:bg-white/15 transition-colors"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-pink-400/20 text-pink-300 flex items-center justify-center mb-8">
-                <Globe size={32} />
-              </div>
-              <h3 className="text-3xl font-serif font-bold mb-8">Humanities</h3>
-              <ul className="space-y-4 mb-8 text-white/90 text-lg">
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-pink-300" /> History</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-pink-300" /> Political Science</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-pink-300" /> Geography</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-pink-300" /> English Core</li>
-                <li className="flex items-center gap-3"><ChevronRight size={20} className="text-pink-300" /> Optional Subject</li>
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Methodology */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-16">Our Teaching Methodology</h2>
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-12">
-              {[
-                { icon: BookOpen, title: "Conceptual Clarity", desc: "Focus on deep understanding rather than rote memorization." },
-                { icon: Monitor, title: "Tech-Integrated", desc: "Smart boards and digital learning resources in every classroom." },
-                { icon: Palette, title: "Experiential", desc: "Learning by doing through practical projects and activities." },
-                { icon: Globe, title: "Global Outlook", desc: "Connecting local curriculum to broader global contexts." }
-              ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center group">
-                  <div className="w-24 h-24 rounded-3xl bg-gray-50 flex items-center justify-center text-[#1a3a6b] mb-6 border border-gray-100 group-hover:bg-[#1a3a6b] group-hover:text-[#f5a623] transition-all duration-300 shadow-sm group-hover:shadow-xl group-hover:-translate-y-2">
-                    <item.icon size={40} />
-                  </div>
-                  <h4 className="text-xl font-bold text-[#1a3a6b] mb-3">{item.title}</h4>
-                  <p className="text-base text-gray-600 leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+      {/* ── Class Structure ──────────────────────────────────── */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">From Nursery to Class XII</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Our Academic Structure</h2>
+            <p className="text-gray-500 max-w-xl mx-auto text-lg">Every stage carefully crafted to match a child's developmental needs</p>
           </motion.div>
+          <div className="flex flex-col gap-5 max-w-4xl mx-auto">
+            {stages.map((s, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.5}
+                className={`flex items-start gap-6 p-6 rounded-2xl border ${s.color} hover:shadow-lg transition-all duration-300 group`}>
+                <div className={`${s.accent} text-white rounded-xl p-3 shrink-0 group-hover:scale-110 transition-transform`}>
+                  <GraduationCap size={24} />
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-3 mb-1">
+                    <h3 className="text-xl font-serif font-bold text-[#1a3a6b]">{s.label}</h3>
+                    <span className="bg-white border border-gray-200 text-gray-600 text-xs px-3 py-1 rounded-full font-semibold">{s.classes}</span>
+                    <span className="text-gray-400 text-sm">· Ages {s.age}</span>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">{s.desc}</p>
+                </div>
+                <ChevronRight className="text-gray-300 group-hover:text-[#1a3a6b] transition-colors shrink-0 mt-1" size={20} />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* ── Senior Secondary Streams ─────────────────────────── */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Class XI & XII</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Choose Your Stream</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Three well-structured streams to align your education with your career aspirations</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {streams.map((stream, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.5}
+                className="rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+                <div className={`bg-gradient-to-br ${stream.color} p-10 text-white`}>
+                  <stream.icon size={40} className="mb-4 opacity-90" />
+                  <h3 className="text-3xl font-serif font-black mb-2">{stream.name}</h3>
+                  <p className="text-white/70 text-sm">Class XI – XII · CBSE</p>
+                </div>
+                <div className="p-8 bg-white border border-gray-100">
+                  <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">Subjects</p>
+                  <ul className="space-y-2 mb-6">
+                    {stream.subjects.map((sub, j) => (
+                      <li key={j} className="flex items-center gap-2 text-gray-700 text-sm font-medium">
+                        <CheckCircle size={15} className="text-green-500 shrink-0" /> {sub}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-3">Career Paths</p>
+                  <div className="flex flex-wrap gap-2">
+                    {stream.careers.map((c, k) => (
+                      <span key={k} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-semibold">{c}</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Teaching Methodology ─────────────────────────────── */}
+      <section className="py-24 bg-gradient-to-br from-[#f8f9ff] to-[#eef2ff]">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">How We Teach</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Our Teaching Approach</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Modern methods meeting timeless wisdom</p>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {methods.map((m, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.4}
+                className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex gap-5 group">
+                <div className="w-14 h-14 bg-[#1a3a6b]/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#1a3a6b] group-hover:text-white transition-all">
+                  <m.icon size={28} className="text-[#1a3a6b] group-hover:text-white transition-colors" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-2">{m.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{m.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Image + CTA ─────────────────────────────────────── */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div variants={{ hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
+              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              className="rounded-3xl overflow-hidden shadow-2xl aspect-video">
+              <img src="/images/academics.jpg" alt="Smart Classroom" className="w-full h-full object-cover" />
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
+              initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
+                <span className="w-10 h-px bg-[#f5a623]" /> Results & Achievements
+              </p>
+              <h2 className="text-4xl font-serif font-bold text-[#1a3a6b] mb-6">Consistently Exceptional<br />Board Results</h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                Our students have consistently achieved 100% pass rates in CBSE Board Examinations. Many of our Class XII graduates have secured top ranks in JEE, NEET, and prestigious colleges nationwide.
+              </p>
+              <ul className="space-y-3 mb-10">
+                {['100% pass rate in CBSE X & XII (last 5 years)', '15+ students in Top 100 state merit list', 'JEE / NEET qualifiers every year', 'NTSE & Olympiad medal winners'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-gray-700 font-medium">
+                    <CheckCircle size={18} className="text-green-500 shrink-0" /> {item}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/contact" className="inline-block bg-[#1a3a6b] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#0f2557] transition-all hover:scale-105 shadow-lg">
+                Enquire About Admissions
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

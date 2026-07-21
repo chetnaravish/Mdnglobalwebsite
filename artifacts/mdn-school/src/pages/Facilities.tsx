@@ -1,124 +1,189 @@
 import { motion } from 'framer-motion';
-import { Microscope, MonitorPlay, Library, Dumbbell, Bus, Coffee, HeartPulse, Palette, ChevronRight } from 'lucide-react';
+import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Utensils, HeartPulse, Palette, Wifi, Music, TreePine, Camera } from 'lucide-react';
 import { Link } from 'wouter';
 
-export default function Facilities() {
-  const facilities = [
-    {
-      title: "Smart Classrooms",
-      description: "Air-conditioned, spacious classrooms equipped with interactive flat panels and high-speed internet to make learning engaging and visual.",
-      icon: MonitorPlay,
-      image: "/images/academics.jpg"
-    },
-    {
-      title: "Science Laboratories",
-      description: "State-of-the-art Physics, Chemistry, and Biology labs complying with CBSE safety norms, allowing hands-on practical experience.",
-      icon: Microscope,
-      image: "/images/facilities-lab.jpg"
-    },
-    {
-      title: "Extensive Library",
-      description: "A vast collection of academic books, journals, fiction, and digital resources in a quiet, conducive reading environment.",
-      icon: Library,
-      image: "/images/facilities-library.jpg"
-    },
-    {
-      title: "Sports Complex",
-      description: "Facilities for cricket, football, basketball, badminton, and indoor games. Professional coaching available.",
-      icon: Dumbbell,
-      image: "/images/facilities-sports.jpg"
-    },
-    {
-      title: "Computer Center",
-      description: "Modern IT labs with the latest hardware and software. 1:1 student-to-computer ratio during practical sessions.",
-      icon: MonitorPlay,
-      image: "/images/facilities-library.jpg"
-    },
-    {
-      title: "Transportation",
-      description: "A fleet of GPS-enabled buses covering Kaithal and surrounding areas with trained drivers and female attendants.",
-      icon: Bus,
-      image: "/images/about-school.jpg"
-    },
-    {
-      title: "Cafeteria",
-      description: "Hygienic and nutritious meals prepared under strict quality control. Menu planned by expert nutritionists.",
-      icon: Coffee,
-      image: "/images/students-happy.jpg"
-    },
-    {
-      title: "Medical Room",
-      description: "Fully equipped infirmary with a qualified full-time nurse and a visiting doctor for regular checkups and emergencies.",
-      icon: HeartPulse,
-      image: "/images/facilities-lab.jpg"
-    },
-    {
-      title: "Art & Craft Studio",
-      description: "A dedicated space for students to explore their creativity through painting, sculpture, pottery, and crafts.",
-      icon: Palette,
-      image: "/images/events-annual.jpg"
-    }
-  ];
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] } })
+};
 
+const facilities = [
+  {
+    icon: Monitor,
+    title: 'Smart Classrooms',
+    desc: 'Every classroom features interactive digital boards, HD projectors, and Wi-Fi — creating an immersive learning environment.',
+    image: '/images/academics.jpg',
+    tag: 'Technology',
+    tagColor: 'bg-blue-100 text-blue-700',
+  },
+  {
+    icon: FlaskConical,
+    title: 'Science Laboratories',
+    desc: 'State-of-the-art Physics, Chemistry, and Biology labs equipped with modern instruments for practical learning.',
+    image: '/images/facilities-lab.jpg',
+    tag: 'Science',
+    tagColor: 'bg-purple-100 text-purple-700',
+  },
+  {
+    icon: BookOpen,
+    title: 'Library & Resource Centre',
+    desc: 'Over 15,000 books, digital e-library access, research journals, and comfortable reading spaces for curious minds.',
+    image: '/images/facilities-library.jpg',
+    tag: 'Knowledge',
+    tagColor: 'bg-amber-100 text-amber-700',
+  },
+  {
+    icon: Dumbbell,
+    title: 'Sports Complex',
+    desc: 'Olympic-standard sports grounds with cricket, football, basketball, badminton courts, and a multi-purpose indoor hall.',
+    image: '/images/facilities-sports.jpg',
+    tag: 'Sports',
+    tagColor: 'bg-green-100 text-green-700',
+  },
+  {
+    icon: Wifi,
+    title: 'Computer & IT Lab',
+    desc: 'High-speed fibre internet, 100+ modern workstations, and coding programmes aligned with NEP 2020 guidelines.',
+    image: '/images/academics.jpg',
+    tag: 'IT & Coding',
+    tagColor: 'bg-cyan-100 text-cyan-700',
+  },
+  {
+    icon: Palette,
+    title: 'Arts & Craft Studio',
+    desc: 'A dedicated creative space for visual arts, sculpture, pottery, and design — nurturing artistic expression in every student.',
+    image: '/images/students-happy.jpg',
+    tag: 'Creative Arts',
+    tagColor: 'bg-pink-100 text-pink-700',
+  },
+  {
+    icon: Music,
+    title: 'Music & Dance Room',
+    desc: 'Soundproofed music studios with professional instruments, and a dance studio for classical, folk, and contemporary styles.',
+    image: '/images/events-annual.jpg',
+    tag: 'Performing Arts',
+    tagColor: 'bg-rose-100 text-rose-700',
+  },
+  {
+    icon: Utensils,
+    title: 'Hygienic Cafeteria',
+    desc: 'Nutritious, freshly cooked meals in a clean, spacious dining hall — healthy food for healthy young minds.',
+    image: '/images/about-school.jpg',
+    tag: 'Nutrition',
+    tagColor: 'bg-orange-100 text-orange-700',
+  },
+  {
+    icon: HeartPulse,
+    title: 'Medical & Wellness Centre',
+    desc: 'Qualified medical staff on campus 24/7, first-aid facilities, and dedicated counsellors for student well-being.',
+    image: '/images/students-happy.jpg',
+    tag: 'Health',
+    tagColor: 'bg-red-100 text-red-700',
+  },
+  {
+    icon: Bus,
+    title: 'Safe Transport',
+    desc: 'GPS-enabled, air-conditioned school buses covering all major routes — student safety is our top priority.',
+    image: '/images/hero-bg.jpg',
+    tag: 'Transport',
+    tagColor: 'bg-teal-100 text-teal-700',
+  },
+  {
+    icon: TreePine,
+    title: 'Eco-Friendly Campus',
+    desc: '10-acre green campus with gardens, open-air amphitheatre, and eco-clubs promoting sustainable living.',
+    image: '/images/about-school.jpg',
+    tag: 'Environment',
+    tagColor: 'bg-lime-100 text-lime-700',
+  },
+  {
+    icon: Camera,
+    title: 'CCTV Surveillance',
+    desc: '360° CCTV monitoring across the campus ensures complete safety and security for all students and staff.',
+    image: '/images/hero-bg.jpg',
+    tag: 'Security',
+    tagColor: 'bg-slate-100 text-slate-700',
+  },
+];
+
+export default function Facilities() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Page Banner */}
-      <section 
-        className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden flex flex-col items-center justify-center text-center"
-        style={{ 
-          backgroundImage: `linear-gradient(to bottom, rgba(26,58,107,0.85), rgba(26,58,107,0.95)), url('/images/facilities-sports.jpg')`, 
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+    <div className="flex flex-col">
+
+      {/* ── Hero Banner ─────────────────────────────────────── */}
+      <section
+        className="relative min-h-[65vh] flex items-end overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(to top, rgba(10,28,70,0.95) 30%, rgba(10,28,70,0.5) 70%, rgba(10,28,70,0.3) 100%), url('/images/facilities-sports.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 30%',
         }}
       >
-        <div className="container relative z-10 px-4">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif font-bold text-white mb-6"
-          >
-            World-Class Facilities
+        <div className="container mx-auto px-6 py-20 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> World-Class Infrastructure
+          </motion.div>
+          <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            Our <span className="text-[#f5a623]">Facilities</span>
           </motion.h1>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex items-center justify-center gap-2 text-white/80 text-sm md:text-base font-medium tracking-wider uppercase"
-          >
-            <Link href="/" className="hover:text-[#f5a623] transition-colors">Home</Link>
-            <ChevronRight size={16} />
-            <span className="text-[#f5a623]">Facilities</span>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
+            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            Modern infrastructure that supports every dimension of a child's growth — academic, physical, creative, and emotional.
+          </motion.p>
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
+            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
+            <div className="h-1 w-8 bg-white/30 rounded-full" />
           </motion.div>
         </div>
       </section>
 
-      {/* Facilities Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {facilities.map((facility, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: (i % 3) * 0.1, duration: 0.5 }}
-                className="group rounded-3xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-500 bg-white flex flex-col h-full hover:-translate-y-2"
-              >
-                <div className="h-64 relative overflow-hidden">
-                  <img src={facility.image} alt={facility.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-[#1a3a6b]/30 group-hover:bg-[#1a3a6b]/10 transition-colors duration-500"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <facility.icon size={80} className="text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" />
-                  </div>
-                  <div className="absolute bottom-5 left-5 w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center text-[#1a3a6b] z-10 group-hover:bg-[#f5a623] transition-colors">
-                    <facility.icon size={28} />
+      {/* ── Quick Stats ──────────────────────────────────────── */}
+      <section className="py-14 bg-[#f5a623]">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { num: '10', unit: 'Acres', label: 'Green Campus' },
+              { num: '30+', unit: '', label: 'Smart Classrooms' },
+              { num: '5', unit: '', label: 'Science Labs' },
+              { num: '15k+', unit: '', label: 'Library Books' },
+            ].map((s, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.4}>
+                <div className="text-4xl font-serif font-black text-[#1a3a6b] mb-1">
+                  {s.num}<span className="text-xl">{s.unit}</span>
+                </div>
+                <div className="text-[#1a3a6b]/70 text-sm font-bold uppercase tracking-wider">{s.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Facilities Grid ──────────────────────────────────── */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Everything Under One Roof</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Complete Campus Facilities</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">12 world-class facilities designed to support holistic development</p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {facilities.map((f, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i % 3 * 0.2}
+                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 hover:-translate-y-2 group border border-gray-100">
+                <div className="relative h-48 overflow-hidden">
+                  <img src={f.image} alt={f.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/70 to-transparent" />
+                  <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${f.tagColor}`}>{f.tag}</div>
+                  <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
+                    <f.icon size={20} />
                   </div>
                 </div>
-                <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-serif font-bold text-[#1a3a6b] mb-4">{facility.title}</h3>
-                  <p className="text-gray-600 leading-relaxed flex-1 text-lg">{facility.description}</p>
+                <div className="p-6">
+                  <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-3">{f.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -126,32 +191,60 @@ export default function Facilities() {
         </div>
       </section>
 
-      {/* Virtual Tour Banner */}
-      <section className="py-24 bg-[#1a3a6b] text-white relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-blue-500/20 blur-[120px]"></div>
-        <div className="absolute left-0 bottom-0 w-1/3 h-full bg-[#f5a623]/10 blur-[100px]"></div>
-        
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6">Experience the Campus</h2>
-            <p className="text-white/80 text-xl mb-10 max-w-3xl mx-auto leading-relaxed">
-              Words can only say so much. We invite you to visit our campus and see the world-class infrastructure that makes MDN Global School the preferred choice for parents in Kaithal.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link href="/contact" className="w-full sm:w-auto bg-[#f5a623] text-[#1a3a6b] px-10 py-4 rounded-full font-bold text-lg hover:bg-[#e09612] transition-colors shadow-lg hover:scale-105">
-                Schedule a Tour
-              </Link>
-              <button className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-colors backdrop-blur-sm">
-                Watch Virtual Tour
-              </button>
-            </div>
+      {/* ── Sports Highlight ────────────────────────────────── */}
+      <section className="py-24 bg-[#1a3a6b] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
+              initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
+                <span className="w-10 h-px bg-[#f5a623]" /> Sports & Fitness
+              </p>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Champions Are<br />Made Here</h2>
+              <p className="text-white/70 text-lg leading-relaxed mb-8">
+                Our professional sports facilities train students to compete at district, state, and national levels. With dedicated coaches and structured training programmes, MDN Global School has produced champions across multiple sports.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {['Cricket Ground', 'Football Field', 'Basketball Courts', 'Badminton Hall', 'Athletics Track', 'Swimming Pool*'].map((sport, i) => (
+                  <div key={i} className="flex items-center gap-2 text-white/80 text-sm font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] shrink-0" /> {sport}
+                  </div>
+                ))}
+              </div>
+              <p className="text-white/40 text-xs mt-4">* Coming 2025</p>
+            </motion.div>
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
+              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              className="rounded-3xl overflow-hidden shadow-2xl aspect-video">
+              <img src="/images/facilities-sports.jpg" alt="Sports Facilities" className="w-full h-full object-cover" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────────── */}
+      <section className="py-20 bg-white text-center">
+        <div className="container mx-auto px-6">
+          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">
+            Come, See It for Yourself
+          </motion.h2>
+          <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+            className="text-gray-500 text-lg mb-8 max-w-xl mx-auto">
+            Book a campus visit and experience our world-class facilities in person.
+          </motion.p>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}>
+            <Link href="/contact" className="inline-block bg-[#1a3a6b] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#0f2557] transition-all hover:scale-105 shadow-lg">
+              Schedule a Campus Visit
+            </Link>
           </motion.div>
         </div>
       </section>
+
     </div>
   );
 }

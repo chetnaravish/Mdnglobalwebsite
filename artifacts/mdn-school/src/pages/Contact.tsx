@@ -1,283 +1,259 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Send, ChevronRight } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useToast } from '@/hooks/use-toast';
-import { Link } from 'wouter';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, ChevronDown } from 'lucide-react';
 
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().min(10, "Valid phone number required"),
-  email: z.string().email("Valid email required"),
-  classApplied: z.string().min(1, "Please select a class"),
-  message: z.string().optional(),
-});
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] } })
+};
+
+const contactCards = [
+  {
+    icon: MapPin,
+    title: 'Our Address',
+    lines: ['MDN Global School,', 'Kaithal, Haryana – 136027', 'India'],
+    action: 'Get Directions',
+    color: 'bg-blue-50 text-blue-600',
+    border: 'border-blue-100',
+  },
+  {
+    icon: Phone,
+    title: 'Call Us',
+    lines: ['+91 98765 43210', '+91 01746 XXXXXX', 'Mon–Sat: 8 AM – 4 PM'],
+    action: 'Call Now',
+    color: 'bg-green-50 text-green-600',
+    border: 'border-green-100',
+  },
+  {
+    icon: Mail,
+    title: 'Email Us',
+    lines: ['info@mdnglobalschool.com', 'admissions@mdnglobalschool.com'],
+    action: 'Send Email',
+    color: 'bg-amber-50 text-amber-600',
+    border: 'border-amber-100',
+  },
+  {
+    icon: Clock,
+    title: 'Office Hours',
+    lines: ['Monday – Friday: 8 AM – 4 PM', 'Saturday: 9 AM – 1 PM', 'Sunday: Closed'],
+    action: 'View Calendar',
+    color: 'bg-purple-50 text-purple-600',
+    border: 'border-purple-100',
+  },
+];
+
+const classOptions = ['Nursery', 'KG 1', 'KG 2', 'Class I', 'Class II', 'Class III', 'Class IV', 'Class V',
+  'Class VI', 'Class VII', 'Class VIII', 'Class IX', 'Class X', 'Class XI', 'Class XII'];
 
 export default function Contact() {
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      classApplied: "",
-      message: "",
-    },
-  });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', classApplying: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Inquiry Submitted",
-      description: "Thank you for reaching out. Our admissions office will contact you soon.",
-    });
-    form.reset();
-  }
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.name.trim()) e.name = 'Name is required';
+    if (!form.phone.match(/^[6-9]\d{9}$/)) e.phone = 'Enter a valid 10-digit mobile number';
+    if (form.email && !form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = 'Enter a valid email';
+    if (!form.classApplying) e.classApplying = 'Please select a class';
+    if (!form.message.trim()) e.message = 'Please write a brief message';
+    return e;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setSubmitted(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    if (errors[e.target.name]) setErrors(prev => ({ ...prev, [e.target.name]: '' }));
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Page Banner */}
-      <section 
-        className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden flex flex-col items-center justify-center text-center"
-        style={{ 
-          backgroundImage: `linear-gradient(to bottom, rgba(26,58,107,0.85), rgba(26,58,107,0.95)), url('/images/hero-bg.jpg')`, 
-          backgroundSize: 'cover', 
+    <div className="flex flex-col">
+
+      {/* ── Hero Banner ─────────────────────────────────────── */}
+      <section
+        className="relative min-h-[55vh] flex items-end overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(10,28,70,0.97) 50%, rgba(30,86,160,0.7) 100%), url('/images/hero-bg.jpg')`,
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
         }}
       >
-        <div className="container relative z-10 px-4">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif font-bold text-white mb-6"
-          >
-            Get in Touch
+        <div className="container mx-auto px-6 py-20 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> We're Here for You
+          </motion.div>
+          <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            Get in <span className="text-[#f5a623]">Touch</span>
           </motion.h1>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex items-center justify-center gap-2 text-white/80 text-sm md:text-base font-medium tracking-wider uppercase"
-          >
-            <Link href="/" className="hover:text-[#f5a623] transition-colors">Home</Link>
-            <ChevronRight size={16} />
-            <span className="text-[#f5a623]">Contact</span>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
+            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            Have questions about admissions, academics, or our campus? We'd love to hear from you. Reach out and our team will respond promptly.
+          </motion.p>
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
+            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
+            <div className="h-1 w-8 bg-white/30 rounded-full" />
           </motion.div>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-24">
-        <div className="grid lg:grid-cols-5 gap-16">
-          
-          {/* Contact Info */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="lg:col-span-2 space-y-12"
-          >
-            <div>
-              <h2 className="text-4xl font-serif font-bold text-[#1a3a6b] mb-6">Contact Information</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Have questions about admissions, facilities, or our curriculum? Our dedicated team is here to assist you.
-              </p>
-            </div>
-
-            <div className="space-y-8">
-              <div className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-[#1a3a6b] shrink-0 group-hover:bg-[#1a3a6b] group-hover:text-[#f5a623] transition-colors duration-300">
-                  <MapPin size={28} />
+      {/* ── Contact Cards ────────────────────────────────────── */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {contactCards.map((card, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.15}
+                className={`bg-white rounded-2xl p-7 border ${card.border} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group`}>
+                <div className={`w-13 h-13 w-12 h-12 ${card.color} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
+                  <card.icon size={24} />
                 </div>
-                <div>
-                  <h4 className="font-bold text-[#1a3a6b] text-xl mb-2">Campus Address</h4>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    MDN Global School<br />
-                    Ambala Road, Kaithal<br />
-                    Haryana - 136027, India
-                  </p>
+                <h3 className="font-serif font-bold text-[#1a3a6b] text-lg mb-3">{card.title}</h3>
+                <div className="space-y-1 mb-4">
+                  {card.lines.map((line, j) => (
+                    <p key={j} className="text-gray-600 text-sm">{line}</p>
+                  ))}
                 </div>
-              </div>
-
-              <div className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-[#1a3a6b] shrink-0 group-hover:bg-[#1a3a6b] group-hover:text-[#f5a623] transition-colors duration-300">
-                  <Phone size={28} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-[#1a3a6b] text-xl mb-2">Phone numbers</h4>
-                  <p className="text-gray-600 text-lg mb-1">Main Office: +91 98765 43210</p>
-                  <p className="text-gray-600 text-lg">Admissions: +91 98765 43211</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-[#1a3a6b] shrink-0 group-hover:bg-[#1a3a6b] group-hover:text-[#f5a623] transition-colors duration-300">
-                  <Mail size={28} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-[#1a3a6b] text-xl mb-2">Email Addresses</h4>
-                  <p className="text-gray-600 text-lg mb-1">info@mdnglobalschool.com</p>
-                  <p className="text-gray-600 text-lg">admissions@mdnglobalschool.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-[#1a3a6b] shrink-0 group-hover:bg-[#1a3a6b] group-hover:text-[#f5a623] transition-colors duration-300">
-                  <Clock size={28} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-[#1a3a6b] text-xl mb-2">Office Hours</h4>
-                  <p className="text-gray-600 text-lg mb-1">Monday - Saturday: 8:00 AM - 4:00 PM</p>
-                  <p className="text-gray-600 text-lg">Sunday: Closed</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Form */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="lg:col-span-3"
-          >
-            <div className="bg-white p-10 md:p-12 rounded-[2.5rem] shadow-xl border border-gray-100">
-              <h2 className="text-3xl font-serif font-bold text-[#1a3a6b] mb-8">Admissions Inquiry</h2>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[#1a3a6b] font-bold">Parent/Guardian Name *</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter full name" className="bg-gray-50 h-14 border-transparent focus:border-[#1a3a6b] rounded-xl px-5 text-lg" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[#1a3a6b] font-bold">Phone Number *</FormLabel>
-                          <FormControl>
-                            <Input placeholder="+91" className="bg-gray-50 h-14 border-transparent focus:border-[#1a3a6b] rounded-xl px-5 text-lg" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[#1a3a6b] font-bold">Email Address *</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="email@example.com" className="bg-gray-50 h-14 border-transparent focus:border-[#1a3a6b] rounded-xl px-5 text-lg" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="classApplied"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[#1a3a6b] font-bold">Class Applying For *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-gray-50 h-14 border-transparent focus:border-[#1a3a6b] rounded-xl px-5 text-lg">
-                                <SelectValue placeholder="Select a class" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="nursery">Pre-Primary (Nursery - UKG)</SelectItem>
-                              <SelectItem value="primary">Primary (Class 1 - 5)</SelectItem>
-                              <SelectItem value="middle">Middle (Class 6 - 8)</SelectItem>
-                              <SelectItem value="secondary">Secondary (Class 9 - 10)</SelectItem>
-                              <SelectItem value="senior">Senior Secondary (Class 11 - 12)</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[#1a3a6b] font-bold">Additional Message (Optional)</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="How can we help you?" 
-                            className="min-h-[150px] bg-gray-50 border-transparent focus:border-[#1a3a6b] rounded-xl p-5 text-lg resize-none" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <button 
-                    type="submit" 
-                    className="w-full bg-[#1a3a6b] text-white py-5 rounded-xl font-bold text-xl hover:bg-[#1a3a6b]/90 transition-all flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:-translate-y-1"
-                  >
-                    <Send size={24} />
-                    Submit Inquiry
-                  </button>
-                </form>
-              </Form>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Map Embed (Placeholder) */}
-      <div className="w-full h-[500px] bg-gray-200 relative mt-12">
-        <div className="absolute inset-0 bg-[#1a3a6b]/5 z-0"></div>
-        <div className="absolute inset-0 flex items-center justify-center text-gray-500 z-10">
-          <div className="text-center bg-white p-8 rounded-3xl shadow-xl">
-            <MapPin size={48} className="mx-auto mb-4 text-[#f5a623]" />
-            <p className="font-serif font-bold text-2xl text-[#1a3a6b] mb-2">Google Maps Integration</p>
-            <p className="text-gray-500 text-lg">MDN Global School, Kaithal</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── Form + Map ──────────────────────────────────────── */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+            {/* Form */}
+            <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
+                <span className="w-10 h-px bg-[#f5a623]" /> Admissions Inquiry
+              </p>
+              <h2 className="text-4xl font-serif font-bold text-[#1a3a6b] mb-3">Send Us a Message</h2>
+              <p className="text-gray-500 mb-10">Fill the form below and our admissions team will contact you within 24 hours.</p>
+
+              {submitted ? (
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+                  className="bg-green-50 border border-green-200 rounded-2xl p-10 text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle size={32} className="text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-green-800 mb-2">Message Sent!</h3>
+                  <p className="text-green-700">Thank you for reaching out. Our team will contact you within 24 hours.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Name & Phone */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Parent / Guardian Name *</label>
+                      <input name="name" value={form.name} onChange={handleChange} placeholder="e.g. Ramesh Kumar"
+                        className={`w-full border ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
+                      <input name="phone" value={form.phone} onChange={handleChange} placeholder="10-digit mobile no."
+                        className={`w-full border ${errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
+                      {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
+
+                  {/* Email & Class */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                      <input name="email" value={form.email} onChange={handleChange} placeholder="Optional"
+                        className={`w-full border ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Class Applying For *</label>
+                      <div className="relative">
+                        <select name="classApplying" value={form.classApplying} onChange={handleChange}
+                          className={`w-full border ${errors.classApplying ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all appearance-none bg-white`}>
+                          <option value="">Select class</option>
+                          {classOptions.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
+                      </div>
+                      {errors.classApplying && <p className="text-red-500 text-xs mt-1">{errors.classApplying}</p>}
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Your Message *</label>
+                    <textarea name="message" value={form.message} onChange={handleChange} rows={5}
+                      placeholder="Tell us about your child, any specific queries, or how we can help..."
+                      className={`w-full border ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all resize-none`} />
+                    {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+                  </div>
+
+                  <motion.button type="submit" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="w-full bg-[#1a3a6b] text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-[#0f2557] transition-colors shadow-lg shadow-[#1a3a6b]/20">
+                    <Send size={20} /> Send Inquiry
+                  </motion.button>
+                  <p className="text-gray-400 text-xs text-center">We respect your privacy. Your information will not be shared.</p>
+                </form>
+              )}
+            </motion.div>
+
+            {/* Map + Info */}
+            <motion.div variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
+              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              className="flex flex-col gap-8 sticky top-24">
+
+              {/* Map Embed Placeholder */}
+              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100 aspect-video bg-gradient-to-br from-[#1a3a6b] to-[#0f2557] flex flex-col items-center justify-center text-white relative">
+                <div className="absolute inset-0 opacity-10"
+                  style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+                <MapPin size={48} className="text-[#f5a623] mb-3" />
+                <h3 className="text-2xl font-serif font-bold mb-1">Find Us on the Map</h3>
+                <p className="text-white/60 text-sm text-center max-w-xs px-4">MDN Global School, Kaithal, Haryana – 136027</p>
+                <a
+                  href="https://maps.google.com/?q=Kaithal,+Haryana"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 bg-[#f5a623] text-[#1a3a6b] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-yellow-400 transition-all"
+                >
+                  Open in Google Maps
+                </a>
+              </div>
+
+              {/* Quick Info Box */}
+              <div className="bg-[#f8f9ff] border border-[#1a3a6b]/10 rounded-2xl p-7">
+                <h3 className="font-serif font-bold text-[#1a3a6b] text-xl mb-4">Admissions 2025–26</h3>
+                <ul className="space-y-3 text-sm text-gray-600">
+                  {[
+                    '📅 Admission forms available year-round',
+                    '📋 Entrance test for Class VI and above',
+                    '🎓 Merit + need-based scholarships available',
+                    '📞 Direct counselling sessions on Saturdays',
+                    '🏫 Campus tour available by appointment',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">{item}</li>
+                  ))}
+                </ul>
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Quick Contact</p>
+                  <a href="tel:+919876543210" className="text-[#1a3a6b] font-bold text-lg hover:text-[#f5a623] transition-colors">
+                    +91 98765 43210
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
