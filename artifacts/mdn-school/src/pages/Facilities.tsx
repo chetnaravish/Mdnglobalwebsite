@@ -117,8 +117,8 @@ export default function Facilities() {
           alt="MDN Global School Facilities"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/85 via-[#0a1c46]/50 to-[#0a1c46]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/65 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/32 to-[#0a1c46]/8" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/42 via-transparent to-transparent" />
 
         <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}

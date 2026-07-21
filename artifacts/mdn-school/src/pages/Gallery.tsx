@@ -153,8 +153,8 @@ export default function Gallery() {
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
         <img src="/images/events-annual.jpg" alt="MDN Global School Gallery"
           className="absolute inset-0 w-full h-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/90 via-[#0a1c46]/65 to-[#0a1c46]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/65 via-[#0a1c46]/38 to-[#0a1c46]/12" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/45 via-transparent to-transparent" />
 
         <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}

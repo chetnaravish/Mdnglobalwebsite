@@ -72,8 +72,8 @@ export default function Events() {
           alt="Events at MDN Global School"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/88 via-[#0a1c46]/55 to-[#500050]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/65 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/60 via-[#0a1c46]/35 to-[#500050]/8" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/42 via-transparent to-transparent" />
 
         <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}

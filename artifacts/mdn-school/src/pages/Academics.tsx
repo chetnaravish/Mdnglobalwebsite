@@ -243,8 +243,8 @@ export default function Academics() {
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
         <img src="/images/academics.jpg" alt="Academics at MDN Global School"
           className="absolute inset-0 w-full h-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/88 via-[#0a1c46]/55 to-[#1e56a0]/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/60 via-[#0a1c46]/35 to-[#1e56a0]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/40 via-transparent to-transparent" />
 
         <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}

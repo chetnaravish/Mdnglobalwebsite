@@ -57,9 +57,9 @@ export default function Home() {
           </div>
         ))}
         <div className="absolute inset-0 z-10"
-          style={{ background: 'linear-gradient(135deg, rgba(6,18,58,0.82) 0%, rgba(10,40,100,0.68) 50%, rgba(6,18,58,0.78) 100%)' }} />
+          style={{ background: 'linear-gradient(135deg, rgba(6,18,58,0.58) 0%, rgba(10,40,100,0.38) 50%, rgba(6,18,58,0.54) 100%)' }} />
         <div className="absolute inset-0 z-10"
-          style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(5,14,45,0.55) 100%)' }} />
+          style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(5,14,45,0.28) 100%)' }} />
         <div className="absolute top-0 right-0 z-10 w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%)', transform: 'translate(30%, -30%)' }} />
 
@@ -71,41 +71,37 @@ export default function Home() {
             <span className="text-white/90 text-xs font-semibold tracking-[0.18em] uppercase">CBSE Affiliated · Est. 2000 · Kaithal, Haryana</span>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }} className="mb-3 w-full">
-            <h1 className="font-serif font-black leading-[0.9] tracking-tight text-white"
-              style={{ fontSize: 'clamp(3.2rem, 11vw, 8rem)', textShadow: '0 6px 40px rgba(0,0,0,0.55)' }}>
-              MDN{' '}
-              <span style={{ background: 'linear-gradient(135deg, #f5d06a 0%, #f5a623 50%, #e07b10 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 24px rgba(245,166,35,0.5))' }}>
+          <motion.div initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }} className="mb-6 w-full">
+            {/* MDN — small elegant prefix */}
+            <p className="font-serif font-black tracking-[0.45em] text-white/65 uppercase mb-1"
+              style={{ fontSize: 'clamp(1rem, 2.8vw, 1.8rem)', textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
+              MDN
+            </p>
+            {/* GLOBAL SCHOOL — main headline */}
+            <h1 className="font-serif font-black leading-[0.88] tracking-tight"
+              style={{ fontSize: 'clamp(3.6rem, 12vw, 9.5rem)', textShadow: '0 6px 40px rgba(0,0,0,0.5)' }}>
+              <span style={{ background: 'linear-gradient(135deg, #f5d06a 0%, #f5a623 50%, #e07b10 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 28px rgba(245,166,35,0.55))' }}>
                 GLOBAL
               </span>
+              {' '}
+              <span className="text-white">SCHOOL</span>
             </h1>
-            <h1 className="font-serif font-black leading-[0.9] tracking-tight text-white"
-              style={{ fontSize: 'clamp(3.2rem, 11vw, 8rem)', textShadow: '0 6px 40px rgba(0,0,0,0.55)' }}>SCHOOL</h1>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.6 }}
-            className="flex items-center gap-4 mb-8">
-            <div className="h-px w-12 bg-white/35" />
-            <span className="font-serif font-bold tracking-[0.35em] text-white/80 uppercase" style={{ fontSize: 'clamp(1rem, 3.5vw, 1.7rem)' }}>
-              KAITHAL · HARYANA
-            </span>
-            <div className="h-px w-12 bg-white/35" />
+            {/* KAITHAL · HARYANA — location line */}
+            <div className="flex items-center gap-4 mt-5">
+              <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-[#f5a623]/70" />
+              <span className="font-serif font-semibold tracking-[0.32em] text-white/82 uppercase"
+                style={{ fontSize: 'clamp(0.85rem, 2.2vw, 1.25rem)', textShadow: '0 2px 10px rgba(0,0,0,0.45)' }}>
+                KAITHAL &nbsp;·&nbsp; HARYANA
+              </span>
+              <div className="h-px flex-1 max-w-[60px] bg-gradient-to-l from-transparent to-[#f5a623]/70" />
+            </div>
           </motion.div>
 
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85, duration: 0.7 }}
-            className="text-white/80 text-lg md:text-xl font-light italic mb-12 max-w-xl">
+            className="text-white/78 text-base md:text-lg font-light italic max-w-lg"
+            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
             Shaping Leaders · Nurturing Minds · Building Futures
           </motion.p>
-
-          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.6 }}
-            className="flex items-center gap-4">
-            <Link href="/about" className="inline-flex items-center gap-2 bg-white text-[#0a1c46] px-9 py-3.5 rounded-full text-base font-bold hover:bg-blue-50 transition-all hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(255,255,255,0.25)]">
-              Explore School <ChevronRight size={18} />
-            </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 border border-white/50 text-white px-9 py-3.5 rounded-full text-base font-semibold hover:bg-white/10 transition-all backdrop-blur-sm">
-              Contact Us
-            </Link>
-          </motion.div>
         </div>
 
         {/* Slide dots */}
