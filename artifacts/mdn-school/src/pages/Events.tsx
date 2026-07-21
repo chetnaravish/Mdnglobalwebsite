@@ -66,25 +66,27 @@ export default function Events() {
     <div className="flex flex-col">
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
-      <section
-        className="relative min-h-[65vh] flex items-end overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(to right, rgba(10,28,70,0.95) 40%, rgba(80,20,80,0.4) 100%), url('/images/events-annual.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="container mx-auto px-6 py-20 relative z-10">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
+        <img
+          src="/images/events-annual.jpg"
+          alt="Events at MDN Global School"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/88 via-[#0a1c46]/55 to-[#500050]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/65 via-transparent to-transparent" />
+
+        <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
-            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> School Calendar 2024–25
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             Events & <span className="text-[#f5a623]">Culture</span>
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
-            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             A vibrant calendar of cultural festivals, sports competitions, academic fairs, and national celebrations that make MDN Global School truly alive.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">

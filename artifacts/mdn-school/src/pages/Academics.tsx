@@ -45,25 +45,27 @@ export default function Academics() {
     <div className="flex flex-col">
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
-      <section
-        className="relative min-h-[65vh] flex items-end overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(120deg, rgba(10,28,70,0.95) 35%, rgba(30,86,160,0.6) 100%), url('/images/academics.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="container mx-auto px-6 py-20 relative z-10">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
+        <img
+          src="/images/academics.jpg"
+          alt="Academics at MDN Global School"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/88 via-[#0a1c46]/55 to-[#1e56a0]/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/60 via-transparent to-transparent" />
+
+        <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
-            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> CBSE Curriculum
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             Academic <span className="text-[#f5a623]">Excellence</span>
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
-            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             A rigorous CBSE curriculum enriched with modern pedagogy, smart technology, and passionate educators who inspire every learner.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">

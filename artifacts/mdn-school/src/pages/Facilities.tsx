@@ -111,25 +111,27 @@ export default function Facilities() {
     <div className="flex flex-col">
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
-      <section
-        className="relative min-h-[65vh] flex items-end overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(to top, rgba(10,28,70,0.95) 30%, rgba(10,28,70,0.5) 70%, rgba(10,28,70,0.3) 100%), url('/images/facilities-sports.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 30%',
-        }}
-      >
-        <div className="container mx-auto px-6 py-20 relative z-10">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
+        <img
+          src="/images/facilities-sports.jpg"
+          alt="MDN Global School Facilities"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/85 via-[#0a1c46]/50 to-[#0a1c46]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/65 via-transparent to-transparent" />
+
+        <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
-            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> World-Class Infrastructure
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             Our <span className="text-[#f5a623]">Facilities</span>
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
-            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             Modern infrastructure that supports every dimension of a child's growth — academic, physical, creative, and emotional.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">

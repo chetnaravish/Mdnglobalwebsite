@@ -22,26 +22,29 @@ export default function About() {
     <div className="flex flex-col">
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
-      <section
-        className="relative min-h-[60vh] flex items-end overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(to right, rgba(10,28,70,0.92) 40%, rgba(10,28,70,0.55) 100%), url('/images/about-school.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a1c46]/80" />
-        <div className="container mx-auto px-6 py-20 relative z-10">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
+        {/* Background image */}
+        <img
+          src="/images/about-school.jpg"
+          alt="MDN Global School Campus"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        {/* Lighter overlay so image is clearly visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/85 via-[#0a1c46]/60 to-[#0a1c46]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/70 via-transparent to-[#0a1c46]/30" />
+
+        <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
-            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-5">
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> Our Story
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-4">
+            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             About <span className="text-[#f5a623]">MDN Global</span>
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
-            className="text-white/75 text-lg md:text-xl max-w-2xl leading-relaxed">
+            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
