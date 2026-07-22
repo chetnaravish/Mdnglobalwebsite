@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   BookOpen, FlaskConical, Calculator, Microscope, TrendingUp,
-  GraduationCap, CheckCircle, ChevronRight, ChevronDown, Palette, Cpu, Globe, Music2
+  GraduationCap, CheckCircle, ChevronRight, Palette, Cpu, HeartPulse, Atom
 } from 'lucide-react';
 import { Link } from 'wouter';
 
@@ -11,231 +10,114 @@ const fadeUp = {
   visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } })
 };
 
-/* ── Stage data with expanded details ───────────────────── */
-type Stage = {
-  label: string; classes: string; age: string;
-  color: string; accent: string; border: string; textAccent: string;
-  desc: string;
-  highlights: string[];
-  activities: string[];
-  images: { src: string; caption: string; pos?: string }[];
-};
-
-const stages: Stage[] = [
+/* ── Stage card data ─────────────────────────────────────── */
+const stages = [
   {
     label: 'Pre-Primary',
     classes: 'Nursery – KG 2',
     age: '3–5 yrs',
-    color: 'bg-pink-50',
+    image: '/images/students-happy.jpg',
+    imagePos: 'center top',
     accent: 'bg-pink-500',
-    border: 'border-pink-200',
-    textAccent: 'text-pink-600',
-    desc: 'Our Pre-Primary programme sparks curiosity through play, song, stories, and hands-on exploration. Every activity is designed to build confidence, language skills, and a love for learning.',
-    highlights: ['Activity-based learning', 'Montessori-inspired approach', 'Safe & nurturing environment', 'All-day supervision'],
-    activities: ['Rhymes & Storytelling', 'Art & Craft', 'Sand & Water Play', 'Nature Walks', 'Music & Movement', 'Show & Tell'],
-    images: [
-      { src: '/images/students-happy.jpg', caption: 'Pre-Primary Students — Activity Time', pos: 'center top' },
-      { src: '/images/academics.jpg', caption: 'Play-Based Learning Classroom', pos: 'center center' },
-      { src: '/images/facilities-library.jpg', caption: 'Story Corner — Reading Together', pos: 'center top' },
-    ]
+    badgeBg: 'bg-pink-100',
+    badgeText: 'text-pink-700',
+    borderTop: 'border-t-4 border-pink-400',
+    desc: 'Our Pre-Primary programme sparks curiosity through play, song, stories, and hands-on exploration. Every activity builds confidence, language skills, and a lifelong love for learning in a safe and nurturing environment.',
+    highlights: ['Activity-based & Montessori-inspired learning', 'Safe, nurturing & fully supervised environment', 'Rhymes, storytelling, art & music', 'Sand & water play, nature walks'],
   },
   {
     label: 'Primary',
     classes: 'Class I – V',
     age: '6–10 yrs',
-    color: 'bg-blue-50',
+    image: '/images/academics.jpg',
+    imagePos: 'center center',
     accent: 'bg-blue-500',
-    border: 'border-blue-200',
-    textAccent: 'text-blue-600',
-    desc: 'The Primary stage builds a strong academic foundation in English, Hindi, Mathematics, EVS, and General Knowledge. Child-centred teaching ensures every student learns at their own pace.',
-    highlights: ['CBSE curriculum', 'Child-centred pedagogy', 'Activity-based maths & science', 'Continuous Assessment'],
-    activities: ['Science Experiments', 'Group Projects', 'Spell Bee', 'Math Olympiad Prep', 'Art Integration', 'Morning Assembly'],
-    images: [
-      { src: '/images/academics.jpg', caption: 'Primary Classroom — Interactive Session', pos: 'center center' },
-      { src: '/images/facilities-lab.jpg', caption: 'Fun with Science Experiments', pos: 'center center' },
-      { src: '/images/students-happy.jpg', caption: 'Students Presenting Group Projects', pos: 'center center' },
-    ]
+    badgeBg: 'bg-blue-100',
+    badgeText: 'text-blue-700',
+    borderTop: 'border-t-4 border-blue-400',
+    desc: 'The Primary stage builds a strong academic foundation in English, Hindi, Mathematics, EVS, and General Knowledge. Child-centred teaching ensures every student learns at their own pace through engaging, activity-based methods.',
+    highlights: ['CBSE curriculum with child-centred pedagogy', 'Activity-based Maths & Science', 'Continuous & comprehensive assessment', 'Spell Bee, Math Olympiad & group projects'],
   },
   {
     label: 'Middle School',
     classes: 'Class VI – VIII',
     age: '11–13 yrs',
-    color: 'bg-purple-50',
+    image: '/images/facilities-lab.jpg',
+    imagePos: 'center center',
     accent: 'bg-purple-500',
-    border: 'border-purple-200',
-    textAccent: 'text-purple-600',
-    desc: 'Middle School introduces deeper subject exploration — labs, research projects, debate, and co-curricular activities that develop critical thinking, teamwork, and confidence.',
-    highlights: ['Subject specialisation begins', 'Lab-based practical sessions', 'Project-based learning', 'Leadership opportunities'],
-    activities: ['Science & Maths Labs', 'Debate Club', 'Quiz Competitions', 'Social Science Projects', 'Sports Training', 'Eco Club'],
-    images: [
-      { src: '/images/facilities-lab.jpg', caption: 'Middle School — Science Lab', pos: 'center center' },
-      { src: '/images/academics.jpg', caption: 'Debate & Public Speaking Session', pos: 'center top' },
-      { src: '/images/students-happy.jpg', caption: 'Group Discussion & Teamwork', pos: 'center center' },
-    ]
+    badgeBg: 'bg-purple-100',
+    badgeText: 'text-purple-700',
+    borderTop: 'border-t-4 border-purple-400',
+    desc: 'Middle School deepens subject exploration through labs, research projects, debate, and co-curricular activities that develop critical thinking, teamwork, and self-confidence in every student.',
+    highlights: ['Subject specialisation & lab-based practicals', 'Project-based & collaborative learning', 'Debate club, quiz & science competitions', 'Leadership and Eco Club opportunities'],
   },
   {
     label: 'Secondary',
     classes: 'Class IX – X',
     age: '14–15 yrs',
-    color: 'bg-amber-50',
+    image: '/images/facilities-library.jpg',
+    imagePos: 'center center',
     accent: 'bg-amber-500',
-    border: 'border-amber-200',
-    textAccent: 'text-amber-600',
-    desc: 'Classes IX and X prepare students for CBSE Board Examinations with focused academics, regular mock tests, individual counselling, and career awareness sessions.',
-    highlights: ['CBSE Board prep', 'Mock tests every month', 'Personal academic counselling', 'NTSE / Olympiad coaching'],
-    activities: ['Board Exam Preparation', 'Mock Test Series', 'Career Counselling', 'Olympiad Training', 'Personality Development', 'Social Internship'],
-    images: [
-      { src: '/images/academics.jpg', caption: 'Class X Board Preparation', pos: 'center center' },
-      { src: '/images/facilities-library.jpg', caption: 'Students Studying in the Library', pos: 'center center' },
-      { src: '/images/facilities-lab.jpg', caption: 'Practical Exam Practice', pos: 'center center' },
-    ]
+    badgeBg: 'bg-amber-100',
+    badgeText: 'text-amber-700',
+    borderTop: 'border-t-4 border-amber-400',
+    desc: 'Classes IX and X prepare students for CBSE Board Examinations with focused academics, regular mock tests, individual counselling, and career awareness sessions to set a clear path ahead.',
+    highlights: ['Rigorous CBSE Board preparation', 'Monthly mock test series', 'Personal academic & career counselling', 'NTSE & Olympiad coaching'],
   },
   {
     label: 'Senior Secondary',
     classes: 'Class XI – XII',
     age: '16–17 yrs',
-    color: 'bg-green-50',
-    accent: 'bg-green-500',
-    border: 'border-green-200',
-    textAccent: 'text-green-600',
-    desc: 'Senior Secondary offers three specialised streams — Science, Commerce, and Humanities — with college guidance, competitive exam coaching, and mentorship from experienced faculty.',
-    highlights: ['Science, Commerce, Humanities streams', 'JEE / NEET / CA Foundation coaching', 'College admission guidance', '100% Board pass rate (5 years)'],
-    activities: ['JEE / NEET Mock Tests', 'College Application Workshops', 'Guest Lectures', 'Research Projects', 'Leadership Council', 'Industry Visits'],
-    images: [
-      { src: '/images/academics.jpg', caption: 'Senior Secondary — Smart Classroom', pos: 'center center' },
-      { src: '/images/facilities-lab.jpg', caption: 'Advanced Science Lab — Class XII', pos: 'center center' },
-      { src: '/images/students-happy.jpg', caption: 'Class XII Graduation Celebration', pos: 'center top' },
-    ]
+    image: '/images/academics.jpg',
+    imagePos: 'center top',
+    accent: 'bg-green-600',
+    badgeBg: 'bg-green-100',
+    badgeText: 'text-green-700',
+    borderTop: 'border-t-4 border-green-500',
+    desc: 'Senior Secondary offers three specialised streams — Medical, Non-Medical, and Commerce — with college guidance, competitive exam coaching (JEE / NEET), and mentorship from highly experienced faculty.',
+    highlights: ['Medical, Non-Medical & Commerce streams', 'JEE / NEET / CA Foundation coaching', 'College & career admission guidance', '100% Board pass rate for 5 consecutive years'],
   },
 ];
 
+/* ── Stream data ─────────────────────────────────────────── */
 const streams = [
   {
-    name: 'Science', icon: Microscope, color: 'from-blue-600 to-blue-800',
-    subjects: ['Physics', 'Chemistry', 'Biology / Mathematics', 'English', 'Physical Education / Computer Sc.'],
-    careers: ['Engineering', 'Medicine', 'Research', 'Technology']
+    name: 'Medical',
+    tagline: 'For future doctors & life scientists',
+    icon: HeartPulse,
+    color: 'from-rose-600 to-rose-800',
+    subjects: ['Physics', 'Chemistry', 'Biology', 'English', 'Physical Education / Computer Sc.'],
+    careers: ['Medicine (MBBS)', 'Pharmacy', 'Biotechnology', 'Research & Life Sciences'],
   },
   {
-    name: 'Commerce', icon: TrendingUp, color: 'from-emerald-600 to-emerald-800',
+    name: 'Non-Medical',
+    tagline: 'For future engineers & technologists',
+    icon: Atom,
+    color: 'from-blue-600 to-blue-800',
+    subjects: ['Physics', 'Chemistry', 'Mathematics', 'English', 'Physical Education / Computer Sc.'],
+    careers: ['Engineering (JEE)', 'Architecture', 'Data Science', 'Technology & Research'],
+  },
+  {
+    name: 'Commerce',
+    tagline: 'For future business leaders & CAs',
+    icon: TrendingUp,
+    color: 'from-emerald-600 to-emerald-800',
     subjects: ['Accountancy', 'Business Studies', 'Economics', 'Mathematics / Informatics', 'English'],
-    careers: ['CA / MBA', 'Banking', 'Entrepreneurship', 'Finance']
-  },
-  {
-    name: 'Humanities', icon: Globe, color: 'from-amber-600 to-amber-700',
-    subjects: ['History', 'Political Science', 'Geography / Psychology', 'Sociology', 'English / Hindi'],
-    careers: ['Civil Services', 'Law', 'Journalism', 'Social Work']
+    careers: ['CA / MBA', 'Banking & Finance', 'Entrepreneurship', 'Management'],
   },
 ];
 
+/* ── Teaching methods ────────────────────────────────────── */
 const methods = [
-  { icon: BookOpen,  title: 'Smart Classrooms',          desc: 'Every classroom features interactive whiteboards, HD projectors, and Wi-Fi for immersive, tech-enabled lessons.' },
-  { icon: FlaskConical, title: 'Lab-Based Learning',     desc: 'Hands-on experiments in Physics, Chemistry, Biology, and Computer labs bridge theory and real-world application.' },
-  { icon: Calculator,   title: 'Conceptual Mathematics', desc: 'A structured Maths programme builds strong fundamentals through problem-solving and daily application exercises.' },
-  { icon: GraduationCap, title: 'Board Excellence',      desc: 'Dedicated revision cycles, full-length mock exams, and one-on-one mentoring for Class X & XII board success.' },
-  { icon: Cpu,          title: 'Digital Literacy',        desc: 'Coding, AI basics, and digital tools integrated from Class VI — preparing students for the future of work.' },
-  { icon: Palette,      title: 'Arts Integration',        desc: 'Creative subjects woven into academics so every learner — not just STEM achievers — has space to shine.' },
+  { icon: BookOpen,     title: 'Smart Classrooms',      desc: 'Every classroom features interactive whiteboards, HD projectors, and Wi-Fi for immersive, tech-enabled lessons.' },
+  { icon: FlaskConical, title: 'Lab-Based Learning',    desc: 'Hands-on experiments in Physics, Chemistry, Biology, and Computer labs bridge theory and real-world application.' },
+  { icon: Calculator,   title: 'Conceptual Mathematics',desc: 'A structured Maths programme builds strong fundamentals through problem-solving and daily application exercises.' },
+  { icon: GraduationCap,title: 'Board Excellence',      desc: 'Dedicated revision cycles, full-length mock exams, and one-on-one mentoring for Class X & XII board success.' },
+  { icon: Cpu,          title: 'Digital Literacy',      desc: 'Coding, AI basics, and digital tools integrated from Class VI — preparing students for the future of work.' },
+  { icon: Palette,      title: 'Arts Integration',      desc: 'Creative subjects woven into academics so every learner — not just STEM achievers — has space to shine.' },
 ];
-
-/* ── Expandable Stage Card ───────────────────────────────── */
-function StageCard({ stage, index, isOpen, onToggle }: {
-  stage: Stage; index: number; isOpen: boolean; onToggle: () => void;
-}) {
-  return (
-    <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={index * 0.12}
-      className={`rounded-2xl border-2 overflow-hidden transition-all duration-300 ${
-        isOpen ? `${stage.border} shadow-xl` : `${stage.border} hover:shadow-lg`
-      } ${stage.color}`}
-    >
-      {/* Header — always visible, clickable */}
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center gap-5 p-6 text-left group focus:outline-none"
-        aria-expanded={isOpen}
-      >
-        <div className={`${stage.accent} text-white rounded-xl p-3 shrink-0 transition-transform duration-200 ${isOpen ? 'scale-110' : 'group-hover:scale-110'}`}>
-          <GraduationCap size={24} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-3 mb-1">
-            <h3 className="text-xl font-serif font-bold text-[#1a3a6b]">{stage.label}</h3>
-            <span className="bg-white border border-gray-200 text-gray-600 text-xs px-3 py-1 rounded-full font-semibold">{stage.classes}</span>
-            <span className="text-gray-400 text-sm">· Ages {stage.age}</span>
-          </div>
-          <p className="text-gray-600 text-sm leading-relaxed line-clamp-1">{stage.desc}</p>
-        </div>
-        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}
-          className={`shrink-0 ${stage.textAccent}`}>
-          <ChevronDown size={22} />
-        </motion.div>
-      </button>
-
-      {/* Expanded content */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-7 border-t border-white/80">
-              <div className="grid lg:grid-cols-2 gap-8 mt-6">
-
-                {/* Left — description + highlights + activities */}
-                <div>
-                  <p className="text-gray-700 leading-relaxed mb-6">{stage.desc}</p>
-
-                  <div className="mb-5">
-                    <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-3">Key Highlights</p>
-                    <ul className="space-y-2">
-                      {stage.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-gray-700 text-sm font-medium">
-                          <CheckCircle size={15} className={`${stage.textAccent} shrink-0 mt-0.5`} /> {h}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-3">Activities & Programmes</p>
-                    <div className="flex flex-wrap gap-2">
-                      {stage.activities.map((a, i) => (
-                        <span key={i} className="bg-white border border-gray-200 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">{a}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right — photo grid */}
-                <div className="grid grid-cols-3 gap-3">
-                  {stage.images.map((img, i) => (
-                    <div key={i} className={`rounded-xl overflow-hidden shadow-md bg-gray-100 ${i === 0 ? 'col-span-3 aspect-video' : 'aspect-square'}`}>
-                      <img src={img.src} alt={img.caption}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-400"
-                        style={{ objectPosition: img.pos || 'center' }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-6 flex justify-end">
-                <Link href="/contact"
-                  className={`inline-flex items-center gap-2 ${stage.accent} text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:opacity-90 transition-opacity shadow-md`}>
-                  Enquire About Admission <ChevronRight size={15} />
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
 
 export default function Academics() {
-  const [openStage, setOpenStage] = useState<number | null>(null);
-
   return (
     <div className="flex flex-col">
 
@@ -267,7 +149,7 @@ export default function Academics() {
         </div>
       </section>
 
-      {/* ── Academic Structure — Expandable ──────────────────── */}
+      {/* ── Academic Structure — Stage Cards ─────────────────── */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-5">
@@ -275,13 +157,14 @@ export default function Academics() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Our Academic Structure</h2>
             <p className="text-gray-500 max-w-xl mx-auto text-lg">Every stage carefully crafted for a child's developmental needs</p>
           </motion.div>
-          {/* ── Key Stats ── */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10">
+
+          {/* Stats row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16">
             {[
-              { num: 'CBSE', label: 'Board Affiliation', sub: 'National Curriculum' },
-              { num: 'KG–XII', label: 'Classes Offered', sub: 'Complete Journey' },
-              { num: '100%', label: 'Pass Rate', sub: 'Consistent 5 Years' },
-              { num: '150+', label: 'Qualified Faculty', sub: 'Experienced Educators' },
+              { num: 'CBSE',  label: 'Board Affiliation',  sub: 'National Curriculum' },
+              { num: 'KG–XII',label: 'Classes Offered',    sub: 'Complete Journey' },
+              { num: '100%',  label: 'Pass Rate',          sub: 'Consistent 5 Years' },
+              { num: '150+',  label: 'Qualified Faculty',  sub: 'Experienced Educators' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
                 className="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -292,16 +175,64 @@ export default function Academics() {
             ))}
           </div>
 
-          <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="text-center text-sm text-gray-400 mb-10 flex items-center justify-center gap-2">
-            <ChevronDown size={15} className="animate-bounce" /> Click any stage to explore photos, activities, and highlights
-          </motion.p>
-
-          <div className="flex flex-col gap-4 max-w-4xl mx-auto">
+          {/* Stage cards grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {stages.map((stage, i) => (
-              <StageCard key={i} stage={stage} index={i}
-                isOpen={openStage === i}
-                onToggle={() => setOpenStage(openStage === i ? null : i)} />
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i * 0.1}
+                className={`bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col ${stage.borderTop}`}
+              >
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden">
+                  <img
+                    src={stage.image}
+                    alt={stage.label}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    style={{ objectPosition: stage.imagePos }}
+                  />
+                  {/* Overlay badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className={`${stage.badgeBg} ${stage.badgeText} text-xs font-bold px-3 py-1.5 rounded-full shadow-sm`}>
+                      {stage.classes}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`${stage.accent} text-white rounded-xl p-2 shrink-0`}>
+                      <GraduationCap size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-serif font-black text-[#1a3a6b] leading-tight">{stage.label}</h3>
+                      <p className="text-gray-400 text-xs font-semibold">Ages {stage.age}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 text-sm leading-relaxed mb-5">{stage.desc}</p>
+
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {stage.highlights.map((h, j) => (
+                      <li key={j} className="flex items-start gap-2 text-gray-700 text-sm">
+                        <CheckCircle size={14} className="text-green-500 shrink-0 mt-0.5" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link href="/contact"
+                    className={`mt-auto inline-flex items-center gap-2 ${stage.accent} text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity self-start shadow-sm`}>
+                    Enquire <ChevronRight size={14} />
+                  </Link>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -315,14 +246,14 @@ export default function Academics() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Choose Your Stream</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Three well-structured streams to align your education with your career aspirations</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {streams.map((stream, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.15}
                 className="rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
                 <div className={`bg-gradient-to-br ${stream.color} p-10 text-white`}>
                   <stream.icon size={40} className="mb-4 opacity-90" />
-                  <h3 className="text-3xl font-serif font-black mb-2">{stream.name}</h3>
-                  <p className="text-white/70 text-sm">Class XI – XII · CBSE</p>
+                  <h3 className="text-3xl font-serif font-black mb-1">{stream.name}</h3>
+                  <p className="text-white/70 text-sm">{stream.tagline}</p>
                 </div>
                 <div className="p-8 bg-white border border-gray-100">
                   <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">Subjects</p>
@@ -358,7 +289,7 @@ export default function Academics() {
             {methods.map((m, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.12}
                 className="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex gap-5 group">
-                <div className="w-13 h-13 w-12 h-12 bg-[#1a3a6b]/08 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#1a3a6b] transition-all">
+                <div className="w-12 h-12 bg-[#1a3a6b]/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#1a3a6b] transition-all">
                   <m.icon size={26} className="text-[#1a3a6b] group-hover:text-white transition-colors" />
                 </div>
                 <div>
@@ -407,36 +338,6 @@ export default function Academics() {
                 Enquire About Admissions
               </Link>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Co-Curricular ────────────────────────────────────── */}
-      <section className="py-24 bg-[#1a3a6b] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '48px 48px' }} />
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
-            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Beyond the Classroom</p>
-            <h2 className="text-4xl font-serif font-bold text-white mb-4">Co-Curricular Excellence</h2>
-            <p className="text-white/60 max-w-xl mx-auto">We believe great education happens everywhere — on stage, on the field, and in the community</p>
-          </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: Music2, title: 'Performing Arts', desc: 'Classical music, dance, drama, and choir programmes taught by trained professionals.' },
-              { icon: Palette, title: 'Visual Arts', desc: 'Drawing, painting, sculpture, and digital arts with a dedicated studio and annual exhibitions.' },
-              { icon: Globe, title: 'MUN & Debate', desc: 'Model United Nations, elocution, and debate competitions that build global citizens.' },
-              { icon: GraduationCap, title: 'Leadership Clubs', desc: 'Eco Club, Student Council, and community service programmes that develop responsible leaders.' },
-            ].map((item, i) => (
-              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.12}
-                className="bg-white/10 border border-white/15 rounded-2xl p-7 hover:bg-white/15 transition-all duration-300">
-                <div className="w-12 h-12 bg-[#f5a623] rounded-xl flex items-center justify-center mb-5">
-                  <item.icon size={24} className="text-[#1a3a6b]" />
-                </div>
-                <h3 className="text-lg font-serif font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-white/65 text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
