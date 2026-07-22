@@ -267,25 +267,6 @@ export default function Academics() {
         </div>
       </section>
 
-      {/* ── Stats Strip ──────────────────────────────────────── */}
-      <section className="py-14 bg-[#1a3a6b]">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { num: 'CBSE', label: 'Board Affiliation' },
-              { num: 'KG–XII', label: 'Classes Offered' },
-              { num: '100%', label: 'Pass Rate (5 Yrs)' },
-              { num: '150+', label: 'Qualified Faculty' },
-            ].map((s, i) => (
-              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.15}>
-                <div className="text-3xl md:text-4xl font-serif font-black text-[#f5a623] mb-2">{s.num}</div>
-                <div className="text-white/60 text-sm font-semibold uppercase tracking-wider">{s.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Academic Structure — Expandable ──────────────────── */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
@@ -294,6 +275,23 @@ export default function Academics() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Our Academic Structure</h2>
             <p className="text-gray-500 max-w-xl mx-auto text-lg">Every stage carefully crafted for a child's developmental needs</p>
           </motion.div>
+          {/* ── Key Stats ── */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10">
+            {[
+              { num: 'CBSE', label: 'Board Affiliation', sub: 'National Curriculum' },
+              { num: 'KG–XII', label: 'Classes Offered', sub: 'Complete Journey' },
+              { num: '100%', label: 'Pass Rate', sub: 'Consistent 5 Years' },
+              { num: '150+', label: 'Qualified Faculty', sub: 'Experienced Educators' },
+            ].map((s, i) => (
+              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
+                className="bg-white rounded-2xl p-5 text-center shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div className="text-2xl md:text-3xl font-serif font-black text-[#1a3a6b] mb-1">{s.num}</div>
+                <div className="text-[#f5a623] text-xs font-black uppercase tracking-wider mb-0.5">{s.label}</div>
+                <div className="text-gray-400 text-xs">{s.sub}</div>
+              </motion.div>
+            ))}
+          </div>
+
           <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
             className="text-center text-sm text-gray-400 mb-10 flex items-center justify-center gap-2">
             <ChevronDown size={15} className="animate-bounce" /> Click any stage to explore photos, activities, and highlights

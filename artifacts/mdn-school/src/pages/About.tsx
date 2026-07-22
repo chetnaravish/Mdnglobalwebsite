@@ -18,12 +18,41 @@ const fadeRight = {
 
 /* ── Milestone Timeline ─────────────────────────────────── */
 const milestones = [
-  { year: '2000', title: 'School Founded', desc: 'MDN Global School established in Kaithal with a vision of accessible, quality education.' },
-  { year: '2005', title: 'CBSE Affiliation', desc: 'Received full CBSE affiliation, marking our commitment to national academic standards.' },
-  { year: '2010', title: '1000 Students', desc: 'Crossed 1,000 students enrolled — a milestone that proved the community\'s trust in us.' },
-  { year: '2015', title: 'Senior Secondary', desc: 'Launched Class XI–XII with Science, Commerce, and Humanities streams.' },
-  { year: '2020', title: 'Smart Campus', desc: 'Completed full campus digitisation with smart classrooms and high-speed internet.' },
-  { year: '2024', title: '2000+ Students', desc: 'Today we proudly serve 2,000+ students, 150+ faculty, and thousands of alumni.' },
+  {
+    year: '2000',
+    title: 'School Founded',
+    desc: 'MDN Global School opened its doors in Kaithal, Haryana, with 120 students and 15 dedicated teachers. Built on the belief that every child deserves quality education, the school quickly earned the trust of families across the region.',
+  },
+  {
+    year: '2004',
+    title: 'CBSE Affiliation Granted',
+    desc: 'After meeting rigorous national standards set by the Central Board of Secondary Education, MDN Global School received its official CBSE affiliation — a landmark achievement marking our commitment to structured, nationally recognised education.',
+  },
+  {
+    year: '2008',
+    title: 'State-Level Academic Honours',
+    desc: 'MDN students began winning awards at state-level Science Olympiad, Mathematics Olympiad, and inter-school debate competitions, putting the school firmly on Haryana\'s academic map and inspiring a culture of excellence.',
+  },
+  {
+    year: '2012',
+    title: 'Modern Campus Inaugurated',
+    desc: 'A transformative expansion: a new multi-storey campus with 40+ classrooms, fully equipped Physics, Chemistry and Biology labs, a 15,000-book library, a computer lab with 100 workstations, and sports facilities across 10 acres of green grounds.',
+  },
+  {
+    year: '2015',
+    title: 'Senior Secondary (XI–XII) Launched',
+    desc: 'Class XI and XII introduced with three well-structured streams — Science, Commerce, and Humanities. For the first time, students in Kaithal could complete their entire schooling journey at a single institution without relocating.',
+  },
+  {
+    year: '2018',
+    title: 'Smart Classroom Initiative',
+    desc: 'Every classroom upgraded with interactive digital boards, HD projectors, and high-speed Wi-Fi under our Smart Campus Initiative — fully embracing 21st-century pedagogy and technology-integrated learning for all students from Nursery to Class XII.',
+  },
+  {
+    year: '2024',
+    title: '25 Years of Excellence',
+    desc: 'Celebrating 25 years of shaping young minds, MDN Global School proudly serves 2,000+ students with 150+ qualified faculty members, a consistent 100% board pass rate, and thousands of alumni contributing to society across India and abroad.',
+  },
 ];
 
 /* ── Vision & Mission card ─────────────────────────────── */
@@ -331,28 +360,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── CTA Banner ──────────────────────────────────────── */}
-      <section className="py-20 bg-[#f5a623]">
-        <div className="container mx-auto px-6 text-center">
-          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif font-black text-[#1a3a6b] mb-4">
-            Ready to Be Part of Our Story?
-          </motion.h2>
-          <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
-            className="text-[#1a3a6b]/75 text-lg mb-8 max-w-xl mx-auto">
-            Admissions open for 2025–26. Take the first step today.
-          </motion.p>
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
-            className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="bg-[#1a3a6b] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#0f2557] transition-all hover:scale-105 shadow-xl">
-              Apply Now
-            </Link>
-            <Link href="/academics" className="bg-white/20 text-[#1a3a6b] border-2 border-[#1a3a6b]/30 px-10 py-4 rounded-full font-bold text-lg hover:bg-white/40 transition-all">
-              Explore Academics
-            </Link>
-          </motion.div>
-        </div>
-      </section>
 
     </div>
   );

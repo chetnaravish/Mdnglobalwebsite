@@ -63,7 +63,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 z-10 w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%)', transform: 'translate(30%, -30%)' }} />
 
-        <div className="relative z-20 w-full max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+        <div className="relative z-20 w-full max-w-6xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-10vh)' }}>
 
           {/* School Name — single line */}
           <motion.h1

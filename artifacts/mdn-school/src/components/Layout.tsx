@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -127,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <footer className="bg-[#1a3a6b] text-white pt-16 pb-8">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
             <div>
               <div className="mb-6">
                 <span className="text-3xl font-serif font-bold block mb-1">MDN</span>
@@ -156,27 +156,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             <div>
-              <h3 className="text-lg font-serif font-bold mb-6 border-b border-white/20 pb-2 inline-block">Quick Links</h3>
-              <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.path}>
-                    <Link href={link.path} className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-serif font-bold mb-6 border-b border-white/20 pb-2 inline-block">Academics</h3>
-              <ul className="space-y-3">
-                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Pre-Primary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Primary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Middle School</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Secondary</Link></li>
-                <li><Link href="/academics" className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>Senior Secondary</Link></li>
+              <h3 className="text-lg font-serif font-bold mb-6 border-b border-white/20 pb-2 inline-block">Follow Us</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                    className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-3 group">
+                    <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#f5a623] group-hover:text-[#1a3a6b] transition-colors shrink-0">
+                      <Facebook size={15} />
+                    </span>
+                    <span>Facebook</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                    className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-3 group">
+                    <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#f5a623] group-hover:text-[#1a3a6b] transition-colors shrink-0">
+                      <Instagram size={15} />
+                    </span>
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://mdnglobalschool.com" target="_blank" rel="noopener noreferrer"
+                    className="text-white/70 hover:text-[#f5a623] transition-colors flex items-center gap-3 group">
+                    <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#f5a623] group-hover:text-[#1a3a6b] transition-colors shrink-0">
+                      <Globe size={15} />
+                    </span>
+                    <span>Official Website</span>
+                  </a>
+                </li>
               </ul>
             </div>
 
