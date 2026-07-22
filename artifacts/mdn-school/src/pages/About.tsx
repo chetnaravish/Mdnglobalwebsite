@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, BookOpen, Heart, Star, Users, Target, Eye, Lightbulb, Shield, CheckCircle } from 'lucide-react';
 import { Link } from 'wouter';
