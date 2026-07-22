@@ -63,45 +63,36 @@ export default function Home() {
         <div className="absolute top-0 right-0 z-10 w-[600px] h-[600px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%)', transform: 'translate(30%, -30%)' }} />
 
-        <div className="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-          <motion.div initial={{ opacity: 0, y: -18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            className="inline-flex items-center gap-2.5 mb-10 px-5 py-2 rounded-full border border-white/25"
-            style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(10px)' }}>
+        <div className="relative z-20 w-full max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+
+          {/* School Name — single line */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif font-black text-white text-center mb-10 whitespace-nowrap"
+            style={{
+              fontSize: 'clamp(1.8rem, 5.6vw, 5.4rem)',
+              letterSpacing: '0.12em',
+              textShadow: '0 4px 32px rgba(0,0,0,0.6)',
+              lineHeight: 1,
+            }}
+          >
+            MDN GLOBAL SCHOOL
+          </motion.h1>
+
+          {/* CBSE Affiliated */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.8 }}
+            className="inline-flex items-center gap-3 px-7 py-2.5 rounded-full border border-white/30"
+            style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(12px)' }}
+          >
             <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-pulse" />
-            <span className="text-white/90 text-xs font-semibold tracking-[0.18em] uppercase">CBSE Affiliated · Est. 2000 · Kaithal, Haryana</span>
+            <span className="text-white font-bold tracking-[0.22em] uppercase text-sm">CBSE AFFILIATED</span>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }} className="mb-6 w-full">
-            {/* MDN — small elegant prefix */}
-            <p className="font-serif font-black tracking-[0.45em] text-white/65 uppercase mb-1"
-              style={{ fontSize: 'clamp(1rem, 2.8vw, 1.8rem)', textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
-              MDN
-            </p>
-            {/* GLOBAL SCHOOL — main headline */}
-            <h1 className="font-serif font-black leading-[0.88] tracking-tight"
-              style={{ fontSize: 'clamp(3.6rem, 12vw, 9.5rem)', textShadow: '0 6px 40px rgba(0,0,0,0.5)' }}>
-              <span style={{ background: 'linear-gradient(135deg, #f5d06a 0%, #f5a623 50%, #e07b10 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 28px rgba(245,166,35,0.55))' }}>
-                GLOBAL
-              </span>
-              {' '}
-              <span className="text-white">SCHOOL</span>
-            </h1>
-            {/* KAITHAL · HARYANA — location line */}
-            <div className="flex items-center gap-4 mt-5">
-              <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-[#f5a623]/70" />
-              <span className="font-serif font-semibold tracking-[0.32em] text-white/82 uppercase"
-                style={{ fontSize: 'clamp(0.85rem, 2.2vw, 1.25rem)', textShadow: '0 2px 10px rgba(0,0,0,0.45)' }}>
-                KAITHAL &nbsp;·&nbsp; HARYANA
-              </span>
-              <div className="h-px flex-1 max-w-[60px] bg-gradient-to-l from-transparent to-[#f5a623]/70" />
-            </div>
-          </motion.div>
-
-          <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85, duration: 0.7 }}
-            className="text-white/78 text-base md:text-lg font-light italic max-w-lg"
-            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
-            Shaping Leaders · Nurturing Minds · Building Futures
-          </motion.p>
         </div>
 
         {/* Slide dots */}
