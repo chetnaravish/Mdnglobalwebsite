@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  BookOpen, FlaskConical, Calculator, Globe, Microscope, TrendingUp,
-  GraduationCap, CheckCircle, ChevronRight, ChevronDown, Palette, Music2, Cpu
+  BookOpen, FlaskConical, Calculator, Microscope, TrendingUp,
+  GraduationCap, CheckCircle, ChevronRight, Palette, Cpu
 } from 'lucide-react';
 import { Link } from 'wouter';
 
