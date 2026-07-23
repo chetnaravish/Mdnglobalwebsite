@@ -114,26 +114,22 @@ export default function Home() {
           style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(5,14,45,0.28) 100%)' }} />
 
         {/* Content */}
-        <div className="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-6vh)' }}>
+        <div className="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-8vh)' }}>
 
-          {/* Location badge */}
-          <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 text-white/80 text-xs font-semibold tracking-wider"
-            style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.18)' }}>
-            <MapPin size={12} className="text-[#f5a623]" />
-            Kaithal, Haryana
-            <span className="w-px h-3 bg-white/30" />
-            Est. 2000
+          {/* CBSE badge */}
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
+            className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> CBSE Affiliated · Kaithal, Haryana
           </motion.div>
 
           {/* School Name */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-black text-white text-center whitespace-nowrap mb-4"
+            transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif font-black text-white text-center whitespace-nowrap mb-5"
             style={{
-              fontSize: 'clamp(1.8rem, 5.4vw, 5.2rem)',
+              fontSize: 'clamp(1.8rem, 5.6vw, 5.4rem)',
               letterSpacing: '0.12em',
               textShadow: '0 4px 32px rgba(0,0,0,0.6)',
               lineHeight: 1,
@@ -142,65 +138,23 @@ export default function Home() {
             MDN GLOBAL SCHOOL
           </motion.h1>
 
-          {/* Tagline */}
+          {/* 1-2 line description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="text-white/80 text-lg md:text-xl font-light tracking-wide mb-6 max-w-xl"
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed"
             style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
           >
-            Shaping Tomorrow's Leaders —<br className="hidden md:block" /> Where Excellence Meets Character
+            Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
 
-          {/* CBSE pill + quick info */}
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.8 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/30"
-              style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(12px)' }}>
-              <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-pulse" />
-              <span className="text-white font-bold tracking-[0.18em] uppercase text-xs">CBSE Affiliated</span>
-            </div>
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20"
-              style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)' }}>
-              <GraduationCap size={13} className="text-[#f5a623]" />
-              <span className="text-white/80 font-semibold text-xs">Nursery to Class XII</span>
-            </div>
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20"
-              style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)' }}>
-              <Trophy size={13} className="text-[#f5a623]" />
-              <span className="text-white/80 font-semibold text-xs">100% Board Results</span>
-            </div>
-          </motion.div>
-
-          {/* CTA buttons */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }}
-            className="flex flex-col sm:flex-row gap-3">
-            <Link href="/contact"
-              className="inline-flex items-center gap-2 bg-[#f5a623] text-[#1a3a6b] px-8 py-3.5 rounded-full font-black text-sm hover:bg-amber-400 transition-all hover:scale-105 shadow-xl shadow-amber-500/30">
-              Apply for Admission <ChevronRight size={16} />
-            </Link>
-            <Link href="/about"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white border border-white/30 hover:bg-white/15 transition-all"
-              style={{ backdropFilter: 'blur(10px)' }}>
-              Explore Our School <ArrowRight size={16} />
-            </Link>
-          </motion.div>
-
-          {/* Hero quick-stats strip */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.8 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-8">
-            {[
-              { num: '25+', label: 'Years of Excellence' },
-              { num: '2000+', label: 'Students Enrolled' },
-              { num: '150+', label: 'Expert Faculty' },
-              { num: '100%', label: 'CBSE Pass Rate' },
-            ].map((s, i) => (
-              <div key={i} className="text-center">
-                <div className="text-2xl md:text-3xl font-serif font-black text-[#f5a623]">{s.num}</div>
-                <div className="text-white/55 text-xs font-semibold uppercase tracking-wide mt-0.5">{s.label}</div>
-              </div>
-            ))}
+          {/* Decorative line — same as About hero */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.0 }}
+            className="mt-8 flex gap-3">
+            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
+            <div className="h-1 w-8 bg-white/30 rounded-full" />
+            <div className="h-1 w-4 bg-white/20 rounded-full" />
           </motion.div>
         </div>
 
