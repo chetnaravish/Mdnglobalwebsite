@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X } from 'lucide-react';
+import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -211,15 +211,36 @@ const facilities: Facility[] = [
   },
 ];
 
-/* ── Modal ───────────────────────────────────────────────── */
+/* ── Modal with auto-scrolling images ───────────────────── */
 function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () => void }) {
+  const [current, setCurrent] = useState(0);
+  const total = facility.images.length;
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const goTo = (idx: number) => {
+    setCurrent((idx + total) % total);
+  };
+
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3000);
+  };
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [total]);
+
+  const handlePrev = () => { goTo(current - 1); resetTimer(); };
+  const handleNext = () => { goTo(current + 1); resetTimer(); };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -230,31 +251,59 @@ function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () 
         className="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-2xl"
         onClick={e => e.stopPropagation()}
       >
-        {/* Horizontal scrolling image strip */}
-        <div className="relative">
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-            {facility.images.map((img, i) => (
-              <div key={i} className="shrink-0 w-full snap-center relative h-56 sm:h-64 bg-gray-900">
-                <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <p className="absolute bottom-3 left-4 text-white/90 text-xs font-semibold">{img.caption}</p>
-                <span className="absolute bottom-3 right-4 text-white/50 text-xs">{i + 1}/{facility.images.length}</span>
-              </div>
-            ))}
-          </div>
+        {/* Auto-scrolling image viewer */}
+        <div className="relative h-80 sm:h-96 bg-gray-900 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={current}
+              src={facility.images[current].src}
+              alt={facility.images[current].caption}
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </AnimatePresence>
+
+          {/* Subtle bottom gradient for caption */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
           {/* Tag */}
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 z-10">
             <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${facility.tagColor}`}>{facility.tag}</span>
           </div>
+
           {/* Close */}
           <button onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors">
+            className="absolute top-4 right-4 z-10 w-9 h-9 bg-black/50 hover:bg-black/75 rounded-full flex items-center justify-center text-white transition-colors">
             <X size={18} />
           </button>
-          {/* Scroll hint */}
-          <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/60 text-xs font-medium flex items-center gap-1">
-            <span>← scroll images →</span>
-          </p>
+
+          {/* Prev / Next arrows */}
+          {total > 1 && (
+            <>
+              <button onClick={handlePrev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-black/40 hover:bg-black/65 rounded-full flex items-center justify-center text-white transition-colors">
+                <ChevronLeft size={18} />
+              </button>
+              <button onClick={handleNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-black/40 hover:bg-black/65 rounded-full flex items-center justify-center text-white transition-colors">
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+
+          {/* Caption + counter */}
+          <div className="absolute bottom-0 inset-x-0 p-4 flex items-center justify-between z-10">
+            <p className="text-white/90 text-xs font-semibold">{facility.images[current].caption}</p>
+            <div className="flex items-center gap-1.5">
+              {facility.images.map((_, i) => (
+                <button key={i} onClick={() => { goTo(i); resetTimer(); }}
+                  className={`w-1.5 h-1.5 rounded-full transition-all ${i === current ? 'bg-white w-4' : 'bg-white/40'}`} />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Info — no scroll */}
