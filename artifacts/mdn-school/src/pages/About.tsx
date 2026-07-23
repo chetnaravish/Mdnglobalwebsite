@@ -187,41 +187,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Timeline ─────────────────────────────────────────── */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
-            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Our Journey</p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Key Milestones</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Two decades of growth, one milestone at a time</p>
-          </motion.div>
-          <div className="relative max-w-3xl mx-auto">
-            {/* Vertical line */}
-            <div className="absolute left-[50%] top-0 bottom-0 w-px bg-gradient-to-b from-[#1a3a6b]/30 via-[#f5a623] to-[#1a3a6b]/30 hidden md:block" />
-            <div className="flex flex-col gap-8">
-              {milestones.map((m, i) => (
-                <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
-                  className={`flex items-center gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
-                  {/* Content */}
-                  <div className={`flex-1 ${i % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                    <div className={`bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 ${i % 2 === 0 ? 'md:ml-auto' : ''}`}>
-                      <span className="text-[#f5a623] font-black text-xl font-serif">{m.year}</span>
-                      <h3 className="text-lg font-serif font-bold text-[#1a3a6b] mt-1 mb-2">{m.title}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
-                    </div>
-                  </div>
-                  {/* Dot */}
-                  <div className="shrink-0 hidden md:flex w-5 h-5 rounded-full bg-[#f5a623] border-4 border-white shadow-lg z-10" />
-                  {/* Empty spacer */}
-                  <div className="flex-1 hidden md:block" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Vision & Mission — Enhanced ──────────────────────── */}
       <section className="py-28 bg-gradient-to-br from-[#0a1635] via-[#0f2557] to-[#1a3a6b] relative overflow-hidden">
         {/* Animated dots grid */}

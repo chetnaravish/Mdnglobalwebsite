@@ -254,32 +254,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════ CO-CURRICULAR STRIP ══════════════ */}
-      <section className="py-16 bg-[#f5a623]">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <p className="text-[#1a3a6b]/70 font-bold tracking-widest uppercase text-xs mb-2">Beyond the Classroom</p>
-              <h3 className="text-3xl font-serif font-bold text-[#1a3a6b]">Co-Curricular Programmes</h3>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              {[
-                { icon: Dumbbell, label: 'Sports' },
-                { icon: Music, label: 'Music & Dance' },
-                { icon: Microscope, label: 'Science Club' },
-                { icon: Star, label: 'Debate & MUN' },
-              ].map((item, i) => (
-                <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
-                  className="flex items-center gap-2.5 bg-[#1a3a6b]/15 border border-[#1a3a6b]/20 rounded-full px-5 py-2.5">
-                  <item.icon size={16} className="text-[#1a3a6b]" />
-                  <span className="text-[#1a3a6b] font-semibold text-sm">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══════════════ GALLERY TEASER ══════════════ */}
       <section className="py-24 bg-gradient-to-br from-[#0f2557] to-[#1a3a6b] relative overflow-hidden">
         <div className="absolute inset-0 opacity-5"

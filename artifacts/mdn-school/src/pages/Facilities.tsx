@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'wouter';
+import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -25,14 +24,13 @@ const facilities: Facility[] = [
     title: 'Smart Classrooms',
     desc: 'Every classroom features interactive digital boards, HD projectors, and Wi-Fi — creating an immersive learning environment.',
     image: '/images/academics.jpg',
-    tag: 'Technology',
-    tagColor: 'bg-blue-100 text-blue-700',
+    tag: 'Technology', tagColor: 'bg-blue-100 text-blue-700',
     detail: [
-      'All 30+ classrooms are equipped with large-format interactive digital whiteboards that allow teachers to teach with multimedia content, animations, and live quizzes.',
-      'High-definition projectors and surround-quality speakers ensure that every student — regardless of where they sit — can see and hear clearly.',
-      'Campus-wide high-speed Wi-Fi enables seamless access to digital textbooks, video lessons, and educational platforms during class.',
-      'Each classroom has individual student tablets available for select subjects, supporting a blended learning model endorsed by NEP 2020.',
-      'Smart attendance and performance tracking tools help teachers identify learning gaps early and provide timely, personalised support to every student.',
+      'All 30+ classrooms equipped with large-format interactive digital whiteboards for multimedia, animations & live quizzes.',
+      'HD projectors and surround-quality speakers ensure every student can see and hear clearly from any seat.',
+      'Campus-wide high-speed Wi-Fi enables seamless access to digital textbooks, video lessons & educational platforms.',
+      'Individual student tablets available for select subjects, supporting a blended learning model endorsed by NEP 2020.',
+      'Smart attendance & performance tracking tools help teachers identify learning gaps and provide timely personalised support.',
     ],
     images: [
       { src: '/images/academics.jpg', caption: 'Interactive Digital Board in Action' },
@@ -45,14 +43,13 @@ const facilities: Facility[] = [
     title: 'Science Laboratories',
     desc: 'State-of-the-art Physics, Chemistry, and Biology labs equipped with modern instruments for practical learning.',
     image: '/images/facilities-lab.jpg',
-    tag: 'Science',
-    tagColor: 'bg-purple-100 text-purple-700',
+    tag: 'Science', tagColor: 'bg-purple-100 text-purple-700',
     detail: [
-      'Separate, fully equipped labs for Physics, Chemistry, and Biology ensure students get dedicated, subject-specific practical experience from Class VI onwards.',
-      'The Chemistry lab houses modern fume hoods, chemical storage with safety protocols, and individual workstations for every student pair.',
-      'The Biology lab features high-power microscopes, anatomical models, preserved specimens, and a live plant section for botany experiments.',
-      'The Physics lab includes precision instruments for optics, mechanics, electricity, and wave experiments — directly aligned with the CBSE practical syllabus.',
-      'All labs are maintained by qualified lab assistants and follow strict safety procedures, with first-aid equipment and fire extinguishers at every exit.',
+      'Separate, fully equipped labs for Physics, Chemistry & Biology — dedicated practical experience from Class VI onwards.',
+      'Chemistry lab has modern fume hoods, chemical storage with safety protocols & individual workstations per student pair.',
+      'Biology lab features high-power microscopes, anatomical models, preserved specimens & a live plant section.',
+      'Physics lab has precision instruments for optics, mechanics, electricity & wave experiments aligned to the CBSE syllabus.',
+      'All labs are maintained by qualified assistants with strict safety procedures, first-aid equipment & fire extinguishers.',
     ],
     images: [
       { src: '/images/facilities-lab.jpg', caption: 'Students in the Chemistry Lab' },
@@ -65,14 +62,13 @@ const facilities: Facility[] = [
     title: 'Library & Resource Centre',
     desc: 'Over 15,000 books, digital e-library access, research journals, and comfortable reading spaces for curious minds.',
     image: '/images/facilities-library.jpg',
-    tag: 'Knowledge',
-    tagColor: 'bg-amber-100 text-amber-700',
+    tag: 'Knowledge', tagColor: 'bg-amber-100 text-amber-700',
     detail: [
-      'The library houses over 15,000 titles spanning fiction, non-fiction, reference books, encyclopaedias, and subject-specific texts across all grade levels.',
-      'A dedicated digital section provides students with access to e-books, research journals, and educational databases through individual reading tablets.',
-      'Comfortable reading zones — including bean bag corners for junior students and quiet study desks for seniors — encourage voluntary reading habits.',
-      'The library runs weekly story sessions for primary classes, book clubs for middle school students, and competitive exam resource shelves for senior students.',
-      'A trained librarian curates fresh additions every term based on curriculum requirements and student reading preferences.',
+      'Over 15,000 titles spanning fiction, non-fiction, reference books, encyclopaedias & subject-specific texts for all grades.',
+      'Dedicated digital section with e-books, research journals & educational databases accessible via individual reading tablets.',
+      'Comfortable reading zones — bean bag corners for junior students & quiet study desks for senior students.',
+      'Weekly story sessions for primary, book clubs for middle school & competitive exam resource shelves for senior students.',
+      'Trained librarian curates fresh additions every term based on curriculum requirements & student reading preferences.',
     ],
     images: [
       { src: '/images/facilities-library.jpg', caption: 'Library — Main Reading Hall' },
@@ -85,14 +81,13 @@ const facilities: Facility[] = [
     title: 'Sports Complex',
     desc: 'Olympic-standard sports grounds with cricket, football, basketball, badminton courts, and a multi-purpose indoor hall.',
     image: '/images/facilities-sports.jpg',
-    tag: 'Sports',
-    tagColor: 'bg-green-100 text-green-700',
+    tag: 'Sports', tagColor: 'bg-green-100 text-green-700',
     detail: [
-      'Our sprawling sports complex spans 4 acres and includes a full-size cricket ground, a regulation football field, and a 400-metre athletics track.',
-      'Indoor facilities include two badminton courts, a basketball court, and a multi-purpose hall used for table tennis, carrom, chess, and gymnastics.',
-      'Professional, BPED-qualified coaches are available for cricket, football, athletics, and badminton — training students for district and state competitions.',
-      'Morning sports sessions are part of the daily school timetable, ensuring every student participates in physical activity regardless of academic stream.',
-      'The sports complex has produced state-level champions in cricket, athletics, and kabaddi — with structured annual inter-school tournaments hosted on campus.',
+      'Sprawling 4-acre sports complex with a full-size cricket ground, regulation football field & 400-metre athletics track.',
+      'Indoor facilities: two badminton courts, basketball court & multi-purpose hall for table tennis, chess & gymnastics.',
+      'BPED-qualified professional coaches for cricket, football, athletics & badminton — training for district & state competitions.',
+      'Morning sports sessions are part of the daily timetable — every student participates in physical activity every day.',
+      'Complex has produced state-level champions in cricket, athletics & kabaddi — annual inter-school tournaments hosted on campus.',
     ],
     images: [
       { src: '/images/facilities-sports.jpg', caption: 'School Sports Complex — Aerial View' },
@@ -105,14 +100,13 @@ const facilities: Facility[] = [
     title: 'Computer & IT Lab',
     desc: 'High-speed fibre internet, 100+ modern workstations, and coding programmes aligned with NEP 2020 guidelines.',
     image: '/images/academics.jpg',
-    tag: 'IT & Coding',
-    tagColor: 'bg-cyan-100 text-cyan-700',
+    tag: 'IT & Coding', tagColor: 'bg-cyan-100 text-cyan-700',
     detail: [
-      'The IT lab features 100+ latest-generation computers with individual workstations, ensuring every student has personal access during lab sessions.',
-      'The lab runs on a 1 Gbps dedicated fibre internet line, providing uninterrupted, high-speed connectivity for research, coding, and digital learning.',
-      'A structured coding curriculum introduces students to Scratch (primary), Python and web development (middle school), and AI/ML basics (senior secondary).',
-      'Students participate in national coding competitions such as Atal Tinkering Lab projects, where MDN Global School has won multiple district-level honours.',
-      'The lab remains open during lunch and free periods for senior students working on projects, college applications, and self-directed digital learning.',
+      '100+ latest-generation computers with individual workstations — every student has personal access during lab sessions.',
+      '1 Gbps dedicated fibre internet providing uninterrupted, high-speed connectivity for research, coding & digital learning.',
+      'Structured coding curriculum: Scratch (primary), Python & web development (middle school), AI/ML basics (senior secondary).',
+      'Students compete in national coding competitions & Atal Tinkering Lab projects — multiple district-level honours won.',
+      'Lab open during lunch & free periods for senior students working on projects, college applications & self-directed learning.',
     ],
     images: [
       { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Session' },
@@ -125,14 +119,13 @@ const facilities: Facility[] = [
     title: 'Arts & Craft Studio',
     desc: 'A dedicated creative space for visual arts, sculpture, pottery, and design — nurturing artistic expression in every student.',
     image: '/images/students-happy.jpg',
-    tag: 'Creative Arts',
-    tagColor: 'bg-pink-100 text-pink-700',
+    tag: 'Creative Arts', tagColor: 'bg-pink-100 text-pink-700',
     detail: [
-      'The Arts & Craft Studio is a bright, airy space with north-facing skylights, designed to give artists the best natural light for colour work and sketching.',
-      'Students work with a wide variety of media — watercolours, acrylics, charcoal, clay, and digital design tools — across different levels of the curriculum.',
-      'A pottery wheel and kiln are available for senior art students, and an annual exhibition showcases the best student work to parents and the wider community.',
-      'Art is not an optional extra at MDN Global School — it is integrated into the main curriculum with formal assessment, encouraging even STEM students to develop creative confidence.',
-      'Trained art teachers with professional practice backgrounds guide students and prepare select students for national-level art competitions and portfolio development.',
+      'Bright, airy studio with north-facing skylights designed to give artists the best natural light for colour work & sketching.',
+      'Students work with watercolours, acrylics, charcoal, clay & digital design tools across all levels of the curriculum.',
+      'Pottery wheel & kiln available for senior art students; annual exhibition showcases best work to parents & the community.',
+      'Art integrated into the main curriculum with formal assessment — encouraging even STEM students to develop creative confidence.',
+      'Trained art teachers with professional practice guide students & prepare them for national-level art competitions.',
     ],
     images: [
       { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition' },
@@ -145,14 +138,13 @@ const facilities: Facility[] = [
     title: 'Music & Dance Room',
     desc: 'Soundproofed music studios with professional instruments, and a dance studio for classical, folk, and contemporary styles.',
     image: '/images/events-annual.jpg',
-    tag: 'Performing Arts',
-    tagColor: 'bg-rose-100 text-rose-700',
+    tag: 'Performing Arts', tagColor: 'bg-rose-100 text-rose-700',
     detail: [
-      'The music room is fully soundproofed and houses a range of instruments including tabla, harmonium, sitar, keyboard, guitar, and a full percussion kit.',
-      'Trained musicians teach Hindustani classical music, light music, and Western notation — catering to students with diverse musical interests and goals.',
-      'An adjacent dance studio with sprung flooring and wall-length mirrors provides the ideal space for Bharatanatyam, folk dances, and contemporary choreography.',
-      'Students regularly perform at school events, cultural festivals, and state-level youth competitions — building stage confidence and performance skills.',
-      'The performing arts programme culminates in the Annual Cultural Gala, a fully staged production that parents and the community look forward to every year.',
+      'Fully soundproofed music room with tabla, harmonium, sitar, keyboard, guitar & a full percussion kit for all students.',
+      'Trained musicians teach Hindustani classical music, light music & Western notation for diverse musical interests.',
+      'Adjacent dance studio with sprung flooring & wall-length mirrors — ideal for Bharatanatyam, folk & contemporary dance.',
+      'Students perform at school events, cultural festivals & state-level youth competitions — building stage confidence.',
+      'Performing arts programme culminates in the Annual Cultural Gala — a fully staged production anticipated every year.',
     ],
     images: [
       { src: '/images/events-annual.jpg', caption: 'Annual Cultural Gala Performance' },
@@ -165,14 +157,13 @@ const facilities: Facility[] = [
     title: 'Safe Transport',
     desc: 'GPS-enabled, air-conditioned school buses covering all major routes — student safety is our top priority.',
     image: '/images/hero-bg.jpg',
-    tag: 'Transport',
-    tagColor: 'bg-teal-100 text-teal-700',
+    tag: 'Transport', tagColor: 'bg-teal-100 text-teal-700',
     detail: [
-      'The school fleet comprises 15 GPS-enabled, air-conditioned buses covering all major residential areas of Kaithal and surrounding villages.',
-      'Every bus is fitted with real-time GPS tracking, and parents receive live location updates through a dedicated mobile app — ensuring complete peace of mind.',
-      'All drivers hold valid commercial licences and undergo periodic background verification, drug screening, and defensive-driving training.',
-      'A trained, female attendant accompanies students on every bus — managing boarding, seating, and safety throughout the journey.',
-      'Routes are reviewed annually based on student enrolment patterns, and new routes are added to ensure maximum coverage without excessive travel time for any child.',
+      '15 GPS-enabled, air-conditioned buses covering all major residential areas of Kaithal & surrounding villages.',
+      'Real-time GPS tracking on every bus — parents receive live location updates through a dedicated mobile app.',
+      'All drivers hold valid commercial licences & undergo periodic background checks, drug screening & defensive-driving training.',
+      'Trained female attendant on every bus — managing boarding, seating & student safety throughout the journey.',
+      'Routes reviewed annually; new routes added to ensure maximum coverage without excessive travel time for any child.',
     ],
     images: [
       { src: '/images/hero-bg.jpg', caption: 'MDN Global School Transport Fleet' },
@@ -185,14 +176,13 @@ const facilities: Facility[] = [
     title: 'Eco-Friendly Campus',
     desc: '10-acre green campus with gardens, open-air amphitheatre, and eco-clubs promoting sustainable living.',
     image: '/images/about-school.jpg',
-    tag: 'Environment',
-    tagColor: 'bg-lime-100 text-lime-700',
+    tag: 'Environment', tagColor: 'bg-lime-100 text-lime-700',
     detail: [
-      'Our 10-acre campus is a certified green zone, with over 500 trees, seasonal flower gardens, and a dedicated kitchen garden tended by students.',
-      'The open-air amphitheatre — nestled among trees — hosts morning assemblies, poetry sessions, and outdoor drama performances through the year.',
-      'Solar panels installed across the school roof supply 40% of the campus electricity requirement, reducing the school\'s carbon footprint significantly.',
-      'Rainwater harvesting pits across the campus recharge groundwater, and a composting unit converts organic waste into fertiliser for the school garden.',
-      'The Eco Club actively runs awareness campaigns, tree-plantation drives, and monthly clean-campus challenges — instilling environmental responsibility from an early age.',
+      '10-acre certified green zone with 500+ trees, seasonal flower gardens & a student-tended kitchen garden.',
+      'Open-air amphitheatre nestled among trees — used for morning assemblies, poetry sessions & outdoor drama performances.',
+      'Solar panels across the school roof supply 40% of campus electricity, significantly reducing our carbon footprint.',
+      'Rainwater harvesting pits recharge groundwater; a composting unit converts organic waste into garden fertiliser.',
+      'Eco Club runs tree-plantation drives, awareness campaigns & monthly clean-campus challenges throughout the year.',
     ],
     images: [
       { src: '/images/about-school.jpg', caption: 'MDN Global School Green Campus' },
@@ -205,14 +195,13 @@ const facilities: Facility[] = [
     title: 'CCTV Surveillance',
     desc: '360° CCTV monitoring across the campus ensures complete safety and security for all students and staff.',
     image: '/images/hero-bg.jpg',
-    tag: 'Security',
-    tagColor: 'bg-slate-100 text-slate-700',
+    tag: 'Security', tagColor: 'bg-slate-100 text-slate-700',
     detail: [
-      'Over 120 high-definition CCTV cameras are strategically installed across every corridor, classroom entrance, sports area, parking lot, and campus gate.',
-      'The security control room is monitored 24/7 by trained security personnel, with footage retained for 30 days on secure encrypted servers.',
-      'Access to the school campus is strictly controlled through a biometric entry system for staff and an ID-card scan gate for students during school hours.',
-      'A dedicated security team patrols the campus perimeter at regular intervals, and all visitors are registered with photo ID at the main gate before entry.',
-      'Regular safety drills — including fire evacuation, earthquake preparedness, and anti-bullying protocols — are conducted each term to keep students and staff prepared.',
+      '120+ HD cameras installed across every corridor, classroom entrance, sports area, parking lot & campus gate.',
+      'Security control room monitored 24/7 by trained personnel — footage retained for 30 days on encrypted servers.',
+      'Biometric entry system for staff & ID-card scan gate for students strictly controls campus access during school hours.',
+      'Dedicated security team patrols the perimeter at regular intervals; all visitors register with photo ID at the main gate.',
+      'Regular safety drills — fire evacuation, earthquake preparedness & anti-bullying protocols — conducted every term.',
     ],
     images: [
       { src: '/images/hero-bg.jpg', caption: 'Campus Security Control Room' },
@@ -222,13 +211,8 @@ const facilities: Facility[] = [
   },
 ];
 
-/* ── Modal component ─────────────────────────────────────── */
+/* ── Modal ───────────────────────────────────────────────── */
 function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () => void }) {
-  const [imgIndex, setImgIndex] = useState(0);
-
-  const prev = () => setImgIndex(i => (i - 1 + facility.images.length) % facility.images.length);
-  const next = () => setImgIndex(i => (i + 1) % facility.images.length);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -243,71 +227,45 @@ function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () 
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col"
+        className="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-2xl"
         onClick={e => e.stopPropagation()}
       >
-        {/* Image carousel */}
-        <div className="relative h-64 sm:h-80 shrink-0 bg-gray-900 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={imgIndex}
-              src={facility.images[imgIndex].src}
-              alt={facility.images[imgIndex].caption}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
-              className="w-full h-full object-cover"
-            />
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-
-          {/* Caption */}
-          <p className="absolute bottom-4 left-5 text-white/90 text-sm font-medium">
-            {facility.images[imgIndex].caption}
-          </p>
-
-          {/* Nav arrows */}
-          {facility.images.length > 1 && (
-            <>
-              <button onClick={prev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/40 hover:bg-black/60 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronLeft size={18} />
-              </button>
-              <button onClick={next}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/40 hover:bg-black/60 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronRight size={18} />
-              </button>
-            </>
-          )}
-
-          {/* Dots */}
-          <div className="absolute bottom-4 right-5 flex gap-1.5">
-            {facility.images.map((_, i) => (
-              <button key={i} onClick={() => setImgIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all ${i === imgIndex ? 'bg-white scale-125' : 'bg-white/50'}`} />
+        {/* Horizontal scrolling image strip */}
+        <div className="relative">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+            {facility.images.map((img, i) => (
+              <div key={i} className="shrink-0 w-full snap-center relative h-56 sm:h-64 bg-gray-900">
+                <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <p className="absolute bottom-3 left-4 text-white/90 text-xs font-semibold">{img.caption}</p>
+                <span className="absolute bottom-3 right-4 text-white/50 text-xs">{i + 1}/{facility.images.length}</span>
+              </div>
             ))}
           </div>
-
-          {/* Tag + Close */}
-          <div className="absolute top-4 left-5">
+          {/* Tag */}
+          <div className="absolute top-4 left-4">
             <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${facility.tagColor}`}>{facility.tag}</span>
           </div>
+          {/* Close */}
           <button onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors">
             <X size={18} />
           </button>
+          {/* Scroll hint */}
+          <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/60 text-xs font-medium flex items-center gap-1">
+            <span>← scroll images →</span>
+          </p>
         </div>
 
-        {/* Content */}
-        <div className="overflow-y-auto flex-1 p-6 sm:p-8">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="w-12 h-12 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
-              <facility.icon size={22} className="text-white" />
+        {/* Info — no scroll */}
+        <div className="p-6 sm:p-8">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-11 h-11 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
+              <facility.icon size={20} className="text-white" />
             </div>
-            <h2 className="text-2xl font-serif font-black text-[#1a3a6b]">{facility.title}</h2>
+            <h2 className="text-xl font-serif font-black text-[#1a3a6b]">{facility.title}</h2>
           </div>
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {facility.detail.map((line, i) => (
               <li key={i} className="flex gap-3 text-gray-600 text-sm leading-relaxed">
                 <span className="mt-1.5 w-2 h-2 rounded-full bg-[#f5a623] shrink-0" />
@@ -329,14 +287,10 @@ export default function Facilities() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img
-          src="/images/facilities-sports.jpg"
-          alt="MDN Global School Facilities"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <img src="/images/facilities-sports.jpg" alt="MDN Global School Facilities"
+          className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/32 to-[#0a1c46]/8" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/42 via-transparent to-transparent" />
-
         <div className="container mx-auto px-6 py-24 relative z-10">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
             className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
@@ -364,9 +318,9 @@ export default function Facilities() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
               { num: '10', unit: 'Acres', label: 'Green Campus' },
-              { num: '30+', unit: '', label: 'Smart Classrooms' },
-              { num: '5', unit: '', label: 'Science Labs' },
-              { num: '15k+', unit: '', label: 'Library Books' },
+              { num: '30+', unit: '',     label: 'Smart Classrooms' },
+              { num: '5',  unit: '',      label: 'Science Labs' },
+              { num: '15k+',unit: '',     label: 'Library Books' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.4}>
                 <div className="text-4xl font-serif font-black text-[#1a3a6b] mb-1">
@@ -393,7 +347,6 @@ export default function Facilities() {
             Click any card to explore photos & details
             <span className="inline-block w-4 h-px bg-gray-300" />
           </motion.p>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {facilities.map((f, i) => (
               <motion.button
@@ -413,13 +366,12 @@ export default function Facilities() {
                   <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
                     <f.icon size={20} />
                   </div>
-                  {/* Click hint */}
                   <div className="absolute bottom-4 right-4 text-white/70 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 px-2 py-1 rounded-full">
                     Click to explore →
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-3 group-hover:text-[#f5a623] transition-colors">{f.title}</h3>
+                  <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-2 group-hover:text-[#f5a623] transition-colors">{f.title}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
                 </div>
               </motion.button>
@@ -460,21 +412,6 @@ export default function Facilities() {
               <img src="/images/facilities-sports.jpg" alt="Sports Facilities" className="w-full h-full object-cover" />
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ── CTA ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-white text-center">
-        <div className="container mx-auto px-6">
-          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-8">
-            Come, See It for Yourself
-          </motion.h2>
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}>
-            <Link href="/contact" className="inline-block bg-[#1a3a6b] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#0f2557] transition-all hover:scale-105 shadow-lg">
-              Schedule a Campus Visit
-            </Link>
-          </motion.div>
         </div>
       </section>
 
