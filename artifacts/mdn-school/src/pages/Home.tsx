@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { BookOpen, Users, Trophy, GraduationCap, ChevronRight, Star, Award, Microscope, Music, Dumbbell, CheckCircle, ArrowRight } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import {
+  BookOpen, Users, Trophy, GraduationCap, ChevronRight, Star, Award, CheckCircle,
+  ArrowRight, MapPin, Phone, Mail, Send, Quote
+} from 'lucide-react';
 import { Link } from 'wouter';
 
 /* ── Animated counter ─────────────────────────────────── */
@@ -38,18 +41,67 @@ const fadeUp = {
   visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } })
 };
 
+/* ── Reviews data ────────────────────────────────────── */
+const reviews = [
+  { name: 'Sunita Sharma', role: 'Parent — Class VIII', rating: 5, text: 'MDN Global School has transformed my son. The teachers genuinely care about every child\'s growth, and the academics are exceptional.' },
+  { name: 'Rajiv Mehta', role: 'Parent — Class XI', rating: 5, text: 'The smart classrooms and experienced faculty gave my daughter the competitive edge she needed. She cleared NEET on her first attempt!' },
+  { name: 'Priya Arora', role: 'Alumni — Batch 2022', rating: 5, text: 'My five years at MDN were the best years of my life. The discipline, values, and friendships I gained here shaped who I am today.' },
+  { name: 'Ankit Verma', role: 'Parent — Class V', rating: 5, text: 'From sports to academics, MDN covers everything. The campus is beautiful and the staff makes you feel like family.' },
+  { name: 'Meera Gupta', role: 'Parent — Class XII', rating: 5, text: 'My daughter topped the district in CBSE XII from MDN. The board preparation programme here is truly outstanding.' },
+  { name: 'Deepak Yadav', role: 'Alumni — Batch 2020', rating: 5, text: 'MDN taught me not just academics but also leadership, sportsmanship, and the confidence to face the world.' },
+  { name: 'Kavita Joshi', role: 'Parent — Class II', rating: 5, text: 'The Pre-Primary section is so nurturing. My daughter loves coming to school every single day — that says everything.' },
+  { name: 'Rohit Batra', role: 'Parent — Class IX', rating: 5, text: 'Safe transport, GPS tracking, CCTV — as a parent I feel completely at ease knowing my child is in safe hands.' },
+];
+
+function ReviewCard({ review }: { review: typeof reviews[0] }) {
+  return (
+    <div className="flex-shrink-0 w-72 mx-3 bg-white rounded-2xl p-6 shadow-md border border-gray-100 flex flex-col gap-4">
+      <div className="flex gap-0.5">
+        {Array(review.rating).fill(0).map((_, i) => (
+          <Star key={i} size={14} className="text-[#f5a623] fill-[#f5a623]" />
+        ))}
+      </div>
+      <p className="text-gray-600 text-sm leading-relaxed flex-1">"{review.text}"</p>
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1a3a6b] to-[#2563eb] flex items-center justify-center text-white font-bold text-sm shrink-0">
+          {review.name.charAt(0)}
+        </div>
+        <div>
+          <p className="font-bold text-[#1a3a6b] text-sm leading-tight">{review.name}</p>
+          <p className="text-gray-400 text-xs">{review.role}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [current, setCurrent] = useState(0);
+  const [formData, setFormData] = useState({ name: '', phone: '', classLevel: '', message: '' });
+  const [formStatus, setFormStatus] = useState<'idle' | 'sent'>('idle');
+
   useEffect(() => {
     const id = setInterval(() => setCurrent(p => (p + 1) % slides.length), SLIDE_MS);
     return () => clearInterval(id);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sent');
+    setTimeout(() => setFormStatus('idle'), 4000);
+    setFormData({ name: '', phone: '', classLevel: '', message: '' });
+  };
+
+  // Duplicate for seamless loop
+  const row1 = [...reviews, ...reviews];
+  const row2 = [...reviews.slice(4), ...reviews.slice(0, 4), ...reviews.slice(4), ...reviews.slice(0, 4)];
 
   return (
     <div className="flex flex-col">
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#0a1c46]">
+        {/* Slides */}
         {slides.map((slide, i) => (
           <div key={slide.src} className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}>
@@ -57,22 +109,31 @@ export default function Home() {
           </div>
         ))}
         <div className="absolute inset-0 z-10"
-          style={{ background: 'linear-gradient(135deg, rgba(6,18,58,0.58) 0%, rgba(10,40,100,0.38) 50%, rgba(6,18,58,0.54) 100%)' }} />
+          style={{ background: 'linear-gradient(135deg, rgba(6,18,58,0.62) 0%, rgba(10,40,100,0.42) 50%, rgba(6,18,58,0.55) 100%)' }} />
         <div className="absolute inset-0 z-10"
           style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(5,14,45,0.28) 100%)' }} />
-        <div className="absolute top-0 right-0 z-10 w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%)', transform: 'translate(30%, -30%)' }} />
 
-        <div className="relative z-20 w-full max-w-6xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-10vh)' }}>
+        {/* Content */}
+        <div className="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-6vh)' }}>
 
-          {/* School Name — single line */}
+          {/* Location badge */}
+          <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 text-white/80 text-xs font-semibold tracking-wider"
+            style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.18)' }}>
+            <MapPin size={12} className="text-[#f5a623]" />
+            Kaithal, Haryana
+            <span className="w-px h-3 bg-white/30" />
+            Est. 2000
+          </motion.div>
+
+          {/* School Name */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-black text-white text-center mb-10 whitespace-nowrap"
+            className="font-serif font-black text-white text-center whitespace-nowrap mb-4"
             style={{
-              fontSize: 'clamp(1.8rem, 5.6vw, 5.4rem)',
+              fontSize: 'clamp(1.8rem, 5.4vw, 5.2rem)',
               letterSpacing: '0.12em',
               textShadow: '0 4px 32px rgba(0,0,0,0.6)',
               lineHeight: 1,
@@ -81,18 +142,66 @@ export default function Home() {
             MDN GLOBAL SCHOOL
           </motion.h1>
 
-          {/* CBSE Affiliated */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.8 }}
-            className="inline-flex items-center gap-3 px-7 py-2.5 rounded-full border border-white/30"
-            style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(12px)' }}
+            transition={{ duration: 0.8, delay: 0.55 }}
+            className="text-white/80 text-lg md:text-xl font-light tracking-wide mb-6 max-w-xl"
+            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
           >
-            <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-pulse" />
-            <span className="text-white font-bold tracking-[0.22em] uppercase text-sm">CBSE AFFILIATED</span>
+            Shaping Tomorrow's Leaders —<br className="hidden md:block" /> Where Excellence Meets Character
+          </motion.p>
+
+          {/* CBSE pill + quick info */}
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.8 }}
+            className="flex flex-wrap items-center justify-center gap-3 mb-8">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/30"
+              style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(12px)' }}>
+              <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-pulse" />
+              <span className="text-white font-bold tracking-[0.18em] uppercase text-xs">CBSE Affiliated</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20"
+              style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)' }}>
+              <GraduationCap size={13} className="text-[#f5a623]" />
+              <span className="text-white/80 font-semibold text-xs">Nursery to Class XII</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20"
+              style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)' }}>
+              <Trophy size={13} className="text-[#f5a623]" />
+              <span className="text-white/80 font-semibold text-xs">100% Board Results</span>
+            </div>
           </motion.div>
 
+          {/* CTA buttons */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }}
+            className="flex flex-col sm:flex-row gap-3">
+            <Link href="/contact"
+              className="inline-flex items-center gap-2 bg-[#f5a623] text-[#1a3a6b] px-8 py-3.5 rounded-full font-black text-sm hover:bg-amber-400 transition-all hover:scale-105 shadow-xl shadow-amber-500/30">
+              Apply for Admission <ChevronRight size={16} />
+            </Link>
+            <Link href="/about"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white border border-white/30 hover:bg-white/15 transition-all"
+              style={{ backdropFilter: 'blur(10px)' }}>
+              Explore Our School <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+
+          {/* Hero quick-stats strip */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.8 }}
+            className="mt-12 flex flex-wrap items-center justify-center gap-8">
+            {[
+              { num: '25+', label: 'Years of Excellence' },
+              { num: '2000+', label: 'Students Enrolled' },
+              { num: '150+', label: 'Expert Faculty' },
+              { num: '100%', label: 'CBSE Pass Rate' },
+            ].map((s, i) => (
+              <div key={i} className="text-center">
+                <div className="text-2xl md:text-3xl font-serif font-black text-[#f5a623]">{s.num}</div>
+                <div className="text-white/55 text-xs font-semibold uppercase tracking-wide mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
         {/* Slide dots */}
@@ -204,33 +313,9 @@ export default function Home() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              {
-                title: 'Academics',
-                icon: BookOpen,
-                image: '/images/academics.jpg',
-                desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.',
-                link: '/academics',
-                accent: 'text-[#1a3a6b]',
-                bg: 'bg-blue-50',
-              },
-              {
-                title: 'Facilities',
-                icon: Trophy,
-                image: '/images/facilities-sports.jpg',
-                desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.',
-                link: '/facilities',
-                accent: 'text-[#f5a623]',
-                bg: 'bg-amber-50',
-              },
-              {
-                title: 'Events & Culture',
-                icon: Star,
-                image: '/images/events-annual.jpg',
-                desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.',
-                link: '/events',
-                accent: 'text-[#1a3a6b]',
-                bg: 'bg-blue-50',
-              },
+              { title: 'Academics', icon: BookOpen, image: '/images/academics.jpg', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Facilities', icon: Trophy, image: '/images/facilities-sports.jpg', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
+              { title: 'Events & Culture', icon: Star, image: '/images/events-annual.jpg', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/events', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
@@ -270,7 +355,6 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
-          {/* 8-photo grid */}
           <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[420px]">
             {[
               { src: '/images/events-annual.jpg', span: 'col-span-2 row-span-2', pos: 'center center' },
@@ -289,7 +373,137 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════ HAPPY LEARNERS CTA ══════════════ */}
+      {/* ══════════════ STUDENT & PARENT REVIEWS ══════════════ */}
+      <section className="py-24 bg-[#f8f9ff] overflow-hidden">
+        <style>{`
+          @keyframes marquee-left  { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+          @keyframes marquee-right { from { transform: translateX(-50%) } to { transform: translateX(0) } }
+          .marquee-left  { animation: marquee-left  36s linear infinite; display: flex; width: max-content; }
+          .marquee-right { animation: marquee-right 40s linear infinite; display: flex; width: max-content; }
+          .marquee-left:hover, .marquee-right:hover { animation-play-state: paused; }
+        `}</style>
+
+        <div className="container mx-auto px-6 mb-12">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3 flex items-center justify-center gap-2">
+              <Quote size={14} /> What People Say
+            </p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Voices of Our Community</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Real words from parents, students, and alumni who've experienced the MDN difference</p>
+          </motion.div>
+        </div>
+
+        {/* Row 1 — scrolls left */}
+        <div className="overflow-hidden mb-5">
+          <div className="marquee-left">
+            {row1.map((r, i) => <ReviewCard key={i} review={r} />)}
+          </div>
+        </div>
+
+        {/* Row 2 — scrolls right */}
+        <div className="overflow-hidden">
+          <div className="marquee-right">
+            {row2.map((r, i) => <ReviewCard key={i} review={r} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ CONTACT FORM ══════════════ */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #1a3a6b 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-5xl mx-auto">
+
+            {/* Left info */}
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
+              <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
+                <span className="w-10 h-px bg-[#f5a623]" /> Get in Touch
+              </p>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-6 leading-tight">
+                Begin Your Child's<br />Journey with MDN
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                Have questions about admissions, facilities, or curriculum? Fill in the form and our team will get back to you within 24 hours.
+              </p>
+              <div className="space-y-5">
+                {[
+                  { icon: MapPin, label: 'Address', value: 'MDN Global School, Kaithal, Haryana — 136027' },
+                  { icon: Phone, label: 'Phone', value: '+91 98765 43210' },
+                  { icon: Mail, label: 'Email', value: 'admissions@mdnglobalschool.in' },
+                ].map((c, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-[#1a3a6b]/08 flex items-center justify-center shrink-0 border border-[#1a3a6b]/10">
+                      <c.icon size={18} className="text-[#1a3a6b]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-0.5">{c.label}</p>
+                      <p className="text-gray-700 font-medium text-sm">{c.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right form */}
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+                <AnimatePresence mode="wait">
+                  {formStatus === 'sent' ? (
+                    <motion.div key="sent" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                      className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                        <CheckCircle size={32} className="text-green-500" />
+                      </div>
+                      <h3 className="text-2xl font-serif font-bold text-[#1a3a6b] mb-2">Message Sent!</h3>
+                      <p className="text-gray-500">Our admissions team will contact you within 24 hours.</p>
+                    </motion.div>
+                  ) : (
+                    <motion.form key="form" onSubmit={handleSubmit} className="space-y-5">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Parent / Guardian Name *</label>
+                        <input required type="text" placeholder="Your full name"
+                          value={formData.name} onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Phone Number *</label>
+                        <input required type="tel" placeholder="+91 XXXXX XXXXX"
+                          value={formData.phone} onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Admission For Class</label>
+                        <select value={formData.classLevel} onChange={e => setFormData(p => ({ ...p, classLevel: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-700 text-sm bg-white">
+                          <option value="">Select class</option>
+                          {['Nursery / KG', 'Class I – V', 'Class VI – VIII', 'Class IX – X', 'Class XI – XII'].map(c => (
+                            <option key={c} value={c}>{c}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Message</label>
+                        <textarea rows={3} placeholder="Any specific questions or information you'd like to share…"
+                          value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm resize-none" />
+                      </div>
+                      <button type="submit"
+                        className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white py-3.5 rounded-xl font-bold text-sm hover:bg-[#0f2557] transition-all hover:shadow-lg hover:shadow-[#1a3a6b]/30 active:scale-98">
+                        <Send size={16} /> Send Enquiry
+                      </button>
+                      <p className="text-center text-xs text-gray-400">We respond within 24 hours · No spam, ever</p>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ HAPPY LEARNERS ══════════════ */}
       <section className="py-24 bg-[#1a3a6b] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #2563eb 0%, transparent 50%), radial-gradient(circle at 80% 50%, #0a1c46 0%, transparent 50%)' }} />
@@ -321,6 +535,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
