@@ -100,7 +100,7 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* ══════════════ HERO ══════════════ */}
-      <section className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#0a1c46]">
+      <section className="relative min-h-[100dvh] flex items-center overflow-hidden bg-[#0a1c46]">
         {/* Slides */}
         {slides.map((slide, i) => (
           <div key={slide.src} className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
@@ -108,16 +108,16 @@ export default function Home() {
             <img src={slide.src} alt="" className="w-full h-full object-cover" style={{ objectPosition: slide.pos }} />
           </div>
         ))}
-        <div className="absolute inset-0 z-10"
-          style={{ background: 'linear-gradient(135deg, rgba(6,18,58,0.62) 0%, rgba(10,40,100,0.42) 50%, rgba(6,18,58,0.55) 100%)' }} />
-        <div className="absolute inset-0 z-10"
-          style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(5,14,45,0.28) 100%)' }} />
+        {/* Overlay — left-heavy like About page */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0a1c46]/75 via-[#0a1c46]/45 to-[#0a1c46]/15" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0a1c46]/55 via-transparent to-transparent" />
 
-        {/* Content */}
-        <div className="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center" style={{ transform: 'translateY(-8vh)' }}>
+        {/* Content — left-aligned, same container as About */}
+        <div className="container mx-auto px-6 py-32 relative z-20">
 
           {/* CBSE badge */}
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
             className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> CBSE Affiliated · Kaithal, Haryana
           </motion.div>
@@ -127,30 +127,32 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-black text-white text-center whitespace-nowrap mb-5"
+            className="font-serif font-black text-white mb-6"
             style={{
-              fontSize: 'clamp(1.8rem, 5.6vw, 5.4rem)',
-              letterSpacing: '0.12em',
-              textShadow: '0 4px 32px rgba(0,0,0,0.6)',
-              lineHeight: 1,
+              fontSize: 'clamp(2.6rem, 6vw, 6rem)',
+              letterSpacing: '0.08em',
+              textShadow: '0 4px 32px rgba(0,0,0,0.5)',
+              lineHeight: 1.05,
+              maxWidth: '14ch',
             }}
           >
-            MDN GLOBAL SCHOOL
+            MDN Global<br />School
           </motion.h1>
 
-          {/* 1-2 line description */}
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed"
+            className="text-white/85 text-lg md:text-xl leading-relaxed max-w-xl"
             style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
           >
             Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
 
-          {/* Decorative line — same as About hero */}
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.0 }}
+          {/* Decorative line */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.0 }}
             className="mt-8 flex gap-3">
             <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
             <div className="h-1 w-8 bg-white/30 rounded-full" />
