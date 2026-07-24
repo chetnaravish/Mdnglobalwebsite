@@ -127,16 +127,15 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-black text-white mb-6"
+            className="font-serif font-black text-white mb-6 whitespace-nowrap"
             style={{
-              fontSize: 'clamp(2.6rem, 6vw, 6rem)',
-              letterSpacing: '0.08em',
+              fontSize: 'clamp(2rem, 5vw, 5rem)',
+              letterSpacing: '0.06em',
               textShadow: '0 4px 32px rgba(0,0,0,0.5)',
-              lineHeight: 1.05,
-              maxWidth: '14ch',
+              lineHeight: 1,
             }}
           >
-            MDN Global<br />School
+            MDN Global School
           </motion.h1>
 
           {/* Description */}
