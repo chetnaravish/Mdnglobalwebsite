@@ -458,6 +458,102 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ══════════════ FIND US / MAP ══════════════ */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        {/* subtle bg pattern */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #1a3a6b 1px, transparent 0)', backgroundSize: '28px 28px' }} />
+
+        <div className="container mx-auto px-6 relative z-10">
+
+          {/* heading */}
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }}
+            className="text-center mb-14">
+            <span className="inline-block text-xs font-black tracking-[0.22em] uppercase text-[#f5a623] bg-[#f5a623]/10 border border-[#f5a623]/25 rounded-full px-4 py-1.5 mb-4">
+              Our Location
+            </span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">
+              Visit <span className="text-[#f5a623]">MDN Global School</span>
+            </h2>
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">
+              Come see our campus in person — we'd love to show you around.
+            </p>
+          </motion.div>
+
+          {/* map + info grid */}
+          <div className="grid lg:grid-cols-3 gap-8 items-stretch">
+
+            {/* info cards — left column */}
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}
+              className="flex flex-col gap-5">
+
+              {[
+                {
+                  icon: MapPin,
+                  color: 'text-[#f5a623]',
+                  bg: 'bg-[#f5a623]/10',
+                  label: 'Address',
+                  lines: ['MDN Global School', 'Kaithal, Haryana – 136027', 'India'],
+                },
+                {
+                  icon: Phone,
+                  color: 'text-emerald-600',
+                  bg: 'bg-emerald-50',
+                  label: 'Phone',
+                  lines: ['+91 98765 43210', '+91 01746 XXXXXX'],
+                },
+                {
+                  icon: Mail,
+                  color: 'text-blue-600',
+                  bg: 'bg-blue-50',
+                  label: 'Email',
+                  lines: ['info@mdnglobalschool.com', 'admissions@mdnglobalschool.com'],
+                },
+              ].map(({ icon: Icon, color, bg, label, lines }, i) => (
+                <div key={i} className="flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                  <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
+                    <Icon size={20} className={color} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-wider text-gray-400 mb-1">{label}</p>
+                    {lines.map((l, j) => (
+                      <p key={j} className="text-[#1a3a6b] font-semibold text-sm leading-snug">{l}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* CTA button */}
+              <a href="https://maps.app.goo.gl/uyF7zkAFZSvnAiaS9" target="_blank" rel="noopener noreferrer"
+                className="mt-auto flex items-center justify-center gap-2 bg-[#1a3a6b] text-white px-6 py-3.5 rounded-2xl font-bold text-sm hover:bg-[#0f2557] transition-all hover:shadow-lg hover:shadow-[#1a3a6b]/30">
+                <MapPin size={16} /> Get Directions
+              </a>
+            </motion.div>
+
+            {/* map — right 2 columns */}
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, delay: 0.1 }}
+              className="lg:col-span-2 relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 min-h-[420px]">
+              <iframe
+                title="MDN Global School – Kaithal Location"
+                src="https://maps.google.com/maps?q=29.778579,76.4346884&z=17&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: 'block', minHeight: '420px' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              {/* floating badge over map */}
+              <div className="absolute top-4 left-4 flex items-center gap-2 bg-white rounded-xl px-4 py-2.5 shadow-lg border border-gray-100">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#f5a623] animate-pulse" />
+                <span className="text-[#1a3a6b] font-bold text-xs">MDN Global School, Kaithal</span>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ══════════════ HAPPY LEARNERS ══════════════ */}
       <section className="py-24 bg-[#1a3a6b] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none"
