@@ -70,15 +70,11 @@ export default function Contact() {
     setSubmitting(true);
     setSubmitError('');
     try {
-      const data = new FormData();
-      data.append('access_key', 'cf9324ed-4e12-4704-a2be-3a3fafd97540');
-      data.append('name', form.name);
-      data.append('phone', form.phone);
-      data.append('email', form.email);
-      data.append('classApplying', form.classApplying);
-      data.append('message', form.message);
-
-      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
       const json = await res.json();
       if (json.success) {
         setSubmitted(true);
@@ -176,8 +172,7 @@ export default function Contact() {
                   <p className="text-green-700">Thank you for reaching out. Our team will contact you within 24 hours.</p>
                 </motion.div>
               ) : (
-                <form action="https://api.web3forms.com/submit" method="POST" onSubmit={handleSubmit} className="space-y-5">
-                  <input type="hidden" name="access_key" value="cf9324ed-4e12-4704-a2be-3a3fafd97540" />
+                <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Name & Phone */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
