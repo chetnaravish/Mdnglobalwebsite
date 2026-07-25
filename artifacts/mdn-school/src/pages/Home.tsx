@@ -77,7 +77,7 @@ function ReviewCard({ review }: { review: typeof reviews[0] }) {
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
-  const [formData, setFormData] = useState({ name: '', phone: '', classLevel: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'sent'>('idle');
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function Home() {
     e.preventDefault();
     setFormStatus('sent');
     setTimeout(() => setFormStatus('idle'), 4000);
-    setFormData({ name: '', phone: '', classLevel: '', message: '' });
+    setFormData({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
   };
 
   // Duplicate for seamless loop
@@ -422,6 +422,12 @@ export default function Home() {
                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm" />
                       </div>
                       <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Student Name *</label>
+                        <input required type="text" placeholder="Student's full name"
+                          value={formData.studentName} onChange={e => setFormData(p => ({ ...p, studentName: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm" />
+                      </div>
+                      <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Phone Number *</label>
                         <input required type="tel" placeholder="+91 XXXXX XXXXX"
                           value={formData.phone} onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
@@ -429,13 +435,9 @@ export default function Home() {
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Admission For Class</label>
-                        <select value={formData.classLevel} onChange={e => setFormData(p => ({ ...p, classLevel: e.target.value }))}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-700 text-sm bg-white">
-                          <option value="">Select class</option>
-                          {['Nursery / KG', 'Class I – V', 'Class VI – VIII', 'Class IX – X', 'Class XI – XII'].map(c => (
-                            <option key={c} value={c}>{c}</option>
-                          ))}
-                        </select>
+                        <input type="text" placeholder="e.g. Class V, KG 1, Nursery"
+                          value={formData.classLevel} onChange={e => setFormData(p => ({ ...p, classLevel: e.target.value }))}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm" />
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Message</label>
