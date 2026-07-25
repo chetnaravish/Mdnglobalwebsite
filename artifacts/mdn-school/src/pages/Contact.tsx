@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, ChevronDown } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -42,11 +42,8 @@ const contactCards = [
   },
 ];
 
-const classOptions = ['Nursery', 'KG 1', 'KG 2', 'Class I', 'Class II', 'Class III', 'Class IV', 'Class V',
-  'Class VI', 'Class VII', 'Class VIII', 'Class IX', 'Class X', 'Class XI', 'Class XII'];
-
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', classApplying: '', message: '' });
+  const [form, setForm] = useState({ name: '', studentName: '', phone: '', email: '', classApplying: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -55,9 +52,10 @@ export default function Contact() {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!form.name.trim()) e.name = 'Name is required';
+    if (!form.studentName.trim()) e.studentName = 'Student name is required';
     if (!form.phone.match(/^[6-9]\d{9}$/)) e.phone = 'Enter a valid 10-digit mobile number';
     if (form.email && !form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = 'Enter a valid email';
-    if (!form.classApplying) e.classApplying = 'Please select a class';
+    if (!form.classApplying.trim()) e.classApplying = 'Please enter the class';
     if (!form.message.trim()) e.message = 'Please write a brief message';
     return e;
   };
@@ -173,7 +171,7 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name & Phone */}
+                  {/* Parent Name & Student Name */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">Parent / Guardian Name *</label>
@@ -182,33 +180,35 @@ export default function Contact() {
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Student Name *</label>
+                      <input name="studentName" value={form.studentName} onChange={handleChange} placeholder="e.g. Aarav Kumar"
+                        className={`w-full border ${errors.studentName ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
+                      {errors.studentName && <p className="text-red-500 text-xs mt-1">{errors.studentName}</p>}
+                    </div>
+                  </div>
+
+                  {/* Phone & Class */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
                       <input name="phone" value={form.phone} onChange={handleChange} placeholder="10-digit mobile no."
                         className={`w-full border ${errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
                       {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
-                  </div>
-
-                  {/* Email & Class */}
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                      <input name="email" value={form.email} onChange={handleChange} placeholder="Optional"
-                        className={`w-full border ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
-                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                    </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">Class Applying For *</label>
-                      <div className="relative">
-                        <select name="classApplying" value={form.classApplying} onChange={handleChange}
-                          className={`w-full border ${errors.classApplying ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all appearance-none bg-white`}>
-                          <option value="">Select class</option>
-                          {classOptions.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
-                      </div>
+                      <input name="classApplying" value={form.classApplying} onChange={handleChange} placeholder="e.g. Class V, KG 1"
+                        className={`w-full border ${errors.classApplying ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
                       {errors.classApplying && <p className="text-red-500 text-xs mt-1">{errors.classApplying}</p>}
                     </div>
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input name="email" value={form.email} onChange={handleChange} placeholder="Optional"
+                      className={`w-full border ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'} rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30 focus:border-[#1a3a6b] transition-all`} />
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                   </div>
 
                   {/* Message */}
