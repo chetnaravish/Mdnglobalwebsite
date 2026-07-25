@@ -48,6 +48,8 @@ const classOptions = ['Nursery', 'KG 1', 'KG 2', 'Class I', 'Class II', 'Class I
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', classApplying: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -60,11 +62,34 @@ export default function Contact() {
     return e;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
-    setSubmitted(true);
+
+    setSubmitting(true);
+    setSubmitError('');
+    try {
+      const data = new FormData();
+      data.append('access_key', 'cf9324ed-4e12-4704-a2be-3a3fafd97540');
+      data.append('name', form.name);
+      data.append('phone', form.phone);
+      data.append('email', form.email);
+      data.append('classApplying', form.classApplying);
+      data.append('message', form.message);
+
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(json.message || 'Submission failed. Please try again.');
+      }
+    } catch {
+      setSubmitError('Network error. Please check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -151,7 +176,8 @@ export default function Contact() {
                   <p className="text-green-700">Thank you for reaching out. Our team will contact you within 24 hours.</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form action="https://api.web3forms.com/submit" method="POST" onSubmit={handleSubmit} className="space-y-5">
+                  <input type="hidden" name="access_key" value="cf9324ed-4e12-4704-a2be-3a3fafd97540" />
                   {/* Name & Phone */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
@@ -199,9 +225,12 @@ export default function Contact() {
                     {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                   </div>
 
-                  <motion.button type="submit" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                    className="w-full bg-[#1a3a6b] text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-[#0f2557] transition-colors shadow-lg shadow-[#1a3a6b]/20">
-                    <Send size={20} /> Send Inquiry
+                  {submitError && (
+                    <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-xl px-4 py-3">{submitError}</p>
+                  )}
+                  <motion.button type="submit" disabled={submitting} whileHover={{ scale: submitting ? 1 : 1.03 }} whileTap={{ scale: submitting ? 1 : 0.97 }}
+                    className="w-full bg-[#1a3a6b] text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-[#0f2557] transition-colors shadow-lg shadow-[#1a3a6b]/20 disabled:opacity-70 disabled:cursor-not-allowed">
+                    <Send size={20} /> {submitting ? 'Sending…' : 'Send Inquiry'}
                   </motion.button>
                   <p className="text-gray-400 text-xs text-center">We respect your privacy. Your information will not be shared.</p>
                 </form>
