@@ -213,20 +213,25 @@ export default function Contact() {
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               className="flex flex-col gap-8 sticky top-24">
 
-              {/* Map Embed Placeholder */}
-              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100 aspect-video bg-gradient-to-br from-[#1a3a6b] to-[#0f2557] flex flex-col items-center justify-center text-white relative">
-                <div className="absolute inset-0 opacity-10"
-                  style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
-                <MapPin size={48} className="text-[#f5a623] mb-3" />
-                <h3 className="text-2xl font-serif font-bold mb-1">Find Us on the Map</h3>
-                <p className="text-white/60 text-sm text-center max-w-xs px-4">MDN Global School, Kaithal, Haryana – 136027</p>
+              {/* Google Maps Embed — MDN Global School exact location */}
+              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100 aspect-video relative">
+                <iframe
+                  title="MDN Global School Location"
+                  src="https://maps.google.com/maps?q=29.778579,76.4346884&z=17&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: 'block' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
                 <a
-                  href="https://maps.google.com/?q=Kaithal,+Haryana"
+                  href="https://maps.app.goo.gl/uyF7zkAFZSvnAiaS9"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 bg-[#f5a623] text-[#1a3a6b] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-yellow-400 transition-all"
+                  className="absolute bottom-4 right-4 bg-[#f5a623] text-[#1a3a6b] px-4 py-2 rounded-full font-bold text-xs shadow-lg hover:bg-yellow-400 transition-all flex items-center gap-1.5"
                 >
-                  Open in Google Maps
+                  <MapPin size={13} /> Open in Google Maps
                 </a>
               </div>
 
