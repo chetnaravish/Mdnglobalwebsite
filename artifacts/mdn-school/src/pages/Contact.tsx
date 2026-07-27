@@ -11,7 +11,7 @@ const contactCards = [
   {
     icon: MapPin,
     title: 'Our Address',
-    lines: ['MDN Global School,', 'Devigarh, Kaithal', 'Haryana – 132027'],
+    lines: ['MDN Global School,', 'Deod Kheri Road, Kaithal', 'Haryana – 136027'],
     action: 'Get Directions',
     color: 'bg-blue-50 text-blue-600',
     border: 'border-blue-100',

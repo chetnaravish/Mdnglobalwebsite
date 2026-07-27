@@ -207,8 +207,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <MapPin className="text-[#f5a623] shrink-0 mt-1" size={18} />
                   <span className="text-white/70 text-sm leading-relaxed">
                     MDN Global School,<br />
-                    Devigarh, Kaithal,<br />
-                    Haryana – 132027
+                    Deod Kheri Road, Kaithal,<br />
+                    Haryana – 136027
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
