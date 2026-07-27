@@ -130,7 +130,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition' },
       { src: '/images/academics.jpg', caption: 'Craft Studio — Clay Workshop' },
-      { src: '/images/about-school.jpg', caption: 'Student Artwork on Display' },
+      { src: '/images/mdn-building-3.jfif', caption: 'Student Artwork on Display' },
     ],
   },
   {
@@ -156,7 +156,7 @@ const facilities: Facility[] = [
     icon: Bus,
     title: 'Safe Transport',
     desc: 'GPS-enabled, air-conditioned school buses covering all major routes — student safety is our top priority.',
-    image: '/images/hero-bg.jpg',
+    image: '/images/mdn-building-2.jfif',
     tag: 'Transport', tagColor: 'bg-teal-100 text-teal-700',
     detail: [
       '15 GPS-enabled, air-conditioned buses covering all major residential areas of Kaithal & surrounding villages.',
@@ -166,16 +166,16 @@ const facilities: Facility[] = [
       'Routes reviewed annually; new routes added to ensure maximum coverage without excessive travel time for any child.',
     ],
     images: [
-      { src: '/images/hero-bg.jpg', caption: 'MDN Global School Transport Fleet' },
+      { src: '/images/mdn-building-2.jfif', caption: 'MDN Global School Transport Fleet' },
       { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure' },
-      { src: '/images/about-school.jpg', caption: 'GPS-Tracked School Bus' },
+      { src: '/images/mdn-building-3.jfif', caption: 'GPS-Tracked School Bus' },
     ],
   },
   {
     icon: TreePine,
     title: 'Eco-Friendly Campus',
     desc: '10-acre green campus with gardens, open-air amphitheatre, and eco-clubs promoting sustainable living.',
-    image: '/images/about-school.jpg',
+    image: '/images/mdn-building-3.jfif',
     tag: 'Environment', tagColor: 'bg-lime-100 text-lime-700',
     detail: [
       '10-acre certified green zone with 500+ trees, seasonal flower gardens & a student-tended kitchen garden.',
@@ -185,7 +185,7 @@ const facilities: Facility[] = [
       'Eco Club runs tree-plantation drives, awareness campaigns & monthly clean-campus challenges throughout the year.',
     ],
     images: [
-      { src: '/images/about-school.jpg', caption: 'MDN Global School Green Campus' },
+      { src: '/images/mdn-building-3.jfif', caption: 'MDN Global School Green Campus' },
       { src: '/images/students-happy.jpg', caption: 'Eco Club Tree Plantation Drive' },
       { src: '/images/academics.jpg', caption: 'Open-Air Amphitheatre' },
     ],
@@ -194,7 +194,7 @@ const facilities: Facility[] = [
     icon: Camera,
     title: 'CCTV Surveillance',
     desc: '360° CCTV monitoring across the campus ensures complete safety and security for all students and staff.',
-    image: '/images/hero-bg.jpg',
+    image: '/images/mdn-building-2.jfif',
     tag: 'Security', tagColor: 'bg-slate-100 text-slate-700',
     detail: [
       '120+ HD cameras installed across every corridor, classroom entrance, sports area, parking lot & campus gate.',
@@ -204,8 +204,8 @@ const facilities: Facility[] = [
       'Regular safety drills — fire evacuation, earthquake preparedness & anti-bullying protocols — conducted every term.',
     ],
     images: [
-      { src: '/images/hero-bg.jpg', caption: 'Campus Security Control Room' },
-      { src: '/images/about-school.jpg', caption: 'CCTV Coverage — Main Gate' },
+      { src: '/images/mdn-building-2.jfif', caption: 'Campus Security Control Room' },
+      { src: '/images/mdn-building-3.jfif', caption: 'CCTV Coverage — Main Gate' },
       { src: '/images/academics.jpg', caption: 'Secure Campus Entry System' },
     ],
   },

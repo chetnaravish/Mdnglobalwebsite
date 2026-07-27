@@ -88,7 +88,7 @@ export default function About() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/about-school.jpg" alt="MDN Global School Campus"
+        <img src="/images/mdn-building-3.jfif" alt="MDN Global School Campus"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/38 to-[#0a1c46]/12" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/50 via-transparent to-transparent" />
@@ -170,7 +170,7 @@ export default function About() {
             {/* Right — image, square aspect to match content height */}
             <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl aspect-square">
-                <img src="/images/about-school.jpg" alt="MDN Global School Campus" className="w-full h-full object-cover" />
+                <img src="/images/mdn-building-2.jfif" alt="MDN Global School Campus" className="w-full h-full object-cover object-center" />
               </div>
               <div className="absolute -bottom-5 -left-5 bg-[#1a3a6b] text-white rounded-2xl p-5 shadow-xl max-w-[200px]">
                 <Award className="text-[#f5a623] mb-2" size={28} />

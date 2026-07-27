@@ -29,10 +29,10 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
-  { src: '/images/hero-bg.jpg',        pos: 'center top'    },
-  { src: '/images/about-school.jpg',   pos: 'center center' },
-  { src: '/images/students-happy.jpg', pos: 'center center' },
-  { src: '/images/academics.jpg',      pos: 'center center' },
+  { src: '/images/mdn-building-2.jfif', pos: 'center center' },
+  { src: '/images/mdn-building-3.jfif', pos: 'center center' },
+  { src: '/images/mdn-building-1.avif', pos: 'center center' },
+  { src: '/images/students-happy.jpg',  pos: 'center center' },
 ];
 const SLIDE_MS = 3500;
 
@@ -269,7 +269,7 @@ export default function Home() {
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 1.04 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.8 }}>
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl group relative">
-                <img src="/images/about-school.jpg" alt="School Campus" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/images/mdn-building-4.avif" alt="MDN Global School Campus" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
                   <div className="text-white">
                     <div className="text-4xl font-serif font-bold mb-1 text-[#f5a623]">100%</div>

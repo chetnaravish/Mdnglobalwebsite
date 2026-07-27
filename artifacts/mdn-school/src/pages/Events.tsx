@@ -43,7 +43,7 @@ const annualHighlights: Highlight[] = [
     images: [
       { src: '/images/events-annual.jpg',  caption: 'Utsav — Grand Opening Night' },
       { src: '/images/students-happy.jpg', caption: 'Classical Dance Performances' },
-      { src: '/images/about-school.jpg',   caption: 'Student Art Exhibition at Utsav' },
+      { src: '/images/mdn-building-4.avif',   caption: 'Student Art Exhibition at Utsav' },
     ],
     detail: [
       'Utsav is our 2-day inter-school cultural festival attracting students from 20+ schools across the district.',
@@ -75,9 +75,9 @@ const annualHighlights: Highlight[] = [
     icon: Globe,
     title: 'MDN Debate Championship',
     desc: 'An annual inter-school debate tournament that hones critical thinking, public speaking, and argumentation skills.',
-    image: '/images/about-school.jpg',
+    image: '/images/mdn-building-4.avif',
     images: [
-      { src: '/images/about-school.jpg',   caption: 'MDN Debate Championship — Main Stage' },
+      { src: '/images/mdn-building-4.avif',   caption: 'MDN Debate Championship — Main Stage' },
       { src: '/images/academics.jpg',      caption: 'Students Presenting Their Arguments' },
       { src: '/images/students-happy.jpg', caption: 'Winners Receive Their Trophies' },
     ],
@@ -115,7 +115,7 @@ const annualHighlights: Highlight[] = [
     images: [
       { src: '/images/students-happy.jpg',  caption: 'Annual Prize Distribution Ceremony' },
       { src: '/images/events-annual.jpg',   caption: 'Cultural Performances — Annual Day' },
-      { src: '/images/about-school.jpg',    caption: 'Chief Guest Address & Felicitation' },
+      { src: '/images/mdn-building-4.avif',    caption: 'Chief Guest Address & Felicitation' },
     ],
     detail: [
       'Held every December, Annual Day is the most anticipated event in the MDN Global School calendar.',
@@ -238,7 +238,7 @@ const galleryImages = [
   '/images/facilities-lab.jpg',
   '/images/events-sports.jpg',
   '/images/students-happy.jpg',
-  '/images/about-school.jpg',
+  '/images/mdn-building-4.avif',
   '/images/academics.jpg',
   '/images/facilities-library.jpg',
 ];
