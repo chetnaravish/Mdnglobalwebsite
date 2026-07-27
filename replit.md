@@ -1,39 +1,44 @@
-# MDN Global School Kaithal — Website
+# MDN Global School Kaithal
 
-A school website for MDN Global School, Kaithal (Haryana), built as a pnpm monorepo with a React frontend and Express API backend.
+A school website for MDN Global School Kaithal (CBSE affiliated, Kaithal, Haryana). Built as a pnpm monorepo with a React/Vite frontend, an Express API server, and a PostgreSQL database via Drizzle ORM.
+
+## Project Structure
+
+```
+artifacts/
+  mdn-school/       # React + Vite frontend (serves at /)
+  api-server/       # Express API server (serves at /api)
+  mockup-sandbox/   # Design canvas / component preview (serves at /__mockup)
+lib/
+  db/               # Drizzle ORM schema + PostgreSQL pool (DATABASE_URL is auto-provisioned)
+  api-client-react/ # Generated API client for the frontend
+  api-zod/          # Shared Zod schemas for API validation
+  api-spec/         # OpenAPI spec
+```
+
+## Running the Project
+
+All three services are managed as workflows and start automatically:
+
+| Workflow | Command | URL |
+|---|---|---|
+| `artifacts/mdn-school: web` | `pnpm --filter @workspace/mdn-school run dev` | `/` |
+| `artifacts/api-server: API Server` | `pnpm --filter @workspace/api-server run dev` | `/api` |
+| `artifacts/mockup-sandbox: Component Preview Server` | `pnpm --filter @workspace/mockup-sandbox run dev` | `/__mockup` |
 
 ## Stack
 
-- **Frontend** (`artifacts/mdn-school`): React + Vite + Tailwind CSS + shadcn/ui, wouter routing
-- **API** (`artifacts/api-server`): Express 5, pnpm build with esbuild, Pino logging
-- **Shared libs** (`lib/`): `api-client-react`, `api-spec` (OpenAPI/orval), `api-zod`, `db` (Drizzle ORM + PostgreSQL)
-
-## Running the project
-
-Two workflows are configured and start automatically:
-
-| Workflow | Command | Preview |
-|----------|---------|---------|
-| `artifacts/mdn-school: web` | `pnpm --filter @workspace/mdn-school run dev` | `/` (root) |
-| `artifacts/api-server: API Server` | `pnpm --filter @workspace/api-server run dev` | `/api` |
-
-## Pages
-
-- Home, About, Academics, Facilities, Events, Gallery, Contact
-
-## Contact / Admission form
-
-The Contact page sends admission inquiries by email using **Brevo SMTP**. Two secrets are required for this to work:
-
-- `BREVO_SMTP_USER` — your Brevo SMTP login (usually your Brevo account email)
-- `BREVO_SMTP_KEY` — your Brevo SMTP API key
-
-Without these, the contact form will return a 500 error. The rest of the site works without them.
+- **Frontend**: React 18, Vite, Tailwind CSS, shadcn/ui, Wouter (routing), TanStack Query
+- **Backend**: Express 5, TypeScript, Pino (logging)
+- **Database**: PostgreSQL via Drizzle ORM (`lib/db/`) — `DATABASE_URL` is runtime-managed by Replit
+- **Package manager**: pnpm workspaces
 
 ## Database
 
-A Drizzle ORM + PostgreSQL `@workspace/db` package is wired up but the schema is currently empty — no tables are defined yet. A `DATABASE_URL` secret is needed if/when the DB is used.
+The database schema lives in `lib/db/src/schema/index.ts`. It is currently empty — add Drizzle table definitions there and run `pnpm --filter @workspace/db push` to apply them.
 
-## User preferences
+`DATABASE_URL` is automatically provided by Replit — do not set it manually.
 
-<!-- Add preferences here as you work with the agent -->
+## User Preferences
+
+- Keep the existing monorepo structure (pnpm workspaces, `artifacts/`, `lib/`)
