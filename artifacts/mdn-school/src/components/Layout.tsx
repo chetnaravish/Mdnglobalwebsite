@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <img
               src="/images/mdn-logo.jfif"
               alt="MDN Global School Kaithal"
-              className="h-12 md:h-14 w-auto rounded-full object-cover"
+              className="h-16 md:h-20 w-auto object-contain"
               style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
             />
             <span className="text-white font-bold text-base md:text-lg leading-tight whitespace-nowrap tracking-wide">
@@ -137,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <img
                     src="/images/mdn-logo.jfif"
                     alt="MDN Global School Kaithal"
-                    className="h-14 w-14 rounded-full object-cover shrink-0"
+                    className="h-20 w-auto object-contain shrink-0"
                     style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }}
                   />
                   <div>
