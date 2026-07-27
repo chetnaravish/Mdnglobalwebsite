@@ -38,13 +38,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         className="fixed top-0 left-0 right-0 z-50 bg-[#1a3a6b] text-white shadow-lg py-3 border-b border-white/10"
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center z-50 shrink-0" data-testid="link-logo">
+          <Link href="/" className="flex items-center gap-3 z-50 shrink-0" data-testid="link-logo">
             <img
-              src="/images/mdn-logo.svg"
+              src="/images/mdn-logo.jfif"
               alt="MDN Global School Kaithal"
-              className="h-12 md:h-14 w-auto"
+              className="h-12 md:h-14 w-auto rounded-full object-cover"
               style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
             />
+            <span className="text-white font-bold text-base md:text-lg leading-tight whitespace-nowrap tracking-wide">
+              MDN Global School Kaithal
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -130,10 +133,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
             <div>
               <div className="mb-6">
-                <span className="text-3xl font-serif font-bold block mb-1">MDN</span>
-                <span className="text-xs font-bold tracking-widest uppercase opacity-100 text-[#f5a623] block mb-4">Global School Kaithal</span>
-                <div className="inline-block border border-white/30 rounded px-3 py-1 text-xs font-semibold text-white">
-                  Affiliated to CBSE
+                <div className="flex items-center gap-3 mb-4">
+                  <img
+                    src="/images/mdn-logo.jfif"
+                    alt="MDN Global School Kaithal"
+                    className="h-14 w-14 rounded-full object-cover shrink-0"
+                    style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }}
+                  />
+                  <div>
+                    <span className="text-lg font-bold text-white leading-tight block">MDN Global School Kaithal</span>
+                    <div className="inline-block border border-white/30 rounded px-2 py-0.5 text-xs font-semibold text-[#f5a623] mt-1">
+                      Affiliated to CBSE
+                    </div>
+                  </div>
                 </div>
               </div>
               <p className="text-white/70 text-sm leading-relaxed mb-6">
