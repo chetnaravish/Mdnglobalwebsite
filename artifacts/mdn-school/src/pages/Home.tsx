@@ -436,6 +436,12 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-serif font-bold text-[#1a3a6b] mb-2">Message Sent!</h3>
                       <p className="text-gray-500">Our admissions team will contact you within 24 hours.</p>
+                      <button
+                        type="button"
+                        onClick={() => setFormStatus('idle')}
+                        className="mt-6 px-6 py-2.5 rounded-xl border-2 border-[#1a3a6b] text-[#1a3a6b] font-bold text-sm hover:bg-[#1a3a6b] hover:text-white transition-all">
+                        Send Another Enquiry
+                      </button>
                     </motion.div>
                   ) : (
                     <motion.form key="form" onSubmit={handleSubmit} className="space-y-5">

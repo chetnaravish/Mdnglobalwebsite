@@ -168,6 +168,16 @@ export default function Contact() {
                   </div>
                   <h3 className="text-2xl font-serif font-bold text-green-800 mb-2">Message Sent!</h3>
                   <p className="text-green-700">Thank you for reaching out. Our team will contact you within 24 hours.</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setForm({ name: '', studentName: '', phone: '', email: '', classApplying: '', message: '' });
+                      setErrors({});
+                    }}
+                    className="mt-6 px-6 py-2.5 rounded-xl border-2 border-green-700 text-green-700 font-bold text-sm hover:bg-green-700 hover:text-white transition-all">
+                    Send Another Enquiry
+                  </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
