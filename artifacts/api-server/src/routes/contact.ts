@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { z } from "zod";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
@@ -10,24 +10,16 @@ const contactSchema = z.object({
   studentName: z.string().min(1, "Student name is required"),
   phone: z.string().min(1, "Phone is required"),
   email: z.string().email().optional().or(z.literal("")),
-  classApplying: z.string().min(1, "Class is required"),
-  message: z.string().min(1, "Message is required"),
+  classApplying: z.string().optional().default(""),
+  message: z.string().optional().default(""),
 });
 
-function createTransporter() {
-  const user = process.env.BREVO_SMTP_USER;
-  const pass = process.env.BREVO_SMTP_KEY;
-
-  if (!user || !pass) {
-    throw new Error("BREVO_SMTP_USER or BREVO_SMTP_KEY is not set");
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not set");
   }
-
-  return nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: { user, pass },
-  });
+  return new Resend(apiKey);
 }
 
 router.post("/contact", async (req, res) => {
@@ -39,16 +31,16 @@ router.post("/contact", async (req, res) => {
 
   const { name, studentName, phone, email, classApplying, message } = parsed.data;
 
-  let transporter: nodemailer.Transporter;
+  let resend: Resend;
   try {
-    transporter = createTransporter();
+    resend = getResend();
   } catch (err) {
     logger.error({ err }, "Email service not configured");
     res.status(500).json({ success: false, message: "Email service not configured" });
     return;
   }
 
-  const senderEmail = process.env.BREVO_SMTP_USER!;
+  const toEmail = process.env.TO_EMAIL || "chetnaravishchetnaravish@gmail.com";
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
@@ -74,11 +66,11 @@ router.post("/contact", async (req, res) => {
         </tr>
         <tr style="background:#f8f9ff;">
           <td style="padding:10px 14px;font-weight:bold;color:#1a3a6b;">Class Applying For</td>
-          <td style="padding:10px 14px;">${classApplying}</td>
+          <td style="padding:10px 14px;">${classApplying || "—"}</td>
         </tr>
         <tr>
           <td style="padding:10px 14px;font-weight:bold;color:#1a3a6b;vertical-align:top;">Message</td>
-          <td style="padding:10px 14px;">${message.replace(/\n/g, "<br>")}</td>
+          <td style="padding:10px 14px;">${(message || "").replace(/\n/g, "<br>")}</td>
         </tr>
       </table>
       <p style="margin-top:24px;color:#888;font-size:12px;">
@@ -88,18 +80,24 @@ router.post("/contact", async (req, res) => {
   `;
 
   try {
-    await transporter.sendMail({
-      from: `"MDN Global School Website" <${senderEmail}>`,
-      to: senderEmail,
-      ...(email ? { replyTo: `"${name}" <${email}>` } : {}),
-      subject: `New Admission Inquiry – ${studentName} (${classApplying}) from ${name}`,
+    const { error } = await resend.emails.send({
+      from: "MDN Global School <onboarding@resend.dev>",
+      to: [toEmail],
+      ...(email ? { replyTo: `${name} <${email}>` } : {}),
+      subject: `New Admission Inquiry – ${studentName} (${classApplying || "Class not specified"}) from ${name}`,
       html,
     });
 
-    logger.info({ name, studentName, classApplying }, "Contact form email sent");
+    if (error) {
+      logger.error({ error }, "Resend API error");
+      res.status(502).json({ success: false, message: "Failed to send email. Please try again." });
+      return;
+    }
+
+    logger.info({ name, studentName, classApplying }, "Contact form email sent via Resend");
     res.json({ success: true });
   } catch (err) {
-    logger.error({ err }, "Failed to send email via SMTP");
+    logger.error({ err }, "Failed to send email via Resend");
     res.status(502).json({ success: false, message: "Failed to send email. Please try again." });
   }
 });

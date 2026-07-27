@@ -78,18 +78,42 @@ function ReviewCard({ review }: { review: typeof reviews[0] }) {
 export default function Home() {
   const [current, setCurrent] = useState(0);
   const [formData, setFormData] = useState({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
-  const [formStatus, setFormStatus] = useState<'idle' | 'sent'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle');
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     const id = setInterval(() => setCurrent(p => (p + 1) % slides.length), SLIDE_MS);
     return () => clearInterval(id);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('sent');
-    setTimeout(() => setFormStatus('idle'), 4000);
-    setFormData({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
+    setFormStatus('submitting');
+    setFormError('');
+    try {
+      const res = await fetch(`${import.meta.env.BASE_URL}api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          studentName: formData.studentName,
+          phone: formData.phone,
+          classApplying: formData.classLevel,
+          message: formData.message,
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setFormStatus('sent');
+        setFormData({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
+      } else {
+        setFormError(json.message || 'Submission failed. Please try again.');
+        setFormStatus('error');
+      }
+    } catch {
+      setFormError('Network error. Please check your connection and try again.');
+      setFormStatus('error');
+    }
   };
 
   // Duplicate for seamless loop
@@ -445,9 +469,12 @@ export default function Home() {
                           value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/15 outline-none transition-all text-gray-800 text-sm resize-none" />
                       </div>
-                      <button type="submit"
-                        className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white py-3.5 rounded-xl font-bold text-sm hover:bg-[#0f2557] transition-all hover:shadow-lg hover:shadow-[#1a3a6b]/30 active:scale-98">
-                        <Send size={16} /> Send Enquiry
+                      {formStatus === 'error' && (
+                        <p className="text-red-500 text-xs text-center">{formError}</p>
+                      )}
+                      <button type="submit" disabled={formStatus === 'submitting'}
+                        className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white py-3.5 rounded-xl font-bold text-sm hover:bg-[#0f2557] transition-all hover:shadow-lg hover:shadow-[#1a3a6b]/30 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed">
+                        <Send size={16} /> {formStatus === 'submitting' ? 'Sending…' : 'Send Enquiry'}
                       </button>
                       <p className="text-center text-xs text-gray-400">We respond within 24 hours · No spam, ever</p>
                     </motion.form>
