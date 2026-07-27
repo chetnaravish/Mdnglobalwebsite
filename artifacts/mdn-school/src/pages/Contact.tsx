@@ -11,7 +11,7 @@ const contactCards = [
   {
     icon: MapPin,
     title: 'Our Address',
-    lines: ['MDN Global School,', 'Kaithal, Haryana – 136027', 'India'],
+    lines: ['MDN Global School,', 'Devigarh, Kaithal', 'Haryana – 132027'],
     action: 'Get Directions',
     color: 'bg-blue-50 text-blue-600',
     border: 'border-blue-100',
@@ -19,7 +19,7 @@ const contactCards = [
   {
     icon: Phone,
     title: 'Call Us',
-    lines: ['+91 98765 43210', '+91 01746 XXXXXX', 'Mon–Sat: 8 AM – 4 PM'],
+    lines: ['+91 87087 71586', 'Mon–Sat: 8 AM – 4 PM'],
     action: 'Call Now',
     color: 'bg-green-50 text-green-600',
     border: 'border-green-100',
@@ -285,8 +285,8 @@ export default function Contact() {
                 </ul>
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Quick Contact</p>
-                  <a href="tel:+919876543210" className="text-[#1a3a6b] font-bold text-lg hover:text-[#f5a623] transition-colors">
-                    +91 98765 43210
+                  <a href="tel:+918708771586" className="text-[#1a3a6b] font-bold text-lg hover:text-[#f5a623] transition-colors">
+                    +91 87087 71586
                   </a>
                 </div>
               </div>
