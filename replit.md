@@ -1,26 +1,39 @@
-# MDN Global School — Kaithal
+# MDN Global School Kaithal — Website
 
-A school website for MDN Global School, Kaithal, Haryana. Built as a pnpm monorepo with a React frontend and an Express API backend.
+A school website for MDN Global School, Kaithal (Haryana), built as a pnpm monorepo with a React frontend and Express API backend.
 
 ## Stack
 
-- **Frontend** (`artifacts/mdn-school`): React + Vite + Tailwind CSS + shadcn/ui, routed via Wouter. Pages: Home, About, Academics, Facilities, Events, Gallery, Contact.
-- **API Server** (`artifacts/api-server`): Express 5 + Drizzle ORM + PostgreSQL. Served at `/api`.
-- **Shared libs** (`lib/`): `api-spec` (OpenAPI + Orval), `api-zod` (Zod schemas), `api-client-react` (React Query hooks), `db` (Drizzle schema + connection).
+- **Frontend** (`artifacts/mdn-school`): React + Vite + Tailwind CSS + shadcn/ui, wouter routing
+- **API** (`artifacts/api-server`): Express 5, pnpm build with esbuild, Pino logging
+- **Shared libs** (`lib/`): `api-client-react`, `api-spec` (OpenAPI/orval), `api-zod`, `db` (Drizzle ORM + PostgreSQL)
 
-## How to run
+## Running the project
 
-Dependencies are installed with `pnpm install` from the workspace root.
+Two workflows are configured and start automatically:
 
-| Service | Command |
-|---------|---------|
-| Frontend | `pnpm --filter @workspace/mdn-school run dev` |
-| API Server | `pnpm --filter @workspace/api-server run dev` |
+| Workflow | Command | Preview |
+|----------|---------|---------|
+| `artifacts/mdn-school: web` | `pnpm --filter @workspace/mdn-school run dev` | `/` (root) |
+| `artifacts/api-server: API Server` | `pnpm --filter @workspace/api-server run dev` | `/api` |
 
-Both workflows are pre-configured in Replit and start automatically.
+## Pages
+
+- Home, About, Academics, Facilities, Events, Gallery, Contact
+
+## Contact / Admission form
+
+The Contact page sends admission inquiries by email using **Brevo SMTP**. Two secrets are required for this to work:
+
+- `BREVO_SMTP_USER` — your Brevo SMTP login (usually your Brevo account email)
+- `BREVO_SMTP_KEY` — your Brevo SMTP API key
+
+Without these, the contact form will return a 500 error. The rest of the site works without them.
 
 ## Database
 
-Replit's built-in PostgreSQL is used. `DATABASE_URL` is injected automatically. To push schema changes: `pnpm --filter @workspace/db run push`.
+A Drizzle ORM + PostgreSQL `@workspace/db` package is wired up but the schema is currently empty — no tables are defined yet. A `DATABASE_URL` secret is needed if/when the DB is used.
 
-## User Preferences
+## User preferences
+
+<!-- Add preferences here as you work with the agent -->
