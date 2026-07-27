@@ -346,7 +346,7 @@ export default function Facilities() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> World-Class Infrastructure
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            className="text-3xl sm:text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
             style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             Our <span className="text-[#f5a623]">Facilities</span>
           </motion.h1>

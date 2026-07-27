@@ -151,12 +151,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif font-black text-white mb-6 whitespace-nowrap"
+            className="font-serif font-black text-white mb-6"
             style={{
-              fontSize: 'clamp(2rem, 5vw, 5rem)',
-              letterSpacing: '0.06em',
+              fontSize: 'clamp(1.75rem, 6vw, 5rem)',
+              letterSpacing: '0.04em',
               textShadow: '0 4px 32px rgba(0,0,0,0.5)',
-              lineHeight: 1,
+              lineHeight: 1.1,
             }}
           >
             MDN Global School
@@ -334,16 +334,17 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
-          <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[420px]">
+          {/* Mobile: 2-col grid | Desktop: bento-style 4-col */}
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-2 md:h-[420px]">
             {[
-              { src: '/images/events-annual.jpg', span: 'col-span-2 row-span-2', pos: 'center center' },
-              { src: '/images/facilities-sports.jpg', span: 'col-span-1 row-span-1', pos: 'center center' },
-              { src: '/images/facilities-lab.jpg', span: 'col-span-1 row-span-1', pos: 'center center' },
-              { src: '/images/events-sports.jpg', span: 'col-span-1 row-span-1', pos: 'center center' },
-              { src: '/images/students-happy.jpg', span: 'col-span-1 row-span-1', pos: 'center top' },
+              { src: '/images/events-annual.jpg',     mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center' },
+              { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
+              { src: '/images/facilities-lab.jpg',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
+              { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
+              { src: '/images/students-happy.jpg',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center top'   },
             ].map((img, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.1}
-                className={`${img.span} rounded-2xl overflow-hidden group cursor-pointer`}>
+                className={`${img.mSpan} ${img.dSpan} rounded-2xl overflow-hidden group cursor-pointer`}>
                 <img src={img.src} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 brightness-90 hover:brightness-110"
                   style={{ objectPosition: img.pos }} />
               </motion.div>

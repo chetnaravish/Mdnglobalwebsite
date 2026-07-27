@@ -45,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="h-16 md:h-20 w-auto object-contain"
               style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
             />
-            <span className="text-white font-bold text-base md:text-lg leading-tight whitespace-nowrap tracking-wide">
+            <span className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight tracking-wide">
               MDN Global School Kaithal
             </span>
           </Link>
