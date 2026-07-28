@@ -82,18 +82,41 @@ function VisionMissionCard({ delay, icon: Icon, iconBg, badge, title, text, item
   );
 }
 
+const aboutSlides = [
+  { src: '/images/mdn-building-4.avif', pos: 'center center', filter: '' },
+  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
+];
+const ABOUT_SLIDE_MS = 4000;
+
 export default function About() {
+  const [current, setCurrent] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setCurrent(p => (p + 1) % aboutSlides.length), ABOUT_SLIDE_MS);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <div className="flex flex-col">
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
-      <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/mdn-building-3.jfif" alt="MDN Global School Campus"
-          className="absolute inset-0 w-full h-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/38 to-[#0a1c46]/12" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/50 via-transparent to-transparent" />
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden bg-[#0a1c46]">
+        {/* Slides */}
+        {aboutSlides.map((slide, i) => (
+          <div key={slide.src}
+            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+            style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}>
+            <img
+              src={slide.src}
+              alt=""
+              className="w-full h-full object-cover"
+              style={{ objectPosition: slide.pos, filter: slide.filter || 'none' }}
+            />
+          </div>
+        ))}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/38 to-[#0a1c46]/12" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0a1c46]/50 via-transparent to-transparent" />
 
-        <div className="container mx-auto px-6 py-24 relative z-10">
+        <div className="container mx-auto px-6 py-24 relative z-20">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0}
             className="inline-flex items-center gap-2 bg-[#f5a623]/20 border border-[#f5a623]/40 rounded-full px-4 py-1.5 text-[#f5a623] text-xs font-bold tracking-widest uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> Our Story
@@ -112,6 +135,14 @@ export default function About() {
             <div className="h-1 w-8 bg-white/30 rounded-full" />
             <div className="h-1 w-4 bg-white/20 rounded-full" />
           </motion.div>
+        </div>
+
+        {/* Slide dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {aboutSlides.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)} aria-label={`Slide ${i + 1}`}
+              className={`rounded-full transition-all duration-500 ${i === current ? 'w-8 h-1.5 bg-[#f5a623]' : 'w-2 h-1.5 bg-white/35 hover:bg-white/60'}`} />
+          ))}
         </div>
       </section>
 

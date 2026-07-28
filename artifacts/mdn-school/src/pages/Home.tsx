@@ -29,10 +29,9 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
-  { src: '/images/mdn-building-2.jfif', pos: 'center center' },
-  { src: '/images/mdn-building-3.jfif', pos: 'center center' },
-  { src: '/images/mdn-building-1.avif', pos: 'center center' },
-  { src: '/images/students-happy.jpg',  pos: 'center center' },
+  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
+  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: 'contrast(1.12) brightness(1.06) saturate(1.1)' },
+  { src: '/images/mdn-building-2.jfif', pos: 'center 20%',    filter: 'contrast(1.15) brightness(1.08) saturate(1.12)' },
 ];
 const SLIDE_MS = 3500;
 
@@ -129,7 +128,8 @@ export default function Home() {
         {slides.map((slide, i) => (
           <div key={slide.src} className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}>
-            <img src={slide.src} alt="" className="w-full h-full object-cover" style={{ objectPosition: slide.pos }} />
+            <img src={slide.src} alt="" className="w-full h-full object-cover"
+              style={{ objectPosition: slide.pos, filter: slide.filter || 'none' }} />
           </div>
         ))}
         {/* Overlay — left-heavy like About page */}
