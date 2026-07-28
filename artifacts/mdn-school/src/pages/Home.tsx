@@ -30,8 +30,8 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
   { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
-  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: 'contrast(1.12) brightness(1.06) saturate(1.1)' },
-  { src: '/images/mdn-building-2.jfif', pos: 'center 20%',    filter: 'contrast(1.15) brightness(1.08) saturate(1.12)' },
+  { src: '/images/mdn-building-3.png', pos: 'center center', filter: '' },
+  { src: '/images/mdn-building-2.png', pos: 'center 40%',    filter: '' },
 ];
 const SLIDE_MS = 3500;
 
