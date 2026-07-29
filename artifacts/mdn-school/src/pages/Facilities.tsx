@@ -82,7 +82,7 @@ const facilities: Facility[] = [
     icon: BookOpen,
     title: 'Library & Resource Centre',
     desc: 'Over 15,000 books, digital e-library access, research journals, and comfortable reading spaces for curious minds.',
-    image: '/images/facilities-library.jpg',
+    image: '/images/classroom.png',
     tag: 'Knowledge', tagColor: 'bg-amber-100 text-amber-700',
     detail: [
       'Over 15,000 titles spanning fiction, non-fiction, reference books, encyclopaedias & subject-specific texts for all grades.',
