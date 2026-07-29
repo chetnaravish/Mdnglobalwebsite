@@ -1,5 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+
+/* ── Animated stat counter ──────────────────────────────── */
+function StatCounter({ end, suffix = '', duration = 1800 }: { end: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    let startTime: number | null = null;
+    const step = (ts: number) => {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      setCount(Math.round(ease * end));
+      if (p < 1) requestAnimationFrame(step);
+      else setCount(end);
+    };
+    requestAnimationFrame(step);
+  }, [inView, end, duration]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const fadeUp = {
@@ -248,11 +269,11 @@ function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () 
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-2xl"
+        className="bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-lg"
         onClick={e => e.stopPropagation()}
       >
         {/* Auto-scrolling image viewer */}
-        <div className="relative h-80 sm:h-96 bg-gray-900 overflow-hidden">
+        <div className="relative h-52 bg-gray-900 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.img
               key={current}
@@ -306,18 +327,18 @@ function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () 
           </div>
         </div>
 
-        {/* Info — no scroll */}
-        <div className="p-6 sm:p-8">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-11 h-11 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
-              <facility.icon size={20} className="text-white" />
+        {/* Info */}
+        <div className="p-5">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-9 h-9 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
+              <facility.icon size={17} className="text-white" />
             </div>
-            <h2 className="text-xl font-serif font-black text-[#1a3a6b]">{facility.title}</h2>
+            <h2 className="text-lg font-serif font-black text-[#1a3a6b]">{facility.title}</h2>
           </div>
-          <ul className="space-y-3">
-            {facility.detail.map((line, i) => (
-              <li key={i} className="flex gap-3 text-gray-600 text-sm leading-relaxed">
-                <span className="mt-1.5 w-2 h-2 rounded-full bg-[#f5a623] shrink-0" />
+          <ul className="space-y-2.5">
+            {facility.detail.slice(0, 3).map((line, i) => (
+              <li key={i} className="flex gap-2.5 text-gray-600 text-sm leading-snug">
+                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#f5a623] shrink-0" />
                 {line}
               </li>
             ))}
@@ -354,10 +375,6 @@ export default function Facilities() {
             className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             Modern infrastructure that supports every dimension of a child's growth — academic, physical, creative, and emotional.
           </motion.p>
-          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
-            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
-            <div className="h-1 w-8 bg-white/30 rounded-full" />
-          </motion.div>
         </div>
       </section>
 
@@ -366,14 +383,14 @@ export default function Facilities() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { num: '10', unit: 'Acres', label: 'Green Campus' },
-              { num: '30+', unit: '',     label: 'Smart Classrooms' },
-              { num: '5',  unit: '',      label: 'Science Labs' },
-              { num: '15k+',unit: '',     label: 'Library Books' },
+              { end: 10, suffix: ' Acres', label: 'Green Campus' },
+              { end: 30, suffix: '+',      label: 'Smart Classrooms' },
+              { end: 5,  suffix: '',       label: 'Science Labs' },
+              { end: 15, suffix: 'k+',    label: 'Library Books' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.4}>
                 <div className="text-4xl font-serif font-black text-[#1a3a6b] mb-1">
-                  {s.num}<span className="text-xl">{s.unit}</span>
+                  <StatCounter end={s.end} suffix={s.suffix} />
                 </div>
                 <div className="text-[#1a3a6b]/70 text-sm font-bold uppercase tracking-wider">{s.label}</div>
               </motion.div>
