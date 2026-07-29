@@ -59,11 +59,11 @@ const stages: Stage[] = [
   {
     label: 'Middle School',
     classes: 'Class VI – VIII', age: '11–13 yrs',
-    image: '/images/facilities-lab.jpg', imagePos: 'center center',
+    image: '/images/science-lab.png', imagePos: 'center center',
     accentBg: 'bg-purple-500', accentText: 'text-purple-600',
     borderTop: 'border-t-4 border-purple-400',
     badgeBg: 'bg-purple-500', badgeText: 'text-white',
-    detailImage: '/images/facilities-lab.jpg',
+    detailImage: '/images/science-lab.png',
     desc: 'Middle School deepens subject exploration through labs, research projects, debate, and co-curricular activities that develop critical thinking, teamwork, and self-confidence in every student.',
     highlights: [
       'Subject specialisation begins with lab-based practicals',

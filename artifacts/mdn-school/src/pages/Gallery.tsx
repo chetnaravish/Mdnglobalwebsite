@@ -61,11 +61,11 @@ const sections: Section[] = [
     count: 6,
     photos: [
       { src: '/images/academics.jpg', caption: 'Smart Classroom — Interactive Learning', pos: 'center center' },
-      { src: '/images/facilities-lab.jpg', caption: 'Science Lab — Practical Session', pos: 'center center' },
-      { src: '/images/facilities-library.jpg', caption: 'School Library — Reading Zone', pos: 'center center' },
+      { src: '/images/science-lab.png', caption: 'Science Lab — Practical Session', pos: 'center center' },
+      { src: '/images/classroom.png', caption: 'School Library — Reading Zone', pos: 'center center' },
       { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Class', pos: 'center top' },
-      { src: '/images/facilities-lab.jpg', caption: 'Chemistry Lab Experiment', pos: 'center bottom' },
-      { src: '/images/facilities-library.jpg', caption: 'Students Studying Together', pos: 'center top' },
+      { src: '/images/science-lab.png', caption: 'Chemistry Lab Experiment', pos: 'center bottom' },
+      { src: '/images/classroom.png', caption: 'Students Studying Together', pos: 'center top' },
     ]
   },
   {
@@ -74,12 +74,12 @@ const sections: Section[] = [
     color: 'bg-rose-600',
     count: 6,
     photos: [
-      { src: '/images/facilities-lab.jpg', caption: 'State-of-the-Art Science Laboratory', pos: 'center center' },
-      { src: '/images/facilities-library.jpg', caption: 'Library & Resource Centre', pos: 'center center' },
+      { src: '/images/science-lab.png', caption: 'State-of-the-Art Science Laboratory', pos: 'center center' },
+      { src: '/images/classroom.png', caption: 'Library & Resource Centre', pos: 'center center' },
       { src: '/images/facilities-sports.jpg', caption: 'Indoor Sports Hall', pos: 'center center' },
       { src: '/images/academics.jpg', caption: 'Digital Classroom Technology', pos: 'center top' },
-      { src: '/images/facilities-lab.jpg', caption: 'Physics Lab — Apparatus Setup', pos: 'center bottom' },
-      { src: '/images/facilities-library.jpg', caption: 'Reading Room — Quiet Zone', pos: 'center top' },
+      { src: '/images/science-lab.png', caption: 'Physics Lab — Apparatus Setup', pos: 'center bottom' },
+      { src: '/images/classroom.png', caption: 'Reading Room — Quiet Zone', pos: 'center top' },
     ]
   },
 ];

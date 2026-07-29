@@ -279,7 +279,7 @@ export default function Home() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: 'Academics', icon: BookOpen, image: '/images/academics.jpg', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
               { title: 'Facilities', icon: Trophy, image: '/images/facilities-sports.jpg', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
               { title: 'Events & Culture', icon: Star, image: '/images/events-annual.jpg', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/events', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
@@ -326,7 +326,7 @@ export default function Home() {
             {[
               { src: '/images/events-annual.jpg',     mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center' },
               { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
-              { src: '/images/facilities-lab.jpg',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
+              { src: '/images/science-lab.png',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
               { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
               { src: '/images/computer-lab.png',       mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
             ].map((img, i) => (

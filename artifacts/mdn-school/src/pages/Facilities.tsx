@@ -56,14 +56,14 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/academics.jpg', caption: 'Interactive Digital Board in Action' },
       { src: '/images/students-happy.jpg', caption: 'Students Engaged in Smart Learning' },
-      { src: '/images/facilities-lab.jpg', caption: 'Technology-Integrated Classroom' },
+      { src: '/images/science-lab.png', caption: 'Technology-Integrated Classroom' },
     ],
   },
   {
     icon: FlaskConical,
     title: 'Science Laboratories',
     desc: 'State-of-the-art Physics, Chemistry, and Biology labs equipped with modern instruments for practical learning.',
-    image: '/images/facilities-lab.jpg',
+    image: '/images/science-lab.png',
     tag: 'Science', tagColor: 'bg-purple-100 text-purple-700',
     detail: [
       'Separate, fully equipped labs for Physics, Chemistry & Biology — dedicated practical experience from Class VI onwards.',
@@ -73,7 +73,7 @@ const facilities: Facility[] = [
       'All labs are maintained by qualified assistants with strict safety procedures, first-aid equipment & fire extinguishers.',
     ],
     images: [
-      { src: '/images/facilities-lab.jpg', caption: 'Students in the Chemistry Lab' },
+      { src: '/images/science-lab.png', caption: 'Students in the Chemistry Lab' },
       { src: '/images/academics.jpg', caption: 'Biology Lab — Microscope Session' },
       { src: '/images/students-happy.jpg', caption: 'Physics Practical Experiment' },
     ],
@@ -132,7 +132,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Session' },
       { src: '/images/students-happy.jpg', caption: 'Students at Individual Workstations' },
-      { src: '/images/facilities-lab.jpg', caption: 'IT Lab — Digital Learning' },
+      { src: '/images/science-lab.png', caption: 'IT Lab — Digital Learning' },
     ],
   },
   {

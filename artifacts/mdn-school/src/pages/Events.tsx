@@ -57,9 +57,9 @@ const annualHighlights: Highlight[] = [
     icon: Microscope,
     title: 'Science Exhibition',
     desc: 'Students showcase innovative projects, working models, and research across Physics, Chemistry, Biology, and Technology.',
-    image: '/images/facilities-lab.jpg',
+    image: '/images/science-lab.png',
     images: [
-      { src: '/images/facilities-lab.jpg', caption: 'Science Exhibition — Working Models' },
+      { src: '/images/science-lab.png', caption: 'Science Exhibition — Working Models' },
       { src: '/images/academics.jpg',      caption: 'Students Explaining Their Projects' },
       { src: '/images/students-happy.jpg', caption: 'Award-Winning Science Exhibit' },
     ],
@@ -235,7 +235,7 @@ function HighlightModal({ event, onClose }: { event: Highlight; onClose: () => v
 const galleryImages = [
   '/images/events-annual.jpg',
   '/images/facilities-sports.jpg',
-  '/images/facilities-lab.jpg',
+  '/images/science-lab.png',
   '/images/events-sports.jpg',
   '/images/students-happy.jpg',
   '/images/mdn-building-4.avif',
