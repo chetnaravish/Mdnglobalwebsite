@@ -131,9 +131,6 @@ export default function About() {
             Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
-            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
-            <div className="h-1 w-8 bg-white/30 rounded-full" />
-            <div className="h-1 w-4 bg-white/20 rounded-full" />
           </motion.div>
         </div>
 

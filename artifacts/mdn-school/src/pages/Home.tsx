@@ -173,14 +173,6 @@ export default function Home() {
             Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
 
-          {/* Decorative line */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.0 }}
-            className="mt-8 flex gap-3">
-            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
-            <div className="h-1 w-8 bg-white/30 rounded-full" />
-            <div className="h-1 w-4 bg-white/20 rounded-full" />
-          </motion.div>
         </div>
 
         {/* Slide dots */}
@@ -190,11 +182,6 @@ export default function Home() {
               className={`rounded-full transition-all duration-500 ${i === current ? 'w-8 h-1.5 bg-[#f5a623]' : 'w-2 h-1.5 bg-white/35 hover:bg-white/60'}`} />
           ))}
         </div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.5, duration: 1 }}
-          className="absolute bottom-8 right-8 z-20 hidden md:flex flex-col items-center gap-1">
-          <div className="w-px h-10 bg-gradient-to-b from-white/50 to-transparent" />
-          <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-semibold">Scroll</span>
-        </motion.div>
       </section>
 
       {/* ══════════════ STATS ══════════════ */}

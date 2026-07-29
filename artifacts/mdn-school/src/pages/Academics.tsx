@@ -146,7 +146,7 @@ export default function Academics() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/academics.jpg" alt="Academics at MDN Global School"
+        <img src="/images/classroom.png" alt="Academics at MDN Global School"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/60 via-[#0a1c46]/35 to-[#1e56a0]/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/40 via-transparent to-transparent" />
@@ -164,10 +164,6 @@ export default function Academics() {
             className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
             A rigorous CBSE curriculum enriched with modern pedagogy, smart technology, and educators who inspire every learner from Nursery to Class XII.
           </motion.p>
-          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
-            <div className="h-1 w-20 bg-[#f5a623] rounded-full" />
-            <div className="h-1 w-8 bg-white/30 rounded-full" />
-          </motion.div>
         </div>
       </section>
 
