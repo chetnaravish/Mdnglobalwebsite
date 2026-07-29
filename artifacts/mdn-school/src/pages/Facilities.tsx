@@ -21,7 +21,7 @@ function StatCounter({ end, suffix = '', duration = 1800 }: { end: number; suffi
   }, [inView, end, duration]);
   return <span ref={ref}>{count}{suffix}</span>;
 }
-import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -120,7 +120,7 @@ const facilities: Facility[] = [
     icon: Wifi,
     title: 'Computer & IT Lab',
     desc: 'High-speed fibre internet, 100+ modern workstations, and coding programmes aligned with NEP 2020 guidelines.',
-    image: '/images/academics.jpg',
+    image: '/images/computer-lab.png',
     tag: 'IT & Coding', tagColor: 'bg-cyan-100 text-cyan-700',
     detail: [
       '100+ latest-generation computers with individual workstations — every student has personal access during lab sessions.',
@@ -232,29 +232,8 @@ const facilities: Facility[] = [
   },
 ];
 
-/* ── Modal with auto-scrolling images ───────────────────── */
+/* ── Modal — single image ────────────────────────────────── */
 function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () => void }) {
-  const [current, setCurrent] = useState(0);
-  const total = facility.images.length;
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const goTo = (idx: number) => {
-    setCurrent((idx + total) % total);
-  };
-
-  const resetTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3000);
-  };
-
-  useEffect(() => {
-    timerRef.current = setInterval(() => setCurrent(c => (c + 1) % total), 3000);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [total]);
-
-  const handlePrev = () => { goTo(current - 1); resetTimer(); };
-  const handleNext = () => { goTo(current + 1); resetTimer(); };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -272,59 +251,18 @@ function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () 
         className="bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-lg"
         onClick={e => e.stopPropagation()}
       >
-        {/* Auto-scrolling image viewer */}
+        {/* Single image */}
         <div className="relative h-52 bg-gray-900 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={current}
-              src={facility.images[current].src}
-              alt={facility.images[current].caption}
-              className="absolute inset-0 w-full h-full object-cover"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </AnimatePresence>
-
-          {/* Subtle bottom gradient for caption */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-
-          {/* Tag */}
+          <img src={facility.image} alt={facility.title}
+            className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
           <div className="absolute top-4 left-4 z-10">
             <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${facility.tagColor}`}>{facility.tag}</span>
           </div>
-
-          {/* Close */}
           <button onClick={onClose}
             className="absolute top-4 right-4 z-10 w-9 h-9 bg-black/50 hover:bg-black/75 rounded-full flex items-center justify-center text-white transition-colors">
             <X size={18} />
           </button>
-
-          {/* Prev / Next arrows */}
-          {total > 1 && (
-            <>
-              <button onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-black/40 hover:bg-black/65 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronLeft size={18} />
-              </button>
-              <button onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-black/40 hover:bg-black/65 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronRight size={18} />
-              </button>
-            </>
-          )}
-
-          {/* Caption + counter */}
-          <div className="absolute bottom-0 inset-x-0 p-4 flex items-center justify-between z-10">
-            <p className="text-white/90 text-xs font-semibold">{facility.images[current].caption}</p>
-            <div className="flex items-center gap-1.5">
-              {facility.images.map((_, i) => (
-                <button key={i} onClick={() => { goTo(i); resetTimer(); }}
-                  className={`w-1.5 h-1.5 rounded-full transition-all ${i === current ? 'bg-white w-4' : 'bg-white/40'}`} />
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Info */}
