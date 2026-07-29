@@ -76,11 +76,11 @@ const stages: Stage[] = [
   {
     label: 'Secondary',
     classes: 'Class IX – X', age: '14–15 yrs',
-    image: '/images/facilities-library.jpg', imagePos: 'center center',
+    image: '/images/classroom.png', imagePos: 'center center',
     accentBg: 'bg-amber-500', accentText: 'text-amber-600',
     borderTop: 'border-t-4 border-amber-400',
     badgeBg: 'bg-amber-500', badgeText: 'text-white',
-    detailImage: '/images/facilities-library.jpg',
+    detailImage: '/images/classroom.png',
     desc: 'Classes IX and X prepare students for CBSE Board Examinations with focused academics, regular mock tests, individual counselling, and career awareness sessions to set a clear path ahead.',
     highlights: [
       'Rigorous CBSE Board preparation programme',
