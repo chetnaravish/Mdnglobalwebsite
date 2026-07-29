@@ -42,11 +42,11 @@ const stages: Stage[] = [
   {
     label: 'Primary',
     classes: 'Class I – V', age: '6–10 yrs',
-    image: '/images/academics.jpg', imagePos: 'center center',
+    image: '/images/primary-kids.png', imagePos: 'center center',
     accentBg: 'bg-blue-500', accentText: 'text-blue-600',
     borderTop: 'border-t-4 border-blue-400',
     badgeBg: 'bg-blue-500', badgeText: 'text-white',
-    detailImage: '/images/academics.jpg',
+    detailImage: '/images/primary-kids.png',
     desc: 'The Primary stage builds a strong academic foundation in English, Hindi, Mathematics, EVS, and General Knowledge. Child-centred teaching ensures every student learns at their own pace through engaging, activity-based methods.',
     highlights: [
       'CBSE curriculum with child-centred pedagogy',

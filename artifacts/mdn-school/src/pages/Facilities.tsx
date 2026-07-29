@@ -196,7 +196,7 @@ const facilities: Facility[] = [
     icon: TreePine,
     title: 'Eco-Friendly Campus',
     desc: '10-acre green campus with gardens, open-air amphitheatre, and eco-clubs promoting sustainable living.',
-    image: '/images/mdn-building-3.png',
+    image: '/images/primary-kids.png',
     tag: 'Environment', tagColor: 'bg-lime-100 text-lime-700',
     detail: [
       '10-acre certified green zone with 500+ trees, seasonal flower gardens & a student-tended kitchen garden.',
