@@ -1,12 +1,13 @@
-kind = "api"
-previewPath = "/api" # TODO - should be excluded from preview in the first place
+kind = "web"
+previewPath = "/api"
 title = "API Server"
 version = "1.0.0"
-id = "3B4_FFSkEVBkAeYMFRJ2e"
+id = "artifacts/api-server"
+router = "path"
 
 [[services]]
-localPort = 8080
-name = "API Server"
+localPort = 22729
+name = "web"
 paths = ["/api"]
 
 [services.development]
@@ -21,12 +22,14 @@ args = ["pnpm", "--filter", "@workspace/api-server", "run", "build"]
 NODE_ENV = "production"
 
 [services.production.run]
-# we don't run through pnpm to make startup faster in production
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
 
 [services.production.run.env]
-PORT = "8080"
+PORT = "22729"
 NODE_ENV = "production"
 
 [services.production.health.startup]
 path = "/api/healthz"
+
+[services.env]
+PORT = "22729"
