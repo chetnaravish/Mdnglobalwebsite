@@ -321,6 +321,55 @@ export default function About() {
         </div>
       </section>
 
+      {/* ── Director's Message ───────────────────────────────── */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left — content */}
+            <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
+                <span className="w-10 h-px bg-[#f5a623]" /> Director's Desk
+              </p>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-6 leading-tight">
+                A Message from<br />Our Director
+              </h2>
+              <div className="text-5xl font-serif text-[#f5a623] leading-none mb-4">"</div>
+              <p className="text-gray-700 text-lg leading-relaxed mb-5 italic">
+                MDN Global School was founded on one unwavering belief — that every child deserves a world-class education rooted in values, curiosity, and character. That belief drives every decision we make.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-5">
+                From the very beginning, our vision has been to create a learning community that goes beyond textbooks — where students discover their strengths, embrace challenges, and grow into confident, compassionate individuals.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                We invest continuously in our faculty, infrastructure, and programmes so that MDN remains a place where excellence is not the exception, but the standard. I welcome every family to join this journey with us.
+              </p>
+              <div className="border-l-4 border-[#f5a623] pl-6 bg-[#fffbf0] py-4 pr-4 rounded-r-xl">
+                <p className="text-[#1a3a6b] font-bold italic">"A school's true measure is the confidence, character, and capability its students carry into the world."</p>
+              </div>
+            </motion.div>
+
+            {/* Right — image */}
+            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative">
+              <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+                <img src="/images/principal.jpg" alt="Director" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="mt-4 bg-white border border-[#1a3a6b]/10 rounded-2xl p-5 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#f5a623] flex items-center justify-center shrink-0">
+                  <Trophy size={22} className="text-[#1a3a6b]" />
+                </div>
+                <div>
+                  <div className="font-serif font-bold text-[#1a3a6b] text-base leading-tight">Mr. Suresh Sharma</div>
+                  <div className="text-[#f5a623] text-sm font-semibold">Director, MDN Global School</div>
+                  <div className="text-gray-400 text-xs mt-0.5">MBA · Founder & Visionary · 25+ Years in Education</div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── Principal's Message ──────────────────────────────── */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
