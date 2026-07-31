@@ -18,13 +18,34 @@ lib/
 
 ## Running the Project
 
-All three services are managed as workflows and start automatically:
+### On Replit
+All services start automatically as managed workflows.
 
-| Workflow | Command | URL |
+### Locally
+Requires Node 20+ and pnpm (`npm i -g pnpm`).
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Start the API server (runs on http://localhost:3000)
+pnpm --filter @workspace/api-server run dev
+
+# 3. In a second terminal, start the frontend (runs on http://localhost:5173)
+pnpm --filter @workspace/mdn-school run dev
+```
+
+No environment variables are required to run locally — both services have built-in defaults (`PORT` 3000 for API, 5173 for frontend; `BASE_PATH` `/`).
+
+If you want the contact form to work locally, add a `.env` file in `artifacts/api-server/` with:
+```
+RESEND_API_KEY=your_key_here
+```
+
+| Service | Local URL | Replit URL |
 |---|---|---|
-| `artifacts/mdn-school: web` | `pnpm --filter @workspace/mdn-school run dev` | `/` |
-| `artifacts/api-server: API Server` | `pnpm --filter @workspace/api-server run dev` | `/api` |
-| `artifacts/mockup-sandbox: Component Preview Server` | `pnpm --filter @workspace/mockup-sandbox run dev` | `/__mockup` |
+| Frontend | `http://localhost:5173` | `/` |
+| API server | `http://localhost:3000/api` | `/api` |
 
 ## Stack
 
