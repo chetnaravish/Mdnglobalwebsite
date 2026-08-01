@@ -281,7 +281,7 @@ export default function Home() {
             {[
               { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
               { title: 'Facilities', icon: Trophy, image: '/images/facilities-sports.jpg', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
-              { title: 'Events & Culture', icon: Star, image: '/images/events-annual.jpg', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/events', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/events', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
@@ -324,7 +324,7 @@ export default function Home() {
           {/* Mobile: 2-col grid | Desktop: bento-style 4-col */}
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-2 md:h-[420px]">
             {[
-              { src: '/images/events-annual.jpg',     mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center' },
+              { src: '/images/annual-function.png',   mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center' },
               { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
               { src: '/images/science-lab.png',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
               { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },

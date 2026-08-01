@@ -47,6 +47,7 @@ const sections: Section[] = [
     color: 'bg-purple-600',
     count: 6,
     photos: [
+      { src: '/images/annual-function.png', caption: 'Annual Function — Cultural Dance Performance', pos: 'center center' },
       { src: '/images/events-annual.jpg', caption: 'Annual Day — Cultural Performances', pos: 'center center' },
       { src: '/images/students-happy.jpg', caption: 'Independence Day Celebration', pos: 'center top' },
       { src: '/images/events-annual.jpg', caption: "Cultural Fest 'Utsav' — Dance Show", pos: 'center bottom' },
