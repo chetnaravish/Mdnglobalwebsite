@@ -25,11 +25,11 @@ const stages: Stage[] = [
   {
     label: 'Pre-Primary',
     classes: 'Nursery – KG 2', age: '3–5 yrs',
-    image: '/images/students-happy.jpg', imagePos: 'center top',
+    image: '/images/pre-primary-kids.png', imagePos: 'center center',
     accentBg: 'bg-pink-500', accentText: 'text-pink-600',
     borderTop: 'border-t-4 border-pink-400',
     badgeBg: 'bg-pink-500', badgeText: 'text-white',
-    detailImage: '/images/students-happy.jpg',
+    detailImage: '/images/pre-primary-kids.png',
     desc: 'Our Pre-Primary programme sparks curiosity through play, song, stories, and hands-on exploration. Every activity builds confidence, language skills, and a lifelong love for learning in a safe and nurturing environment.',
     highlights: [
       'Activity-based & Montessori-inspired learning',

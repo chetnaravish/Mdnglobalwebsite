@@ -584,7 +584,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-2 md:order-1">
-              <img src="/images/students-happy.jpg" alt="Happy Students" className="w-full rounded-3xl shadow-2xl" />
+              <img src="/images/pre-primary-kids.png" alt="Happy Students" className="w-full rounded-3xl shadow-2xl" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-1 md:order-2 text-white">
               <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">A Community of<br />Happy Learners</h2>

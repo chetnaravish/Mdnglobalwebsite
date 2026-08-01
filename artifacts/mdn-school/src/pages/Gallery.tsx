@@ -22,6 +22,7 @@ const sections: Section[] = [
       { src: '/images/mdn-building-3.png', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
       { src: '/images/mdn-building-1.avif', caption: 'MDN Global School — Campus Overview', pos: 'center center' },
       { src: '/images/mdn-building-4.avif', caption: 'School Building — Drone View', pos: 'center center' },
+      { src: '/images/pre-primary-kids.png', caption: 'Pre-Primary Students — Classroom Learning', pos: 'center center' },
       { src: '/images/primary-kids.png', caption: 'Primary Students — Playground Fun', pos: 'center center' },
       { src: '/images/students-happy.jpg', caption: 'Students During Break Time', pos: 'center top' },
     ]
