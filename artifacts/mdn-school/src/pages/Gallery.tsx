@@ -76,6 +76,7 @@ const sections: Section[] = [
     color: 'bg-rose-600',
     count: 6,
     photos: [
+      { src: '/images/classroom-students.jpg', caption: 'Classroom — Students in Session', pos: 'center center' },
       { src: '/images/science-lab.png', caption: 'State-of-the-Art Science Laboratory', pos: 'center center' },
       { src: '/images/classroom.png', caption: 'Library & Resource Centre', pos: 'center center' },
       { src: '/images/facilities-sports.jpg', caption: 'Indoor Sports Hall', pos: 'center center' },
