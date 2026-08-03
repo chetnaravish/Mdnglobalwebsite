@@ -240,7 +240,7 @@ const galleryImages = [
   '/images/students-happy.jpg',
   '/images/mdn-building-4.avif',
   '/images/academics.jpg',
-  '/images/facilities-library.jpg',
+  '/images/library-students.jpg',
 ];
 
 function Lightbox({ startIdx, onClose }: { startIdx: number; onClose: () => void }) {
