@@ -21,7 +21,8 @@ function StatCounter({ end, suffix = '', duration = 1800 }: { end: number; suffi
   }, [inView, end, duration]);
   return <span ref={ref}>{count}{suffix}</span>;
 }
-import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, X } from 'lucide-react';
+import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, ArrowLeft, CheckCircle, ChevronRight } from 'lucide-react';
+import { Link } from 'wouter';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -232,57 +233,97 @@ const facilities: Facility[] = [
   },
 ];
 
-/* ── Modal — single image ────────────────────────────────── */
-function FacilityModal({ facility, onClose }: { facility: Facility; onClose: () => void }) {
+/* ── Inline detail view (same pattern as Academics page) ─── */
+function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () => void }) {
+  const [activeImg, setActiveImg] = React.useState(0);
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm"
-      onClick={onClose}
+      key="detail"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -16 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-lg"
-        onClick={e => e.stopPropagation()}
+      {/* Back button */}
+      <button
+        onClick={onBack}
+        className="inline-flex items-center gap-2 text-[#1a3a6b] font-semibold hover:text-[#f5a623] transition-colors mb-8 group"
       >
-        {/* Single image */}
-        <div className="relative h-52 bg-gray-900 overflow-hidden">
-          <img src={facility.image} alt={facility.title}
-            className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute top-4 left-4 z-10">
-            <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${facility.tagColor}`}>{facility.tag}</span>
-          </div>
-          <button onClick={onClose}
-            className="absolute top-4 right-4 z-10 w-9 h-9 bg-black/50 hover:bg-black/75 rounded-full flex items-center justify-center text-white transition-colors">
-            <X size={18} />
-          </button>
-        </div>
+        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+        Back to all facilities
+      </button>
 
-        {/* Info */}
-        <div className="p-5">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
-              <facility.icon size={17} className="text-white" />
+      {/* Two-column card */}
+      <div className="grid lg:grid-cols-2 gap-0 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+        {/* Left — info */}
+        <div className="p-8 lg:p-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-[#1a3a6b] rounded-xl flex items-center justify-center shrink-0">
+              <facility.icon size={22} className="text-white" />
             </div>
-            <h2 className="text-lg font-serif font-black text-[#1a3a6b]">{facility.title}</h2>
+            <div>
+              <span className={`text-xs font-bold px-3 py-1 rounded-full ${facility.tagColor} mb-1 inline-block`}>
+                {facility.tag}
+              </span>
+              <h3 className="text-3xl font-serif font-black text-[#1a3a6b] leading-tight">{facility.title}</h3>
+            </div>
           </div>
-          <ul className="space-y-2.5">
-            {facility.detail.slice(0, 3).map((line, i) => (
-              <li key={i} className="flex gap-2.5 text-gray-600 text-sm leading-snug">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#f5a623] shrink-0" />
+
+          <p className="text-gray-600 leading-relaxed mb-7">{facility.desc}</p>
+
+          <p className="text-xs font-black tracking-widest text-gray-400 uppercase mb-4">Key Highlights</p>
+          <ul className="space-y-3 mb-8">
+            {facility.detail.map((line, j) => (
+              <li key={j} className="flex items-start gap-3 text-gray-700 text-sm font-medium">
+                <CheckCircle size={16} className="text-[#f5a623] shrink-0 mt-0.5" />
                 {line}
               </li>
             ))}
           </ul>
+
+          <Link href="/contact"
+            className="inline-flex items-center gap-2 bg-[#1a3a6b] text-white px-6 py-3 rounded-full font-semibold text-sm hover:bg-[#f5a623] hover:text-[#1a3a6b] transition-colors shadow-md">
+            Enquire Now <ChevronRight size={15} />
+          </Link>
         </div>
-      </motion.div>
+
+        {/* Right — images */}
+        <div className="flex flex-col">
+          {/* Main image */}
+          <div className="relative flex-1 min-h-[280px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeImg}
+                src={facility.images[activeImg].src}
+                alt={facility.images[activeImg].caption}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full h-full object-cover absolute inset-0"
+              />
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+            <p className="absolute bottom-3 left-4 text-white/80 text-xs font-semibold">
+              {facility.images[activeImg].caption}
+            </p>
+          </div>
+          {/* Thumbnail strip */}
+          {facility.images.length > 1 && (
+            <div className="flex gap-2 p-3 bg-gray-50 border-t border-gray-100">
+              {facility.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImg(idx)}
+                  className={`flex-1 h-16 rounded-lg overflow-hidden border-2 transition-all ${activeImg === idx ? 'border-[#f5a623]' : 'border-transparent opacity-60 hover:opacity-90'}`}
+                >
+                  <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -345,42 +386,55 @@ export default function Facilities() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Complete Campus Facilities</h2>
             <p className="text-gray-500 max-w-xl mx-auto">World-class facilities designed to support holistic development</p>
           </motion.div>
-          <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
-            className="text-center text-sm text-gray-400 mb-12 flex items-center justify-center gap-2">
-            <span className="inline-block w-4 h-px bg-gray-300" />
-            Click any card to explore photos & details
-            <span className="inline-block w-4 h-px bg-gray-300" />
-          </motion.p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {facilities.map((f, i) => (
-              <motion.button
-                key={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                custom={i % 3 * 0.2}
-                onClick={() => setSelected(f)}
-                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group border border-gray-100 text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30"
+          <AnimatePresence mode="wait">
+            {!selected ? (
+              <motion.div
+                key="grid"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img src={f.image} alt={f.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/70 to-transparent" />
-                  <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${f.tagColor}`}>{f.tag}</div>
-                  <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
-                    <f.icon size={20} />
-                  </div>
-                  <div className="absolute bottom-4 right-4 text-white/70 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 px-2 py-1 rounded-full">
-                    Click to explore →
-                  </div>
+                <p className="text-center text-sm text-gray-400 mb-12 flex items-center justify-center gap-2">
+                  <span className="inline-block w-4 h-px bg-gray-300" />
+                  Click any card to explore photos &amp; details
+                  <span className="inline-block w-4 h-px bg-gray-300" />
+                </p>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {facilities.map((f, i) => (
+                    <motion.button
+                      key={i}
+                      variants={fadeUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.1 }}
+                      custom={i % 3 * 0.2}
+                      onClick={() => setSelected(f)}
+                      className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group border border-gray-100 text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30"
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img src={f.image} alt={f.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/70 to-transparent" />
+                        <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${f.tagColor}`}>{f.tag}</div>
+                        <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
+                          <f.icon size={20} />
+                        </div>
+                        <div className="absolute bottom-4 right-4 text-white/70 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 px-2 py-1 rounded-full">
+                          Tap to explore →
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-2 group-hover:text-[#f5a623] transition-colors">{f.title}</h3>
+                        <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+                      </div>
+                    </motion.button>
+                  ))}
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-serif font-bold text-[#1a3a6b] mb-2 group-hover:text-[#f5a623] transition-colors">{f.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
+              </motion.div>
+            ) : (
+              <FacilityDetail facility={selected} onBack={() => setSelected(null)} />
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
@@ -419,12 +473,6 @@ export default function Facilities() {
         </div>
       </section>
 
-      {/* ── Modal ───────────────────────────────────────────── */}
-      <AnimatePresence>
-        {selected && (
-          <FacilityModal facility={selected} onClose={() => setSelected(null)} />
-        )}
-      </AnimatePresence>
 
     </div>
   );
