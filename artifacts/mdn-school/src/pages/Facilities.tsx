@@ -177,7 +177,7 @@ const facilities: Facility[] = [
     icon: Bus,
     title: 'Safe Transport',
     desc: 'GPS-enabled, air-conditioned school buses covering all major routes — student safety is our top priority.',
-    image: '/images/mdn-building-2.png',
+    image: '/images/school-buses.jpg',
     tag: 'Transport', tagColor: 'bg-teal-100 text-teal-700',
     detail: [
       '15 GPS-enabled, air-conditioned buses covering all major residential areas of Kaithal & surrounding villages.',
@@ -187,7 +187,7 @@ const facilities: Facility[] = [
       'Routes reviewed annually; new routes added to ensure maximum coverage without excessive travel time for any child.',
     ],
     images: [
-      { src: '/images/mdn-building-2.png', caption: 'MDN Global School Transport Fleet' },
+      { src: '/images/school-buses.jpg', caption: 'MDN Global School Transport Fleet' },
       { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure' },
       { src: '/images/mdn-building-3.png', caption: 'GPS-Tracked School Bus' },
     ],
