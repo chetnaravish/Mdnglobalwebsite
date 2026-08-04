@@ -235,7 +235,9 @@ const facilities: Facility[] = [
 
 /* ── Inline detail view (same pattern as Academics page) ─── */
 function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () => void }) {
-  const [activeImg, setActiveImg] = React.useState(0);
+  const [activeImg, setActiveImg] = React.useState<{ src: string; caption: string }>(
+    { src: facility.image, caption: facility.title }
+  );
   return (
     <motion.div
       key="detail"
