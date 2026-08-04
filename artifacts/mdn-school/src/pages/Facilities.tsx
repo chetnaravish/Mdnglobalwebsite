@@ -295,7 +295,7 @@ export default function Facilities() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/facilities-sports.jpg" alt="MDN Global School Facilities"
+        <img src="/images/skating.jpg" alt="MDN Global School Facilities"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/32 to-[#0a1c46]/8" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/42 via-transparent to-transparent" />

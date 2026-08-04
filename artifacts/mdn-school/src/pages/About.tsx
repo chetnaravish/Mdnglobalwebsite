@@ -146,7 +146,7 @@ export default function About() {
       {/* ── Our Journey ─────────────────────────────────────── */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-stretch">
 
             {/* Left — content */}
             <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
@@ -195,10 +195,10 @@ export default function About() {
               </ul>
             </motion.div>
 
-            {/* Right — image, square aspect to match content height */}
-            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl aspect-square">
-                <img src="/images/mdn-building-2.png" alt="MDN Global School Campus" className="w-full h-full object-cover object-center" />
+            {/* Right — image stretches to match content column height */}
+            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="relative self-stretch flex flex-col">
+              <div className="rounded-3xl overflow-hidden shadow-2xl flex-1 min-h-[420px]">
+                <img src="/images/skating.jpg" alt="MDN Global School Students Skating" className="w-full h-full object-cover object-center" />
               </div>
               <div className="absolute -bottom-5 -left-5 bg-[#1a3a6b] text-white rounded-2xl p-5 shadow-xl max-w-[200px]">
                 <Award className="text-[#f5a623] mb-2" size={28} />
