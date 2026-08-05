@@ -376,57 +376,78 @@ export default function About() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Our Leadership</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Head Staff</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">The dedicated leadership team guiding MDN Global School Kaithal towards excellence</p>
+            <p className="text-gray-500 max-w-xl mx-auto">The dedicated leadership team guiding MDN Global School Kaithal</p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
               {
                 name: 'Dr. Vinod Kumar',
                 role: 'Director & Chairman',
-                desc: 'Leading MDN Global School since February 2018, Dr. Vinod Kumar focuses on holistic student growth, modern teaching techniques, and values-based education.',
-                icon: Trophy,
-                color: 'bg-[#1a3a6b]',
-                badge: 'Director & Chairman',
+                desc: 'Visionary leader of MDN Global School since February 2018.',
+                photo: '/images/director.png',
+                initials: 'VK',
+                grad: 'from-[#1a3a6b] to-[#0f2557]',
               },
               {
                 name: 'Mrs. Nidhi Kansal',
                 role: 'Chairperson',
-                desc: 'Mrs. Nidhi Kansal guides the overall vision and institutional governance of MDN Global School, ensuring the highest standards of education.',
-                icon: Star,
-                color: 'bg-[#f5a623]',
-                badge: 'Chairperson',
+                desc: 'Guides the vision and governance of the school.',
+                photo: null,
+                initials: 'NK',
+                grad: 'from-[#b8860b] to-[#f5a623]',
               },
               {
                 name: 'Mr. Gaurav Garg',
                 role: 'Manager',
-                desc: 'Mr. Gaurav Garg oversees school administration and operations, ensuring smooth functioning across all departments.',
-                icon: Shield,
-                color: 'bg-[#1a3a6b]',
-                badge: 'Manager',
+                desc: 'Oversees administration and school operations.',
+                photo: null,
+                initials: 'GG',
+                grad: 'from-[#1a3a6b] to-[#2a5298]',
               },
               {
                 name: 'Dr. Sant Ram',
                 role: 'Principal',
-                desc: 'Also known as Dr. Sant Kaushik, he leads academic affairs, guides the faculty, and oversees day-to-day school functioning with dedication.',
-                icon: GraduationCap,
-                color: 'bg-[#f5a623]',
-                badge: 'Principal',
+                desc: 'Leads academics and faculty at MDN Global School.',
+                photo: null,
+                initials: 'SR',
+                grad: 'from-[#7b5800] to-[#f5a623]',
               },
             ].map((member, i) => (
               <motion.div key={i}
                 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.12}
-                className="bg-white rounded-3xl p-7 shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                className="bg-white rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col"
               >
-                <div className={`w-16 h-16 rounded-2xl ${member.color} flex items-center justify-center mb-5 shrink-0`}>
-                  <member.icon size={30} className={member.color === 'bg-[#1a3a6b]' ? 'text-[#f5a623]' : 'text-[#1a3a6b]'} />
+                {/* Image area */}
+                <div className="relative w-full aspect-[4/3] overflow-hidden">
+                  {member.photo ? (
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${member.grad} flex items-center justify-center`}>
+                      <span className="text-5xl font-serif font-black text-white/90 select-none tracking-wide">
+                        {member.initials}
+                      </span>
+                    </div>
+                  )}
+                  {/* Role pill on image */}
+                  <div className="absolute bottom-3 left-3">
+                    <span className="bg-[#f5a623] text-[#1a3a6b] text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow">
+                      {member.role}
+                    </span>
+                  </div>
                 </div>
-                <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#f5a623] bg-[#f5a623]/10 border border-[#f5a623]/20 rounded-full px-3 py-1 mb-3 self-start">
-                  {member.badge}
-                </span>
-                <h3 className="text-lg font-serif font-bold text-[#1a3a6b] mb-1 leading-tight">{member.name}</h3>
-                <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide mb-3">{member.role}</p>
-                <p className="text-gray-500 text-sm leading-relaxed flex-1">{member.desc}</p>
+
+                {/* Text */}
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-xl font-serif font-black text-[#1a3a6b] leading-tight mb-2">
+                    {member.name}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{member.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
