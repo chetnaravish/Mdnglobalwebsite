@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+import { resolve } from "path";
+
+// .env file project root se load hoti hai — transfer hone pe bhi kaam karta hai
+dotenv.config({ path: resolve(import.meta.dirname, "../../..", ".env") });
+
 import app from "./app";
 import { logger } from "./lib/logger";
 
