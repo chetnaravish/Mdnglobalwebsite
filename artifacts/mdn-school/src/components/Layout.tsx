@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import ChatBot from '@/components/ChatBot';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -127,6 +128,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex flex-col">
         {children}
       </main>
+
+      <ChatBot />
 
       <footer className="bg-[#1a3a6b] text-white pt-16 pb-8">
         <div className="container mx-auto px-4 md:px-6">
