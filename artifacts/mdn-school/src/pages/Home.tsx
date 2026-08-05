@@ -199,7 +199,7 @@ export default function Home() {
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
             {[
-              { icon: Award, count: 25, suffix: '+', label: 'Years of Excellence', sub: 'Established 2000', iconBg: 'bg-blue-50', iconColor: 'text-[#1a3a6b]', numColor: 'text-[#1a3a6b]', border: 'border-blue-100', top: 'bg-[#1a3a6b]' },
+              { icon: Award, count: 8, suffix: '+', label: 'Years of Excellence', sub: 'Established 2018', iconBg: 'bg-blue-50', iconColor: 'text-[#1a3a6b]', numColor: 'text-[#1a3a6b]', border: 'border-blue-100', top: 'bg-[#1a3a6b]' },
               { icon: Users, count: 2000, suffix: '+', label: 'Students Enrolled', sub: 'Growing every year', iconBg: 'bg-amber-50', iconColor: 'text-[#f5a623]', numColor: 'text-[#f5a623]', border: 'border-amber-100', top: 'bg-[#f5a623]' },
               { icon: GraduationCap, count: 150, suffix: '+', label: 'Expert Faculty', sub: 'Dedicated educators', iconBg: 'bg-blue-50', iconColor: 'text-[#1a3a6b]', numColor: 'text-[#1a3a6b]', border: 'border-blue-100', top: 'bg-[#1a3a6b]' },
               { icon: Trophy, count: 100, suffix: '%', label: 'CBSE Pass Rate', sub: '5 consecutive years', iconBg: 'bg-amber-50', iconColor: 'text-[#f5a623]', numColor: 'text-[#f5a623]', border: 'border-amber-100', top: 'bg-[#f5a623]' },

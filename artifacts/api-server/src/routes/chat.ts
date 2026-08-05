@@ -12,11 +12,17 @@ Here is detailed information about the school:
 **School Overview:**
 - Name: MDN Global School Kaithal
 - Affiliation: CBSE (Central Board of Secondary Education)
-- Location: Deod Kheri Road, Kaithal, Haryana – 136027
+- Location: Behind Gulmohar City, Deod Kheri Road, Kaithal, Haryana – 136027
 - Phone: +91 87087 71586
 - Email: info@mdnglobalschool.com
-- Founded: Over two decades ago (20+ years of education)
-- Mission: Empowering minds and shaping futures through holistic education
+- Established: February 2018 (under leadership of Dr. Vinod Kumar)
+- Mission: Empowering minds and shaping futures through holistic, values-based education
+
+**School Leadership & Head Staff:**
+- Director & Chairman: Dr. Vinod Kumar — Leading the school since February 2018; focuses on holistic student growth, modern teaching techniques, and values-based education
+- Chairperson: Mrs. Nidhi Kansal — Guides the overall vision and institutional governance
+- Manager: Mr. Gaurav Garg — Manages school administration and operations
+- Principal: Dr. Sant Ram (also known as Dr. Sant Kaushik) — Leads academic affairs, faculty, and day-to-day school functioning
 
 **Academics:**
 - Classes: Nursery, KG 1, KG 2 (Pre-Primary) through Class 12

@@ -128,7 +128,7 @@ export default function About() {
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
             className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
+            Nurturing young minds, building character, and creating future leaders in the heart of Haryana — under the visionary leadership of Dr. Vinod Kumar since 2018.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3} className="mt-8 flex gap-3">
           </motion.div>
@@ -151,24 +151,24 @@ export default function About() {
             {/* Left — content */}
             <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm flex items-center gap-3 mb-4">
-                <span className="w-10 h-px bg-[#f5a623]" /> Est. 2000
+                <span className="w-10 h-px bg-[#f5a623]" /> Est. 2018
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-6 leading-tight">
-                Two Decades of<br />Excellence & Legacy
+                A Legacy of<br />Excellence & Values
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-5">
-                Founded in 2000, MDN Global School Kaithal began with a clear purpose: to deliver world-class, values-rooted education to the children of Haryana. What started as a modest institution has grown into a landmark of academic excellence.
+                MDN Global School Kaithal, located behind Gulmohar City, Deod Kheri Road, Kaithal, Haryana, was established with a clear purpose — to deliver world-class, values-rooted education to the children of Haryana. Under the visionary leadership of Director & Chairman Dr. Vinod Kumar since February 2018, the school has grown into a landmark of academic excellence.
               </p>
               <p className="text-gray-600 leading-relaxed mb-5">
-                Today, with over 2,000 students and 150+ dedicated faculty members, we are one of the most trusted CBSE-affiliated schools in the region — recognised for academic rigour, holistic development, and a community that truly cares.
+                Today, with hundreds of students and dedicated faculty members, we are one of the most trusted CBSE-affiliated schools in the region — recognised for academic rigour, holistic development, and a community that truly cares.
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Our 10-acre green campus houses smart classrooms, modern science labs, a 15,000-book library, and sports grounds that have produced state-level champions — giving every child the environment they deserve to grow, learn, and lead.
+                Our green campus houses smart classrooms, modern science labs, a well-stocked library, and sports grounds that produce state-level champions — giving every child the environment they deserve to grow, learn, and lead.
               </p>
               <div className="grid grid-cols-3 gap-4 p-6 bg-[#f8f9ff] rounded-2xl">
                 {[
-                  { num: '25+', label: 'Years of Trust' },
-                  { num: '2000+', label: 'Students Enrolled' },
+                  { num: '2018', label: 'Year Established' },
+                  { num: '500+', label: 'Students Enrolled' },
                   { num: '100%', label: 'Board Results' },
                 ].map((s, i) => (
                   <div key={i} className="text-center">
@@ -266,7 +266,7 @@ export default function About() {
           {/* Animated stats row */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {[
-              { icon: Trophy,        end: 25,   suffix: '+', label: 'Years of Trust' },
+              { icon: Trophy,        end: 8,    suffix: '+', label: 'Years of Trust' },
               { icon: GraduationCap, end: 150,  suffix: '+', label: 'Expert Faculty' },
               { icon: Users,         end: 2000, suffix: '+', label: 'Happy Students' },
               { icon: Award,         end: 100,  suffix: '%', label: 'Board Results' },
@@ -359,13 +359,76 @@ export default function About() {
                   <Trophy size={22} className="text-[#1a3a6b]" />
                 </div>
                 <div>
-                  <div className="font-serif font-bold text-[#1a3a6b] text-base leading-tight">Mr. Suresh Sharma</div>
-                  <div className="text-[#f5a623] text-sm font-semibold">Director, MDN Global School</div>
-                  <div className="text-gray-400 text-xs mt-0.5">MBA · Founder & Visionary · 25+ Years in Education</div>
+                  <div className="font-serif font-bold text-[#1a3a6b] text-base leading-tight">Dr. Vinod Kumar</div>
+                  <div className="text-[#f5a623] text-sm font-semibold">Director & Chairman, MDN Global School</div>
+                  <div className="text-gray-400 text-xs mt-0.5">Leading MDN Global School since February 2018</div>
                 </div>
               </div>
             </motion.div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* ── Head Staff ──────────────────────────────────────── */}
+      <section className="py-24 bg-[#f8f9ff]">
+        <div className="container mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Our Leadership</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Head Staff</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">The dedicated leadership team guiding MDN Global School Kaithal towards excellence</p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                name: 'Dr. Vinod Kumar',
+                role: 'Director & Chairman',
+                desc: 'Leading MDN Global School since February 2018, Dr. Vinod Kumar focuses on holistic student growth, modern teaching techniques, and values-based education.',
+                icon: Trophy,
+                color: 'bg-[#1a3a6b]',
+                badge: 'Director & Chairman',
+              },
+              {
+                name: 'Mrs. Nidhi Kansal',
+                role: 'Chairperson',
+                desc: 'Mrs. Nidhi Kansal guides the overall vision and institutional governance of MDN Global School, ensuring the highest standards of education.',
+                icon: Star,
+                color: 'bg-[#f5a623]',
+                badge: 'Chairperson',
+              },
+              {
+                name: 'Mr. Gaurav Garg',
+                role: 'Manager',
+                desc: 'Mr. Gaurav Garg oversees school administration and operations, ensuring smooth functioning across all departments.',
+                icon: Shield,
+                color: 'bg-[#1a3a6b]',
+                badge: 'Manager',
+              },
+              {
+                name: 'Dr. Sant Ram',
+                role: 'Principal',
+                desc: 'Also known as Dr. Sant Kaushik, he leads academic affairs, guides the faculty, and oversees day-to-day school functioning with dedication.',
+                icon: GraduationCap,
+                color: 'bg-[#f5a623]',
+                badge: 'Principal',
+              },
+            ].map((member, i) => (
+              <motion.div key={i}
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.12}
+                className="bg-white rounded-3xl p-7 shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+              >
+                <div className={`w-16 h-16 rounded-2xl ${member.color} flex items-center justify-center mb-5 shrink-0`}>
+                  <member.icon size={30} className={member.color === 'bg-[#1a3a6b]' ? 'text-[#f5a623]' : 'text-[#1a3a6b]'} />
+                </div>
+                <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#f5a623] bg-[#f5a623]/10 border border-[#f5a623]/20 rounded-full px-3 py-1 mb-3 self-start">
+                  {member.badge}
+                </span>
+                <h3 className="text-lg font-serif font-bold text-[#1a3a6b] mb-1 leading-tight">{member.name}</h3>
+                <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide mb-3">{member.role}</p>
+                <p className="text-gray-500 text-sm leading-relaxed flex-1">{member.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -387,9 +450,9 @@ export default function About() {
                   <GraduationCap size={22} className="text-[#f5a623]" />
                 </div>
                 <div>
-                  <div className="font-serif font-bold text-[#1a3a6b] text-base leading-tight">Dr. Rajesh Kumar</div>
+                  <div className="font-serif font-bold text-[#1a3a6b] text-base leading-tight">Dr. Sant Ram (Dr. Sant Kaushik)</div>
                   <div className="text-[#f5a623] text-sm font-semibold">Principal, MDN Global School</div>
-                  <div className="text-gray-400 text-xs mt-0.5">M.Ed · Ph.D. in Education · 20+ Years Experience</div>
+                  <div className="text-gray-400 text-xs mt-0.5">Leading Academic Excellence at MDN Global School</div>
                 </div>
               </div>
             </motion.div>
