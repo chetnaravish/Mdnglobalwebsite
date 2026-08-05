@@ -60,6 +60,20 @@ The database schema lives in `lib/db/src/schema/index.ts`. It is currently empty
 
 `DATABASE_URL` is automatically provided by Replit — do not set it manually.
 
+## Required Secrets (Replit Secrets Tab)
+
+Jab bhi project nayi Replit ID pe transfer ho, yeh secrets **Secrets tab** mein dobara add karni hain:
+
+| Key | Description |
+|---|---|
+| `RESEND_API_KEY` | Resend.com se email bhejne ke liye (form submissions) |
+| `SESSION_SECRET` | Session encryption ke liye (koi bhi lamba random string) |
+
+Non-secret env var (already `.replit` mein saved hai):
+- `TO_EMAIL` = `chetnaravishchetnaravish@gmail.com` — jis email pe form submissions aayengi
+
+> **Note:** Replit `.env` files ko security reasons se block karta hai. Secrets sirf Replit Secrets tab mein hi store hoti hain aur project transfer pe manually re-add karni padti hain.
+
 ## User Preferences
 
 - Keep the existing monorepo structure (pnpm workspaces, `artifacts/`, `lib/`)
