@@ -11,7 +11,7 @@ paths = [ "/" ]
 localPort = 26263
 
 [services.development]
-run = "pnpm --filter @workspace/mdn-school run dev"
+run = "pnpm install --frozen-lockfile && pnpm --filter @workspace/mdn-school run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/mdn-school", "run", "build" ]
