@@ -99,3 +99,23 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 ---
 
 *Aage jo bhi changes honge — text update, image change, new feature, bug fix — sab yahan add hote rahenge.*
+
+---
+
+## ✅ Task 5 — Head Staff Cards Mein Posts Naam Ke Neeche Dikhayi
+**Date:** August 6, 2026
+
+### Kya kiya:
+- About page ke **Head Staff** section mein photo ke upar dikhne wale role pills hata diye.
+- Ab har staff member ke card mein naam ke turant neeche unki post bracket mein dikh rahi hai:
+  - Dr. Vinod Kumar — `(Director & Chairman)`
+  - Mrs. Nidhi Kansal — `(Chairperson)`
+  - Mr. Gaurav Garg — `(Manager)`
+  - Dr. Sant Ram — `(Principal)`
+- Post ke neeche staff member ka short description pehle ki tarah dikh raha hai.
+
+### File changed:
+- `artifacts/mdn-school/src/pages/About.tsx`
+
+### Documentation:
+- Is change ko `project.md` ke is task log mein save kiya gaya hai.

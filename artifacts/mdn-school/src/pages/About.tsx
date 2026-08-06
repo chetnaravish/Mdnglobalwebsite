@@ -433,19 +433,16 @@ export default function About() {
                       </span>
                     </div>
                   )}
-                  {/* Role pill on image */}
-                  <div className="absolute bottom-3 left-3">
-                    <span className="bg-[#f5a623] text-[#1a3a6b] text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow">
-                      {member.role}
-                    </span>
-                  </div>
                 </div>
 
                 {/* Text */}
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-xl font-serif font-black text-[#1a3a6b] leading-tight mb-2">
+                  <h3 className="text-xl font-serif font-black text-[#1a3a6b] leading-tight mb-1">
                     {member.name}
                   </h3>
+                  <div className="text-[#f5a623] text-sm font-semibold mb-2">
+                    ({member.role})
+                  </div>
                   <p className="text-gray-500 text-sm leading-relaxed">{member.desc}</p>
                 </div>
               </motion.div>
