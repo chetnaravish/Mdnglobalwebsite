@@ -102,10 +102,40 @@ const messageSchema = z.object({
   ).min(1).max(20),
 });
 
+const CARTESIA_VOICE_ID = "db6b0ed5-d5d3-463d-ae85-518a07d3c2b4";
+
 function getGroq() {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("GROQ_API_KEY is not set");
   return new Groq({ apiKey });
+}
+
+async function generateVoice(reply: string): Promise<string> {
+  const apiKey = process.env.CARTESIA_API_KEY;
+  if (!apiKey) throw new Error("CARTESIA_API_KEY is not set");
+
+  const response = await fetch("https://api.cartesia.ai/tts/bytes", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Cartesia-Version": "2026-03-01",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model_id: "sonic-3.5",
+      transcript: reply,
+      voice: { mode: "id", id: CARTESIA_VOICE_ID },
+      output_format: { container: "mp3", sample_rate: 44100, bit_rate: 128000 },
+    }),
+  });
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(`Cartesia request failed (${response.status}): ${detail.slice(0, 300)}`);
+  }
+
+  const audio = Buffer.from(await response.arrayBuffer());
+  return audio.toString("base64");
 }
 
 router.post("/chat", async (req, res) => {
@@ -136,8 +166,17 @@ router.post("/chat", async (req, res) => {
     });
 
     const reply = completion.choices[0]?.message?.content ?? "Sorry, I could not generate a response. Please try again.";
+    let audioBase64: string;
+    try {
+      audioBase64 = await generateVoice(reply);
+    } catch (err) {
+      logger.error({ err }, "Cartesia voice generation failed");
+      res.status(502).json({ success: false, message: "Could not generate the voice reply. Please try again." });
+      return;
+    }
+
     logger.info("Chat response generated");
-    res.json({ success: true, reply });
+    res.json({ success: true, reply, audioBase64, audioMimeType: "audio/mpeg" });
   } catch (err) {
     logger.error({ err }, "Groq API error");
     res.status(502).json({ success: false, message: "Could not get response. Please try again." });

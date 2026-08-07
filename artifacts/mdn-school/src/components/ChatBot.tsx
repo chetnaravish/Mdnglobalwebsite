@@ -1,10 +1,35 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Loader2, Mic, Square, Volume2 } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  audioUrl?: string;
+}
+
+interface SpeechRecognitionResultEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionInstance {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((event: SpeechRecognitionResultEvent) => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance;
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
 }
 
 const WELCOME_MESSAGE: Message = {
@@ -18,8 +43,12 @@ export default function ChatBot() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [listening, setListening] = useState(false);
+  const [playingUrl, setPlayingUrl] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -31,10 +60,81 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  useEffect(() => {
+    return () => {
+      recognitionRef.current?.stop();
+      audioRef.current?.pause();
+      messages.forEach((message) => {
+        if (message.audioUrl) URL.revokeObjectURL(message.audioUrl);
+      });
+    };
+    // This cleanup intentionally runs only when the chatbot unmounts. Revoking
+    // URLs whenever a new message arrives would break replay for older replies.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function playVoice(audioUrl: string) {
+    audioRef.current?.pause();
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+    setPlayingUrl(audioUrl);
+    audio.onended = () => setPlayingUrl(null);
+    void audio.play().catch(() => {
+      setPlayingUrl(null);
+      setError('Voice playback was blocked. Tap the speaker button to play it.');
+    });
+  }
+
+  function startListening() {
+    if (loading || listening) return;
+    const SpeechRecognition = window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError('Voice input is not supported in this browser. Please type your question.');
+      return;
+    }
+
+    setError('');
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'hi-IN';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; i += 1) {
+        transcript += event.results[i][0]?.transcript ?? '';
+      }
+      setInput(transcript);
+    };
+    recognition.onerror = () => {
+      setListening(false);
+      setError('Could not hear that. Please try again or type your question.');
+    };
+    recognition.onend = () => {
+      setListening(false);
+      recognitionRef.current = null;
+    };
+    recognitionRef.current = recognition;
+    setListening(true);
+    recognition.start();
+  }
+
+  function stopListening() {
+    recognitionRef.current?.stop();
+    setListening(false);
+  }
+
+  function base64ToAudioUrl(base64: string, mimeType: string) {
+    const binary = window.atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+  }
+
   async function sendMessage(e?: React.FormEvent) {
     e?.preventDefault();
     const text = input.trim();
     if (!text || loading) return;
+    if (listening) stopListening();
 
     const userMsg: Message = { role: 'user', content: text };
     const updatedMessages = [...messages, userMsg];
@@ -55,9 +155,17 @@ export default function ChatBot() {
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.message || 'Error');
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
-    } catch {
-      setError('Sorry, could not get response. Please try again.');
+      if (typeof data.reply !== 'string' || typeof data.audioBase64 !== 'string') {
+        throw new Error('The voice reply was incomplete. Please try again.');
+      }
+
+      // The text is intentionally added only after audio is ready, so both
+      // appear together rather than showing text before its voice is available.
+      const audioUrl = base64ToAudioUrl(data.audioBase64, data.audioMimeType ?? 'audio/mpeg');
+      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply, audioUrl }]);
+      playVoice(audioUrl);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Sorry, could not get response. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -146,6 +254,17 @@ export default function ChatBot() {
                     }`}
                   >
                     {msg.content}
+                    {msg.role === 'assistant' && msg.audioUrl && (
+                      <button
+                        type="button"
+                        onClick={() => playVoice(msg.audioUrl!)}
+                        className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#1a3a6b] hover:text-[#f5a623] transition-colors"
+                        aria-label="Play voice reply"
+                      >
+                        {playingUrl === msg.audioUrl ? <Loader2 size={13} className="animate-spin" /> : <Volume2 size={13} />}
+                        {playingUrl === msg.audioUrl ? 'Playing...' : 'Play voice'}
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -201,6 +320,20 @@ export default function ChatBot() {
                 disabled={loading}
                 className="flex-1 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/10 outline-none transition-all text-gray-800 disabled:opacity-60"
               />
+              <button
+                type="button"
+                onClick={listening ? stopListening : startListening}
+                disabled={loading}
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shrink-0 ${
+                  listening
+                    ? 'bg-red-500 text-white animate-pulse'
+                    : 'bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e39a17]'
+                } disabled:opacity-40 disabled:cursor-not-allowed`}
+                aria-label={listening ? 'Stop voice input' : 'Use voice input'}
+                title={listening ? 'Stop listening' : 'Speak your question'}
+              >
+                {listening ? <Square size={15} /> : <Mic size={16} />}
+              </button>
               <button
                 type="submit"
                 disabled={!input.trim() || loading}

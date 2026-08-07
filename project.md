@@ -119,3 +119,31 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 
 ### Documentation:
 - Is change ko `project.md` ke is task log mein save kiya gaya hai.
+
+---
+
+## ✅ Task 6 — Chatbot Mein Cartesia Voice Reply Aur Mic Input
+**Date:** August 7, 2026
+
+### Kya kiya:
+- Chatbot ke har AI reply ke liye Cartesia Text-to-Speech add kiya.
+- Har reply mein hamesha fixed voice ID `db6b0ed5-d5d3-463d-ae85-518a07d3c2b4` use hoti hai; koi random voice select nahi hoti.
+- Groq se text reply milne ke baad Cartesia audio generate hota hai. Frontend text tabhi message mein dikhata aur voice play karta hai jab dono ready hon, isliye text pehle aur voice baad mein अलग-अलग नहीं आती.
+- Reply generate होने तक chatbot में existing typing/loading dots दिखाई देते हैं.
+- Assistant messages में **Play voice** button भी जोड़ा गया है, ताकि reply को दोबारा सुना जा सके.
+- Message input के side में mic button जोड़ा गया है. Browser speech recognition बोलकर input box में text भरता है, जिसे user send कर सकता है.
+- Hindi/Hinglish के लिए speech recognition language `hi-IN` रखी गई है.
+
+### Backend changes:
+- `artifacts/api-server/src/routes/chat.ts` में Cartesia `/tts/bytes` API call जोड़ा गया.
+- Server response अब `reply`, `audioBase64`, और `audioMimeType` साथ भेजता है.
+- Cartesia API key browser/client में expose नहीं की गई.
+
+### Secure environment:
+- `CARTESIA_API_KEY` को Replit Secrets में secure तरीके से save किया गया है.
+- Security के कारण API key को `.env`, source code, या `project.md` में actual value के रूप में नहीं लिखा गया.
+- Backend runtime `process.env.CARTESIA_API_KEY` से वही secret पढ़ता है.
+
+### Frontend changes:
+- `artifacts/mdn-school/src/components/ChatBot.tsx`
+- Mic start/stop state, browser STT, synchronized text+voice response, audio replay, और error handling जोड़ी गई.
