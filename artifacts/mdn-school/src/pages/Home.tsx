@@ -3,7 +3,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Users, Trophy, GraduationCap, ChevronRight, Star, Award, CheckCircle,
   ArrowRight, MapPin, Phone, Mail, Send, Quote, Download, Smartphone, Bell,
-  CalendarDays, MessageCircle, ShieldCheck
+  CalendarDays, MessageCircle, ShieldCheck, X
 } from 'lucide-react';
 import { Link } from 'wouter';
 
@@ -82,11 +82,21 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: '', studentName: '', phone: '', classLevel: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle');
   const [formError, setFormError] = useState('');
+  const [isAppImageOpen, setIsAppImageOpen] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setCurrent(p => (p + 1) % slides.length), SLIDE_MS);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    if (!isAppImageOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsAppImageOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isAppImageOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -212,102 +222,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════ SCHOOL APP ══════════════ */}
-      <section id="about-school-app" className="scroll-mt-24 py-24 bg-[#f8f9ff] relative overflow-hidden">
-        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-[#f5a623]/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[#2563eb]/10 blur-3xl pointer-events-none" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.7 }}
-              className="relative"
-            >
-              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-[#1a3a6b] to-[#2563eb] opacity-10 blur-xl" />
-              <div className="relative rounded-[2rem] border border-white bg-white p-5 shadow-2xl">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="col-span-2 relative h-56 overflow-hidden rounded-2xl bg-[#0a1c46]">
-                    <img
-                      src="/images/mdn-logo.jfif"
-                      alt="MDN Global School logo used in the school app"
-                      className="absolute inset-0 m-auto h-40 w-40 rounded-2xl object-contain shadow-2xl"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a1c46] to-transparent px-5 pb-4 pt-12">
-                      <p className="text-sm font-bold text-white">MDN Global School Kaithal</p>
-                      <p className="text-xs text-white/65">Official school app</p>
-                    </div>
-                  </div>
-                  <img src="/images/classroom.png" alt="Students learning at MDN Global School" className="h-56 w-full rounded-2xl object-cover" />
-                  <div className="flex h-56 items-center justify-center overflow-hidden rounded-2xl bg-[#eef4fb]">
-                    <img
-                      src="/images/mdn-school-app-dashboard.webp"
-                      alt="MDN Global School app dashboard showing school services"
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                </div>
-                <a
-                  href={appDownloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#1a3a6b] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#0f2557]"
-                  data-testid="button-app-section-download"
-                >
-                  <Download size={17} /> Get the app on Google Play
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <div className="mb-4 flex items-center gap-3 text-sm font-black uppercase tracking-[0.2em] text-[#f5a623]">
-                <span className="h-px w-10 bg-[#f5a623]" /> Stay Connected
-              </div>
-              <h2 className="mb-8 max-w-xl text-4xl font-serif font-bold leading-tight text-[#1a3a6b] md:text-5xl">
-                About the <span className="text-[#f5a623]">MDN School App</span>
-              </h2>
-              <ul className="grid gap-4">
-                {[
-                  { icon: Bell, text: 'Receive important school notices, announcements, and circulars in one place.' },
-                  { icon: CalendarDays, text: 'Keep track of school events, activities, holidays, and important dates.' },
-                  { icon: MessageCircle, text: 'Stay connected with school updates and parent communication.' },
-                  { icon: Bell, text: 'Get instant alerts and notifications from MDN Global School.' },
-                  { icon: Smartphone, text: 'View fee payment information and manage leave details from the app.' },
-                  { icon: BookOpen, text: 'Access homework, classroom updates, circulars, and exam or test results.' },
-                  { icon: Trophy, text: 'Follow school activities and student participation updates from the home dashboard.' },
-                  { icon: ShieldCheck, text: 'Use the official MDN Global School Kaithal app for convenient school information access.' },
-                  { icon: Smartphone, text: 'Download the app directly from Google Play on your Android phone.' },
-                ].map(({ icon: Icon, text }, i) => (
-                  <li key={i} className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
-                    <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1a3a6b]/10 text-[#1a3a6b]">
-                      <Icon size={19} />
-                    </span>
-                    <span className="pt-1 text-base font-medium leading-relaxed text-gray-700">{text}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href={appDownloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-6 py-3 font-black text-[#0a1c46] transition-all hover:bg-[#ffc15c] hover:shadow-lg"
-                >
-                  <Download size={17} /> Download School App
-                </a>
-                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Official Google Play link</span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* ══════════════ STATS ══════════════ */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -425,6 +339,115 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ SCHOOL APP ══════════════ */}
+      <section id="about-school-app" className="scroll-mt-24 bg-[#f8f9ff] py-24 relative overflow-hidden">
+        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-[#f5a623]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[#2563eb]/10 blur-3xl pointer-events-none" />
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mb-12 text-center"
+          >
+            <p className="mb-3 text-sm font-bold uppercase tracking-widest text-[#f5a623]">Stay Connected</p>
+            <h2 className="mb-4 text-4xl font-serif font-bold text-[#1a3a6b] md:text-5xl">
+              About the <span className="text-[#f5a623]">MDN School App</span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-500">
+              The official MDN Global School Kaithal app keeps families connected with important school services and daily updates.
+            </p>
+          </motion.div>
+
+          <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="mx-auto w-full max-w-md"
+            >
+              <div className="rounded-[2rem] border border-white bg-white p-5 shadow-2xl">
+                {/* Image 1: school logo */}
+                <div className="flex h-28 items-center justify-center rounded-2xl bg-[#0a1c46] p-3">
+                  <img
+                    src="/images/mdn-logo.jfif"
+                    alt="MDN Global School logo"
+                    className="h-full w-auto object-contain"
+                  />
+                </div>
+
+                {/* Image 2: uploaded app screenshot, clickable for a larger view */}
+                <button
+                  type="button"
+                  onClick={() => setIsAppImageOpen(true)}
+                  className="group relative mt-4 block w-full overflow-hidden rounded-2xl bg-[#eef4fb] text-left shadow-md ring-1 ring-[#1a3a6b]/10 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#f5a623]/50"
+                  aria-label="Open MDN School App screenshot in full view"
+                  data-testid="button-open-app-screenshot"
+                >
+                  <img
+                    src="/images/mdn-school-app-dashboard.webp"
+                    alt="MDN Global School app dashboard showing school services"
+                    className="mx-auto block max-h-[620px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a1c46]/85 to-transparent px-4 pb-4 pt-12 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    Click to view image
+                  </span>
+                </button>
+
+                <a
+                  href={appDownloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#1a3a6b] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#0f2557]"
+                  data-testid="button-app-section-download"
+                >
+                  <Download size={17} /> Get the app on Google Play
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
+              <ul className="grid gap-3">
+                {[
+                  { icon: Bell, text: 'Receive instant alerts, notifications, school announcements, and circulars.' },
+                  { icon: Smartphone, text: 'View fee payment information and manage leave details from the app.' },
+                  { icon: BookOpen, text: 'Access homework, classroom updates, and important learning information.' },
+                  { icon: CalendarDays, text: 'Keep track of school events, activities, holidays, and important dates.' },
+                  { icon: Trophy, text: 'Follow exam and test results, student activities, and school participation updates.' },
+                  { icon: MessageCircle, text: 'Stay connected with MDN Global School and parent-school communication.' },
+                  { icon: ShieldCheck, text: 'Use the official MDN Global School Kaithal app for convenient school information access.' },
+                ].map(({ icon: Icon, text }, i) => (
+                  <li key={i} className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+                    <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1a3a6b]/10 text-[#1a3a6b]">
+                      <Icon size={19} />
+                    </span>
+                    <span className="pt-1 text-base font-medium leading-relaxed text-gray-700">{text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-7 flex flex-wrap items-center gap-4">
+                <a
+                  href={appDownloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-6 py-3 font-black text-[#0a1c46] transition-all hover:bg-[#ffc15c] hover:shadow-lg"
+                >
+                  <Download size={17} /> Download School App
+                </a>
+                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Official Google Play link</span>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -733,6 +756,36 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {isAppImageOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#06122d]/90 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label="MDN School App screenshot"
+          onClick={() => setIsAppImageOpen(false)}
+        >
+          <div
+            className="relative flex max-h-[calc(100vh-2rem)] max-w-[min(92vw,520px)] items-center justify-center"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img
+              src="/images/mdn-school-app-dashboard.webp"
+              alt="MDN Global School app dashboard showing school services"
+              className="max-h-[calc(100vh-2rem)] w-auto max-w-full rounded-2xl bg-white object-contain shadow-2xl"
+            />
+            <button
+              type="button"
+              onClick={() => setIsAppImageOpen(false)}
+              aria-label="Close app screenshot"
+              className="absolute -right-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#1a3a6b] shadow-xl transition-colors hover:bg-[#f5a623] hover:text-[#0a1c46] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#f5a623]/50"
+              data-testid="button-close-app-screenshot"
+            >
+              <X size={22} />
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );

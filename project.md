@@ -252,3 +252,25 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 - `artifacts/mdn-school/public/images/mdn-school-app-dashboard.webp`
 - `artifacts/mdn-school/src/pages/Home.tsx`
 - `project.md`
+
+---
+
+## ✅ Task 11 — App Section Ko Why Families Choose MDN Ke Baad Move Aur Clickable Banaya
+**Date:** August 10, 2026
+
+### Kya kiya:
+- **About the MDN School App** section ko Home page par **Why Families Choose MDN** section ke turant baad move kiya gaya.
+- App section ke media area mein ab sirf do images hain:
+  1. School ka official logo
+  2. User dwara share ki gayi official app dashboard screenshot
+- Classroom/students image aur bus image ko app section se hata diya gaya.
+- Logo ke neeche app screenshot ko proper portrait layout mein rakha gaya, taaki screenshot ke content ke beech unnecessary empty space na lage.
+- App section ka text aur images balanced two-column layout mein set kiye gaye.
+- App screenshot ko clickable banaya gaya:
+  - Screenshot par click karne se full-size lightbox open hota hai.
+  - Close button se image band ki ja sakti hai.
+  - Lightbox ke bahar click karne ya `Escape` press karne par bhi image close hoti hai.
+
+### Files changed:
+- `artifacts/mdn-school/src/pages/Home.tsx`
+- `project.md`
