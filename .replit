@@ -40,3 +40,4 @@ channel = "stable-25_05"
 
 [userenv.shared]
 TO_EMAIL = "chetnaravishchetnaravish@gmail.com"
+VITE_MDN_APP_DOWNLOAD_URL = "https://play.google.com/store/apps/details?id=com.campuspro.mdngs&pcampaignid=web_share"

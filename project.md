@@ -198,3 +198,32 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 
 ### File changed:
 - `artifacts/api-server/src/routes/chat.ts`
+
+---
+
+## ✅ Task 9 — Home Page Par Official MDN School App Add
+**Date:** August 10, 2026
+
+### Kya kiya:
+- Home page ke hero section mein **Download App** button add kiya gaya.
+- Button Google Play par MDN Global School Kaithal ke official app page ko open karta hai:
+  `com.campuspro.mdngs`
+- Hero section mein **Explore App** option add kiya gaya, jo home page ke naye **About the MDN School App** section par scroll karta hai.
+- App section mein school ke existing logo `mdn-logo.jfif` ko official app identity ke roop mein prominently dikhaya gaya.
+- App section mein school ki existing classroom aur transport images add ki gayi hain.
+- App ke baare mein information paragraph mein nahi, balki clear bullet points mein add ki gayi:
+  - School notices, announcements aur circulars
+  - Events, activities, holidays aur important dates
+  - Parent-school communication updates
+  - Official MDN Global School Kaithal app identity
+  - Android phone par Google Play se direct download
+- App section mein dobara **Get the app on Google Play** aur **Download School App** buttons add kiye gaye.
+
+### Environment configuration:
+- Public app URL ko source code mein hardcode nahi kiya gaya.
+- Shared environment variable `VITE_MDN_APP_DOWNLOAD_URL` mein Google Play link save kiya gaya.
+- Home page ke sabhi app links isi environment variable se read hote hain.
+
+### Files changed:
+- `artifacts/mdn-school/src/pages/Home.tsx`
+- `project.md`

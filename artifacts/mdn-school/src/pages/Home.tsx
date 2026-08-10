@@ -2,9 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Users, Trophy, GraduationCap, ChevronRight, Star, Award, CheckCircle,
-  ArrowRight, MapPin, Phone, Mail, Send, Quote
+  ArrowRight, MapPin, Phone, Mail, Send, Quote, Download, Smartphone, Bell,
+  CalendarDays, MessageCircle, ShieldCheck
 } from 'lucide-react';
 import { Link } from 'wouter';
+
+const appDownloadUrl = import.meta.env.VITE_MDN_APP_DOWNLOAD_URL;
 
 /* ── Animated counter ─────────────────────────────────── */
 function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
@@ -173,6 +176,31 @@ export default function Home() {
             Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
           </motion.p>
 
+          {/* School app CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="mt-8 flex flex-col sm:flex-row gap-3"
+          >
+            <a
+              href={appDownloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f5a623] px-6 py-3.5 text-sm font-black text-[#0a1c46] shadow-xl shadow-black/20 transition-all hover:bg-[#ffc15c] hover:-translate-y-0.5"
+              data-testid="button-download-school-app"
+            >
+              <Download size={18} /> Download App
+            </a>
+            <a
+              href="#about-school-app"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/45 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:-translate-y-0.5"
+              data-testid="button-explore-school-app"
+            >
+              <Smartphone size={18} /> Explore App <ArrowRight size={16} />
+            </a>
+          </motion.div>
+
         </div>
 
         {/* Slide dots */}
@@ -181,6 +209,92 @@ export default function Home() {
             <button key={i} onClick={() => setCurrent(i)} aria-label={`Slide ${i + 1}`}
               className={`rounded-full transition-all duration-500 ${i === current ? 'w-8 h-1.5 bg-[#f5a623]' : 'w-2 h-1.5 bg-white/35 hover:bg-white/60'}`} />
           ))}
+        </div>
+      </section>
+
+      {/* ══════════════ SCHOOL APP ══════════════ */}
+      <section id="about-school-app" className="scroll-mt-24 py-24 bg-[#f8f9ff] relative overflow-hidden">
+        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-[#f5a623]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-[#2563eb]/10 blur-3xl pointer-events-none" />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="relative"
+            >
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-[#1a3a6b] to-[#2563eb] opacity-10 blur-xl" />
+              <div className="relative rounded-[2rem] border border-white bg-white p-5 shadow-2xl">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="col-span-2 relative h-56 overflow-hidden rounded-2xl bg-[#0a1c46]">
+                    <img
+                      src="/images/mdn-logo.jfif"
+                      alt="MDN Global School logo used in the school app"
+                      className="absolute inset-0 m-auto h-40 w-40 rounded-2xl object-contain shadow-2xl"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a1c46] to-transparent px-5 pb-4 pt-12">
+                      <p className="text-sm font-bold text-white">MDN Global School Kaithal</p>
+                      <p className="text-xs text-white/65">Official school app</p>
+                    </div>
+                  </div>
+                  <img src="/images/classroom.png" alt="Students learning at MDN Global School" className="h-32 w-full rounded-2xl object-cover" />
+                  <img src="/images/school-buses.jpg" alt="MDN Global School transport" className="h-32 w-full rounded-2xl object-cover" />
+                </div>
+                <a
+                  href={appDownloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#1a3a6b] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#0f2557]"
+                  data-testid="button-app-section-download"
+                >
+                  <Download size={17} /> Get the app on Google Play
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
+              <div className="mb-4 flex items-center gap-3 text-sm font-black uppercase tracking-[0.2em] text-[#f5a623]">
+                <span className="h-px w-10 bg-[#f5a623]" /> Stay Connected
+              </div>
+              <h2 className="mb-8 max-w-xl text-4xl font-serif font-bold leading-tight text-[#1a3a6b] md:text-5xl">
+                About the <span className="text-[#f5a623]">MDN School App</span>
+              </h2>
+              <ul className="grid gap-4">
+                {[
+                  { icon: Bell, text: 'Receive important school notices, announcements, and circulars in one place.' },
+                  { icon: CalendarDays, text: 'Keep track of school events, activities, holidays, and important dates.' },
+                  { icon: MessageCircle, text: 'Stay connected with school updates and parent communication.' },
+                  { icon: ShieldCheck, text: 'Use the official MDN Global School Kaithal app for convenient school information access.' },
+                  { icon: Smartphone, text: 'Download the app directly from Google Play on your Android phone.' },
+                ].map(({ icon: Icon, text }, i) => (
+                  <li key={i} className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+                    <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1a3a6b]/10 text-[#1a3a6b]">
+                      <Icon size={19} />
+                    </span>
+                    <span className="pt-1 text-base font-medium leading-relaxed text-gray-700">{text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href={appDownloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-6 py-3 font-black text-[#0a1c46] transition-all hover:bg-[#ffc15c] hover:shadow-lg"
+                >
+                  <Download size={17} /> Download School App
+                </a>
+                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Official Google Play link</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
