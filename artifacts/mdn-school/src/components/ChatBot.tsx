@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Loader2, Mic, Square, Volume2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Loader2, Mic, Square, Volume2, VolumeX } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -44,11 +44,13 @@ export default function ChatBot() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [listening, setListening] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const voiceEnabledRef = useRef(true);
 
   useEffect(() => {
     if (open) {
@@ -83,6 +85,16 @@ export default function ChatBot() {
       setPlayingUrl(null);
       setError('Voice playback was blocked. Tap the speaker button to play it.');
     });
+  }
+
+  function toggleVoice() {
+    const nextEnabled = !voiceEnabledRef.current;
+    voiceEnabledRef.current = nextEnabled;
+    setVoiceEnabled(nextEnabled);
+    if (!nextEnabled) {
+      audioRef.current?.pause();
+      setPlayingUrl(null);
+    }
   }
 
   function startListening() {
@@ -163,7 +175,7 @@ export default function ChatBot() {
       // appear together rather than showing text before its voice is available.
       const audioUrl = base64ToAudioUrl(data.audioBase64, data.audioMimeType ?? 'audio/mpeg');
       setMessages((prev) => [...prev, { role: 'assistant', content: data.reply, audioUrl }]);
-      playVoice(audioUrl);
+      if (voiceEnabledRef.current) playVoice(audioUrl);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Sorry, could not get response. Please try again.');
     } finally {
@@ -223,8 +235,18 @@ export default function ChatBot() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm leading-tight">MDN School Assistant</p>
-                <p className="text-white/60 text-xs">Ask anything about our school</p>
+                <p className="text-white/60 text-xs">{voiceEnabled ? 'Voice on · short answers' : 'Voice off · text only'}</p>
               </div>
+              <button
+                type="button"
+                onClick={toggleVoice}
+                className={`p-1.5 rounded-lg transition-colors ${voiceEnabled ? 'text-[#f5a623] hover:bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                aria-label={voiceEnabled ? 'Turn voice replies off' : 'Turn voice replies on'}
+                aria-pressed={voiceEnabled}
+                title={voiceEnabled ? 'Turn voice replies off' : 'Turn voice replies on'}
+              >
+                {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+              </button>
               <button
                 onClick={() => setOpen(false)}
                 className="text-white/60 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"

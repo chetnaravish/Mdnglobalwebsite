@@ -147,3 +147,28 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 ### Frontend changes:
 - `artifacts/mdn-school/src/components/ChatBot.tsx`
 - Mic start/stop state, browser STT, synchronized text+voice response, audio replay, और error handling जोड़ी गई.
+
+---
+
+## ✅ Task 7 — Short Replies Aur Voice On/Off Control
+**Date:** August 10, 2026
+
+### Kya kiya:
+- Chatbot ka system prompt concise kiya gaya hai.
+- Ab chatbot normally 1–3 simple sentences aur maximum 45 words mein exact question ka short, specific answer dega.
+- Unnecessary greeting, repeated details, markdown, bullets, emojis aur decorative symbols हटाए गए हैं, ताकि text और voice दोनों easy to understand रहें.
+- Off-topic questions को short polite redirect मिलेगा.
+- Groq generation को `max_tokens: 220` और lower temperature पर सेट किया गया, जिससे replies अधिक focused रहें.
+- Cartesia voice के लिए reply text साफ़ किया जाता है और language Hindi/English के हिसाब से चुनी जाती है.
+- Voice speed `0.9`, volume `1`, और calm emotion सेट किया गया है, जिससे बोलना धीमा, साफ़ और समझने में आसान रहे.
+
+### Voice control:
+- Chatbot header में Voice On/Off button जोड़ा गया.
+- Voice On होने पर generated voice reply आते ही auto-play होगी.
+- Voice Off करने पर current audio तुरंत रुकती है और नई voice auto-play नहीं होती.
+- Voice फिर भी backend पर generate होती है और message के नीचे **Play voice** button से manually सुनी जा सकती है.
+- Text और generated audio अभी भी दोनों ready होने के बाद एक साथ message में आते हैं.
+
+### Files changed:
+- `artifacts/api-server/src/routes/chat.ts`
+- `artifacts/mdn-school/src/components/ChatBot.tsx`
