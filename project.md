@@ -172,3 +172,29 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 ### Files changed:
 - `artifacts/api-server/src/routes/chat.ts`
 - `artifacts/mdn-school/src/components/ChatBot.tsx`
+
+---
+
+## ✅ Task 8 — Website Ki Puri School Information Chatbot Knowledge Mein Add
+**Date:** August 10, 2026
+
+### Kya kiya:
+- Chatbot ka system prompt website ke actual pages ke according expand kiya gaya.
+- Ab chatbot sirf school ka phone number dekar answer nahi टालेगा; jis topic par question hoga uski available proper information dega.
+- Prompt mein About, Academics, Facilities, Events, Contact aur Admissions sections ki information add ki gayi:
+  - School history, vision, mission aur core values
+  - Director, Chairperson, Manager aur Principal ki details
+  - Nursery se Class XII tak academic stages
+  - Medical, Non-Medical aur Commerce streams aur subjects
+  - Teaching methodology, board preparation aur results
+  - Smart classrooms, labs, library, sports, IT lab, arts, music, transport, green campus aur safety
+  - Annual Sports Meet, Utsav, Science Exhibition, Debate Championship, Inter-School Sports aur Annual Day
+  - Admission process, entrance test, scholarships, counselling aur campus tour
+  - Address, phone, email, office hours aur map location
+- Pehle laga hua artificial 45-word limit hata diya gaya. Ab detailed question par complete relevant answer diya ja sakta hai.
+- Groq `max_tokens` ko 900 kiya gaya, taaki detailed school answers truncate na hon.
+- School ke bahar ke topics ke liye strict refusal rule रखा गया है. Chatbot general knowledge, politics, coding, entertainment, health, legal, financial ya other-school questions ka answer nahi dega.
+- Exact fee, current seats, dates ya website par unavailable details ke liye chatbot guess nahi karega; woh clearly बताएगा ki exact detail available nahi hai aur school se confirmation ka option dega.
+
+### File changed:
+- `artifacts/api-server/src/routes/chat.ts`
