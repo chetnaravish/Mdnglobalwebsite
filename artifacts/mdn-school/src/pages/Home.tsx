@@ -239,8 +239,14 @@ export default function Home() {
                       <p className="text-xs text-white/65">Official school app</p>
                     </div>
                   </div>
-                  <img src="/images/classroom.png" alt="Students learning at MDN Global School" className="h-32 w-full rounded-2xl object-cover" />
-                  <img src="/images/school-buses.jpg" alt="MDN Global School transport" className="h-32 w-full rounded-2xl object-cover" />
+                  <img src="/images/classroom.png" alt="Students learning at MDN Global School" className="h-56 w-full rounded-2xl object-cover" />
+                  <div className="flex h-56 items-center justify-center overflow-hidden rounded-2xl bg-[#eef4fb]">
+                    <img
+                      src="/images/mdn-school-app-dashboard.webp"
+                      alt="MDN Global School app dashboard showing school services"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
                 </div>
                 <a
                   href={appDownloadUrl}
@@ -271,6 +277,10 @@ export default function Home() {
                   { icon: Bell, text: 'Receive important school notices, announcements, and circulars in one place.' },
                   { icon: CalendarDays, text: 'Keep track of school events, activities, holidays, and important dates.' },
                   { icon: MessageCircle, text: 'Stay connected with school updates and parent communication.' },
+                  { icon: Bell, text: 'Get instant alerts and notifications from MDN Global School.' },
+                  { icon: Smartphone, text: 'View fee payment information and manage leave details from the app.' },
+                  { icon: BookOpen, text: 'Access homework, classroom updates, circulars, and exam or test results.' },
+                  { icon: Trophy, text: 'Follow school activities and student participation updates from the home dashboard.' },
                   { icon: ShieldCheck, text: 'Use the official MDN Global School Kaithal app for convenient school information access.' },
                   { icon: Smartphone, text: 'Download the app directly from Google Play on your Android phone.' },
                 ].map(({ icon: Icon, text }, i) => (

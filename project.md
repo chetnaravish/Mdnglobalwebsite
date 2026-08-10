@@ -227,3 +227,28 @@ Chatbot pehle koi bhi question ka answer de deta tha — general knowledge, hist
 ### Files changed:
 - `artifacts/mdn-school/src/pages/Home.tsx`
 - `project.md`
+
+---
+
+## ✅ Task 10 — Home App Section Mein Uploaded App Screenshot Add
+**Date:** August 10, 2026
+
+### Kya kiya:
+- User ke uploaded screenshot `attached_assets/unnamed_1786339397005.webp` ko website ke public images folder mein add kiya gaya.
+- App section mein pehle dikh rahi bus image ko hata kar uploaded MDN School App dashboard screenshot add kiya gaya.
+- Screenshot ko school logo ke neeche portrait app preview ke roop mein visible rakha gaya.
+- App information bullets ko screenshot ke actual modules ke according expand kiya gaya:
+  - Alert & Notification
+  - Fee Payment
+  - Leave Detail
+  - Home Work
+  - ClassRoom updates
+  - Circulars
+  - Exam/Test Result
+  - Activities
+- Existing app bullets jaise announcements, events, parent communication, official app identity aur Google Play download information bhi retain kiye gaye.
+
+### Files changed:
+- `artifacts/mdn-school/public/images/mdn-school-app-dashboard.webp`
+- `artifacts/mdn-school/src/pages/Home.tsx`
+- `project.md`
