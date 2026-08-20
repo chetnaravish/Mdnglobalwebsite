@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, User, Loader2, Mic, Square, Volume2, VolumeX } from 'lucide-react';
 
@@ -34,7 +34,7 @@ declare global {
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
-  content: 'Namaste! 🙏 I am the MDN Global School assistant. I can help you with information about admissions, academics, facilities, fee structure, and more.\n\nHow can I help you today?',
+  content: 'Namaste! \u{1F64F} I am the MDN Global School assistant. I can help you with information about admissions, academics, facilities, fee structure, and more.\n\nHow can I help you today?',
 };
 
 export default function ChatBot() {
@@ -45,17 +45,16 @@ export default function ChatBot() {
   const [error, setError] = useState('');
   const [listening, setListening] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [speaking, setSpeaking] = useState(false);
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const voiceEnabledRef = useRef(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 300);
-    }
+    if (open) setTimeout(() => inputRef.current?.focus(), 300);
   }, [open]);
 
   useEffect(() => {
@@ -66,47 +65,70 @@ export default function ChatBot() {
     return () => {
       recognitionRef.current?.stop();
       audioRef.current?.pause();
-      messages.forEach((message) => {
-        if (message.audioUrl) URL.revokeObjectURL(message.audioUrl);
-      });
+      window.speechSynthesis?.cancel();
+      messages.forEach((m) => { if (m.audioUrl) URL.revokeObjectURL(m.audioUrl); });
     };
-    // This cleanup intentionally runs only when the chatbot unmounts. Revoking
-    // URLs whenever a new message arrives would break replay for older replies.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function playVoice(audioUrl: string) {
+  function speakText(text: string) {
+    if (!voiceEnabledRef.current || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const clean = text
+      .replace(/[*_#`]/g, '')
+      .replace(/[\u{1F64F}\u{1F44D}\u{2728}\u{1F31F}\u{1F3C6}\u{2714}\u{2B50}]/gu, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!clean) return;
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.lang = /[\u0900-\u097F]/u.test(clean) ? 'hi-IN' : 'en-IN';
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function playAudio(url: string) {
     audioRef.current?.pause();
-    const audio = new Audio(audioUrl);
+    const audio = new Audio(url);
     audioRef.current = audio;
-    setPlayingUrl(audioUrl);
-    audio.onended = () => setPlayingUrl(null);
-    void audio.play().catch(() => {
-      setPlayingUrl(null);
-      setError('Voice playback was blocked. Tap the speaker button to play it.');
-    });
+    setPlayingUrl(url);
+    setSpeaking(true);
+    audio.onended = () => { setPlayingUrl(null); setSpeaking(false); };
+    audio.onerror = () => { setPlayingUrl(null); setSpeaking(false); };
+    void audio.play().catch(() => { setPlayingUrl(null); setSpeaking(false); });
+  }
+
+  function stopSpeaking() {
+    audioRef.current?.pause();
+    window.speechSynthesis?.cancel();
+    setSpeaking(false);
+    setPlayingUrl(null);
   }
 
   function toggleVoice() {
-    const nextEnabled = !voiceEnabledRef.current;
-    voiceEnabledRef.current = nextEnabled;
-    setVoiceEnabled(nextEnabled);
-    if (!nextEnabled) {
+    const next = !voiceEnabledRef.current;
+    voiceEnabledRef.current = next;
+    setVoiceEnabled(next);
+    if (!next) {
       audioRef.current?.pause();
+      window.speechSynthesis?.cancel();
+      setSpeaking(false);
       setPlayingUrl(null);
     }
   }
 
   function startListening() {
     if (loading || listening) return;
-    const SpeechRecognition = window.SpeechRecognition ?? window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
+    const SR = window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    if (!SR) {
       setError('Voice input is not supported in this browser. Please type your question.');
       return;
     }
-
     setError('');
-    const recognition = new SpeechRecognition();
+    const recognition = new SR();
     recognition.lang = 'hi-IN';
     recognition.continuous = false;
     recognition.interimResults = true;
@@ -135,22 +157,15 @@ export default function ChatBot() {
     setListening(false);
   }
 
-  function base64ToAudioUrl(base64: string, mimeType: string) {
-    const binary = window.atob(base64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
-    return URL.createObjectURL(new Blob([bytes], { type: mimeType }));
-  }
-
-  async function sendMessage(e?: React.FormEvent) {
+  const sendMessage = useCallback(async (e?: React.FormEvent) => {
     e?.preventDefault();
     const text = input.trim();
     if (!text || loading) return;
     if (listening) stopListening();
 
     const userMsg: Message = { role: 'user', content: text };
-    const updatedMessages = [...messages, userMsg];
-    setMessages(updatedMessages);
+    const updated = [...messages, userMsg];
+    setMessages(updated);
     setInput('');
     setError('');
     setLoading(true);
@@ -160,28 +175,38 @@ export default function ChatBot() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
+          messages: updated.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
 
       const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.message || 'Error');
-
-      if (typeof data.reply !== 'string' || typeof data.audioBase64 !== 'string') {
-        throw new Error('The voice reply was incomplete. Please try again.');
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Something went wrong. Please try again.');
       }
 
-      // The text is intentionally added only after audio is ready, so both
-      // appear together rather than showing text before its voice is available.
-      const audioUrl = base64ToAudioUrl(data.audioBase64, data.audioMimeType ?? 'audio/mpeg');
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply, audioUrl }]);
-      if (voiceEnabledRef.current) playVoice(audioUrl);
+      const reply = data.reply as string;
+      const audioBase64 = data.audioBase64 as string | undefined;
+      const audioMimeType = (data.audioMimeType as string) || 'audio/mpeg';
+
+      let audioUrl: string | undefined;
+      if (audioBase64) {
+        const binary = window.atob(audioBase64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+        audioUrl = URL.createObjectURL(new Blob([bytes], { type: audioMimeType }));
+      }
+
+      setMessages((prev) => [...prev, { role: 'assistant', content: reply, audioUrl }]);
+      if (voiceEnabledRef.current && audioUrl) {
+        playAudio(audioUrl);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sorry, could not get response. Please try again.');
+      setError(err instanceof Error ? err.message : 'Sorry, could not connect. Please try again.');
     } finally {
       setLoading(false);
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input, loading, listening, messages]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -211,7 +236,6 @@ export default function ChatBot() {
             </motion.span>
           )}
         </AnimatePresence>
-        {/* Pulse ring */}
         {!open && (
           <span className="absolute inset-0 rounded-full bg-[#1a3a6b] animate-ping opacity-25 pointer-events-none" />
         )}
@@ -235,23 +259,15 @@ export default function ChatBot() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm leading-tight">MDN School Assistant</p>
-                <p className="text-white/60 text-xs">{voiceEnabled ? 'Voice on · short answers' : 'Voice off · text only'}</p>
+                <p className="text-white/60 text-xs">{voiceEnabled ? 'Voice on' : 'Voice off'}</p>
               </div>
-              <button
-                type="button"
-                onClick={toggleVoice}
+              <button type="button" onClick={toggleVoice}
                 className={`p-1.5 rounded-lg transition-colors ${voiceEnabled ? 'text-[#f5a623] hover:bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
-                aria-label={voiceEnabled ? 'Turn voice replies off' : 'Turn voice replies on'}
-                aria-pressed={voiceEnabled}
-                title={voiceEnabled ? 'Turn voice replies off' : 'Turn voice replies on'}
-              >
+                aria-label={voiceEnabled ? 'Turn voice off' : 'Turn voice on'}>
                 {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-white/60 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
-                aria-label="Close chat"
-              >
+              <button onClick={() => setOpen(false)}
+                className="text-white/60 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10" aria-label="Close chat">
                 <X size={18} />
               </button>
             </div>
@@ -260,38 +276,31 @@ export default function ChatBot() {
             <div className="flex-1 overflow-y-auto bg-gray-50 px-3 py-4 space-y-3">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex gap-2 items-end ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                  {/* Avatar */}
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'assistant' ? 'bg-[#1a3a6b]' : 'bg-[#f5a623]'}`}>
-                    {msg.role === 'assistant'
-                      ? <Bot size={14} className="text-white" />
-                      : <User size={14} className="text-[#1a3a6b]" />
-                    }
+                    {msg.role === 'assistant' ? <Bot size={14} className="text-white" /> : <User size={14} className="text-[#1a3a6b]" />}
                   </div>
-                  {/* Bubble */}
-                  <div
-                    className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                      msg.role === 'assistant'
-                        ? 'bg-white text-gray-800 rounded-bl-sm shadow-sm border border-gray-100'
-                        : 'bg-[#1a3a6b] text-white rounded-br-sm'
-                    }`}
-                  >
+                  <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+                    msg.role === 'assistant' ? 'bg-white text-gray-800 rounded-bl-sm shadow-sm border border-gray-100' : 'bg-[#1a3a6b] text-white rounded-br-sm'
+                  }`}>
                     {msg.content}
-                    {msg.role === 'assistant' && msg.audioUrl && (
-                      <button
-                        type="button"
-                        onClick={() => playVoice(msg.audioUrl!)}
-                        className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#1a3a6b] hover:text-[#f5a623] transition-colors"
-                        aria-label="Play voice reply"
-                      >
-                        {playingUrl === msg.audioUrl ? <Loader2 size={13} className="animate-spin" /> : <Volume2 size={13} />}
-                        {playingUrl === msg.audioUrl ? 'Playing...' : 'Play voice'}
+                    {msg.role === 'assistant' && i > 0 && voiceEnabled && (
+                      <button type="button"
+                        onClick={() => {
+                          if (msg.audioUrl) {
+                            playingUrl === msg.audioUrl ? stopSpeaking() : playAudio(msg.audioUrl);
+                          } else {
+                            speaking ? stopSpeaking() : speakText(msg.content);
+                          }
+                        }}
+                        className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#1a3a6b] hover:text-[#f5a623] transition-colors" aria-label="Play voice">
+                        {speaking && playingUrl === msg.audioUrl ? <Loader2 size={13} className="animate-spin" /> : <Volume2 size={13} />}
+                        {speaking && playingUrl === msg.audioUrl ? 'Playing...' : msg.audioUrl ? 'Listen' : 'Listen'}
                       </button>
                     )}
                   </div>
                 </div>
               ))}
 
-              {/* Loading dots */}
               {loading && (
                 <div className="flex gap-2 items-end">
                   <div className="w-7 h-7 rounded-full bg-[#1a3a6b] flex items-center justify-center shrink-0">
@@ -307,7 +316,6 @@ export default function ChatBot() {
                 </div>
               )}
 
-              {/* Error */}
               {error && (
                 <p className="text-center text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{error}</p>
               )}
@@ -315,15 +323,13 @@ export default function ChatBot() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Quick suggestions (only at start) */}
+            {/* Quick suggestions */}
             {messages.length === 1 && (
               <div className="bg-gray-50 px-3 pb-2 flex flex-wrap gap-1.5">
                 {['Admission process?', 'Fee structure?', 'School timings?', 'Facilities?'].map((q) => (
-                  <button
-                    key={q}
+                  <button key={q}
                     onClick={() => { setInput(q); setTimeout(() => sendMessage(), 50); }}
-                    className="text-xs bg-white border border-gray-200 text-[#1a3a6b] px-2.5 py-1.5 rounded-full hover:border-[#1a3a6b] hover:bg-[#1a3a6b]/5 transition-colors"
-                  >
+                    className="text-xs bg-white border border-gray-200 text-[#1a3a6b] px-2.5 py-1.5 rounded-full hover:border-[#1a3a6b] hover:bg-[#1a3a6b]/5 transition-colors">
                     {q}
                   </button>
                 ))}
@@ -332,36 +338,18 @@ export default function ChatBot() {
 
             {/* Input */}
             <form onSubmit={sendMessage} className="bg-white border-t border-gray-100 px-3 py-3 flex gap-2 items-center shrink-0">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Type your question..."
-                disabled={loading}
-                className="flex-1 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/10 outline-none transition-all text-gray-800 disabled:opacity-60"
-              />
-              <button
-                type="button"
-                onClick={listening ? stopListening : startListening}
-                disabled={loading}
+              <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown} placeholder="Type your question..." disabled={loading}
+                className="flex-1 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/10 outline-none transition-all text-gray-800 disabled:opacity-60" />
+              <button type="button" onClick={listening ? stopListening : startListening} disabled={loading}
                 className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shrink-0 ${
-                  listening
-                    ? 'bg-red-500 text-white animate-pulse'
-                    : 'bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e39a17]'
+                  listening ? 'bg-red-500 text-white animate-pulse' : 'bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e39a17]'
                 } disabled:opacity-40 disabled:cursor-not-allowed`}
-                aria-label={listening ? 'Stop voice input' : 'Use voice input'}
-                title={listening ? 'Stop listening' : 'Speak your question'}
-              >
+                aria-label={listening ? 'Stop voice input' : 'Use voice input'}>
                 {listening ? <Square size={15} /> : <Mic size={16} />}
               </button>
-              <button
-                type="submit"
-                disabled={!input.trim() || loading}
-                className="w-9 h-9 rounded-xl bg-[#1a3a6b] text-white flex items-center justify-center hover:bg-[#0f2557] disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0"
-                aria-label="Send"
-              >
+              <button type="submit" disabled={!input.trim() || loading}
+                className="w-9 h-9 rounded-xl bg-[#1a3a6b] text-white flex items-center justify-center hover:bg-[#0f2557] disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0" aria-label="Send">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               </button>
             </form>
