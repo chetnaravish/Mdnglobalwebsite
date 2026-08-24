@@ -242,6 +242,12 @@ pnpm typecheck   # root se — libs + artifacts sab check hota hai
 ### ✅ Task 13 — AGENT.md Banaya (Aug 22, 2026)
 - Yeh file create ki taaki har naya agent/session pehle poori project history samajh sake. Aage ke saare changes isi file mein log honge.
 
+### ✅ Task 14 — API Server Windows Local Run Fix + Local Preview Start (Aug 22, 2026)
+- **Bug:** `artifacts/api-server/package.json` ka dev script `export NODE_ENV=development && ...` Windows pe fail hota tha (`export` Linux/Mac command hai) — `ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL`.
+- **Fix:** Dev script ab sirf `pnpm run build && pnpm run start` hai. `NODE_ENV` unset chhoda to bhi logger.ts development mode (pino-pretty) use karta hai, to behavior same rehta hai.
+- **Local preview start kiya:** Frontend Vite dev server → http://localhost:5173 (chatbot keys `artifacts/mdn-school/.env` se load hui), API server → http://localhost:3000/api (`/api/healthz` = ok).
+- ⚠️ **Known limitation:** Contact form frontend se `/api/contact` (port 5173) pe POST karta hai par Vite mein uska proxy :3000 pe nahi hai — local dev mein form test karne ke liye `vite.config.ts` mein `server.proxy` add karna hoga ya form URL absolute banana hoga.
+
 ---
 
 *Aage ka har kaam — chhota ho ya bada — is change log mein add karna zaroori hai.*
