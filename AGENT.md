@@ -248,6 +248,14 @@ pnpm typecheck   # root se — libs + artifacts sab check hota hai
 - **Local preview start kiya:** Frontend Vite dev server → http://localhost:5173 (chatbot keys `artifacts/mdn-school/.env` se load hui), API server → http://localhost:3000/api (`/api/healthz` = ok).
 - ⚠️ **Known limitation:** Contact form frontend se `/api/contact` (port 5173) pe POST karta hai par Vite mein uska proxy :3000 pe nahi hai — local dev mein form test karne ke liye `vite.config.ts` mein `server.proxy` add karna hoga ya form URL absolute banana hoga.
 
+### ✅ Task 15 — Download App Button Fix (Aug 24, 2026)
+- **Bug:** Home page ke saare "Download App" buttons (hero + app section, total 3) locally kaam nahi kar rahe the — `href` sirf `VITE_MDN_APP_DOWNLOAD_URL` env var se aata tha jo local machine pe missing thi (root `.env` exist nahi karti thi), isliye `href={undefined}` → click pe kuch nahi hota tha. (Replit pe `.replit` env se kaam karta tha.)
+- **Fix (2-part):**
+  1. `Home.tsx:10-11` — fallback constant `DEFAULT_APP_DOWNLOAD_URL` add kiya (`https://play.google.com/store/apps/details?id=com.campuspro.mdngs`). Ab agar env var missing bhi ho to button hamesha Play Store link kholega; env var set ho to wahi override karega.
+  2. Root `.env` create kiya with `VITE_MDN_APP_DOWNLOAD_URL=https://play.google.com/store/apps/details?id=com.campuspro.mdngs&pcampaignid=web_share` (gitignored hai, safe).
+- **Verify:** Play Store link live hai (HTTP 200), Vite server restart karke page load ok, typecheck mein mere changes se koi error nahi.
+- ⚠️ **Pre-existing issue noted:** `Facilities.tsx` (lightbox state typing) mein 6 purane TS errors hain — inhe alag task mein fix karna hoga.
+
 ---
 
 *Aage ka har kaam — chhota ho ya bada — is change log mein add karna zaroori hai.*

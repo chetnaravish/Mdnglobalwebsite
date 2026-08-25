@@ -7,7 +7,8 @@ import {
 } from 'lucide-react';
 import { Link } from 'wouter';
 
-const appDownloadUrl = import.meta.env.VITE_MDN_APP_DOWNLOAD_URL;
+const DEFAULT_APP_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.campuspro.mdngs';
+const appDownloadUrl = import.meta.env.VITE_MDN_APP_DOWNLOAD_URL || DEFAULT_APP_DOWNLOAD_URL;
 
 /* ── Animated counter ─────────────────────────────────── */
 function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
