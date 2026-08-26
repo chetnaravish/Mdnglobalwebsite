@@ -101,17 +101,20 @@ function Lightbox({ photo, onClose }: { photo: Photo & { sectionLabel?: string }
         <motion.div
           initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.88, opacity: 0 }} transition={{ duration: 0.25 }}
-          className="relative max-w-4xl w-full"
+          className="relative max-w-5xl w-full"
           onClick={e => e.stopPropagation()}
         >
-          <img src={photo.src} alt={photo.caption}
-            className="w-full max-h-[80vh] object-cover rounded-2xl shadow-2xl"
-            style={{ objectPosition: photo.pos || 'center' }} />
-          <div className="mt-4 text-center">
-            <p className="text-white font-medium text-lg">{photo.caption}</p>
-            {photo.sectionLabel && <p className="text-white/50 text-sm mt-1">{photo.sectionLabel}</p>}
+          <div className="rounded-2xl overflow-hidden bg-black shadow-2xl">
+            <img src={photo.src} alt={photo.caption}
+              className="w-full max-h-[78vh] object-contain" />
           </div>
-          <button onClick={onClose}
+          <div className="mt-4 text-center px-6">
+            {photo.sectionLabel && (
+              <p className="text-[#f5a623] text-xs font-bold uppercase tracking-widest mb-1">{photo.sectionLabel}</p>
+            )}
+            <p className="text-white font-semibold text-lg leading-snug">{photo.caption}</p>
+          </div>
+          <button onClick={onClose} aria-label="Close"
             className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors">
             <X size={20} className="text-gray-800" />
           </button>
@@ -121,22 +124,77 @@ function Lightbox({ photo, onClose }: { photo: Photo & { sectionLabel?: string }
   );
 }
 
+/* ── Auto-scrolling marquee row ───────────────────────── */
+function MarqueeRow({ photos, reverse, onOpen }: {
+  photos: (Photo & { sectionLabel?: string })[];
+  reverse?: boolean;
+  onOpen: (p: Photo & { sectionLabel?: string }) => void;
+}) {
+  const items = [...photos, ...photos];
+  return (
+    <div className="gallery-marquee">
+      <div
+        className={`gallery-marquee-track ${reverse ? 'reverse' : ''}`}
+        style={{ '--marquee-duration': `${Math.max(35, photos.length * 4)}s` } as React.CSSProperties}
+      >
+        {items.map((photo, i) => (
+          <figure key={`${i}-${photo.src}`} onClick={() => onOpen(photo)}
+            className="w-64 md:w-80 shrink-0 mr-5 cursor-pointer group">
+            <div className="relative rounded-xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-gray-100">
+              <img src={photo.src} alt={photo.caption} loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                style={{ objectPosition: photo.pos || 'center' }} />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">
+                <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={26} />
+              </div>
+            </div>
+            <figcaption className="mt-3 px-1">
+              {photo.sectionLabel && (
+                <p className="text-[11px] font-bold uppercase tracking-widest text-[#f5a623]">{photo.sectionLabel}</p>
+              )}
+              <p className="text-sm font-semibold text-gray-800 leading-snug mt-0.5">{photo.caption}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Two scrolling rows (All Photos view) ─────────────── */
+function ScrollingRows({ photos, onOpen }: {
+  photos: (Photo & { sectionLabel?: string })[];
+  onOpen: (p: Photo & { sectionLabel?: string }) => void;
+}) {
+  const mid = Math.ceil(photos.length / 2);
+  return (
+    <div className="space-y-8">
+      <MarqueeRow photos={photos.slice(0, mid)} onOpen={onOpen} />
+      <MarqueeRow photos={photos.slice(mid)} reverse onOpen={onOpen} />
+    </div>
+  );
+}
+
 /* ── Photo card ───────────────────────────────────────── */
 function PhotoCard({ photo, index, onClick }: { photo: Photo & { sectionLabel?: string }; index: number; onClick: () => void }) {
   return (
     <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={index % 6 * 0.07}
-      className="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 aspect-square bg-gray-100"
+      className="group rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
       onClick={onClick}
     >
-      <img src={photo.src} alt={photo.caption}
-        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        style={{ objectPosition: photo.pos || 'center' }} />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="flex items-center gap-2 text-white/80 text-xs font-medium mb-1">
-          <ZoomIn size={14} /> View Photo
+      <div className="relative aspect-square overflow-hidden bg-gray-100">
+        <img src={photo.src} alt={photo.caption} loading="lazy"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          style={{ objectPosition: photo.pos || 'center' }} />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">
+          <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={26} />
         </div>
-        <p className="text-white font-semibold text-sm leading-snug line-clamp-2">{photo.caption}</p>
+      </div>
+      <div className="p-3">
+        {photo.sectionLabel && (
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#f5a623]">{photo.sectionLabel}</p>
+        )}
+        <p className="text-sm font-semibold text-gray-800 leading-snug mt-0.5 line-clamp-2">{photo.caption}</p>
       </div>
     </motion.div>
   );
@@ -176,12 +234,9 @@ export default function Gallery() {
 
           {/* Stats row */}
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3}
-            className="mt-10 flex flex-wrap gap-6">
+            className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
             {sections.map(s => (
-              <div key={s.id} className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${s.color}`} />
-                <span className="text-white/70 text-sm font-medium">{s.label}</span>
-              </div>
+              <span key={s.id} className="text-white/70 text-sm font-medium">{s.label}</span>
             ))}
           </motion.div>
         </div>
@@ -204,7 +259,6 @@ export default function Gallery() {
                   style={{ objectPosition: s.photos[0].pos || 'center' }} />
                 <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-black/20`} />
                 <div className={`absolute inset-x-0 bottom-0 p-4`}>
-                  <div className={`inline-block w-2 h-2 rounded-full ${s.color} mb-2`} />
                   <p className="text-white font-serif font-bold text-base leading-tight">{s.label}</p>
                   <p className="text-white/60 text-xs mt-0.5">{s.count} Photos</p>
                 </div>
@@ -239,7 +293,6 @@ export default function Gallery() {
                     : 'bg-white text-gray-600 border border-gray-200 hover:border-[#1a3a6b] hover:text-[#1a3a6b]'
                 }`}
               >
-                <span className={`w-2 h-2 rounded-full ${s.color}`} />
                 {s.label} <span className="opacity-60">({s.count})</span>
               </button>
             ))}
@@ -253,15 +306,20 @@ export default function Gallery() {
             </motion.div>
           )}
 
-          {/* Photos Grid */}
+          {/* Photos — scrolling rows for All, grid for a category */}
           <AnimatePresence mode="wait">
             <motion.div key={activeFilter}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {displayPhotos.map((photo, i) => (
-                <PhotoCard key={`${activeFilter}-${i}`} photo={photo} index={i}
-                  onClick={() => setLightboxPhoto(photo)} />
-              ))}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              {activeFilter === 'all' ? (
+                <ScrollingRows photos={displayPhotos} onOpen={setLightboxPhoto} />
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {displayPhotos.map((photo, i) => (
+                    <PhotoCard key={`${activeFilter}-${i}`} photo={photo} index={i}
+                      onClick={() => setLightboxPhoto(photo)} />
+                  ))}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -272,8 +330,7 @@ export default function Gallery() {
         <section key={section.id} className={si % 2 === 0 ? 'py-16 bg-white' : 'py-16 bg-gray-50'}>
           <div className="container mx-auto px-6">
             <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <span className={`w-3 h-3 rounded-full ${section.color}`} />
+              <div className="flex items-baseline gap-3 flex-wrap">
                 <h3 className="text-2xl font-serif font-bold text-[#1a3a6b]">{section.label}</h3>
                 <span className="text-gray-400 text-sm">·  {section.count} Photos</span>
               </div>
@@ -284,20 +341,23 @@ export default function Gallery() {
                 View all →
               </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {section.photos.map((photo, i) => (
                 <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.07}
-                  className={`group relative rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 bg-gray-100 ${
-                    i === 0 ? 'col-span-2 row-span-1 aspect-video' : 'aspect-square'
+                  className={`group rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 bg-white border border-gray-100 ${
+                    i === 0 ? 'col-span-2 row-span-1' : ''
                   }`}
                   onClick={() => setLightboxPhoto({ ...photo, sectionLabel: section.label })}
                 >
-                  <img src={photo.src} alt={photo.caption}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    style={{ objectPosition: photo.pos || 'center' }} />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                    <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={22} />
+                  <div className={`relative overflow-hidden bg-gray-100 ${i === 0 ? 'aspect-video' : 'aspect-square'}`}>
+                    <img src={photo.src} alt={photo.caption} loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      style={{ objectPosition: photo.pos || 'center' }} />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                      <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={22} />
+                    </div>
                   </div>
+                  <p className="px-3 py-2 text-xs font-semibold text-gray-700 leading-snug">{photo.caption}</p>
                 </motion.div>
               ))}
             </div>

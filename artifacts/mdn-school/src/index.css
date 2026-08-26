@@ -238,3 +238,41 @@
     pointer-events: none;
   }
 }
+
+/* ── Gallery marquee scroll rows ─────────────────────────── */
+@keyframes gallery-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.gallery-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.gallery-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: gallery-marquee var(--marquee-duration, 55s) linear infinite;
+  will-change: transform;
+}
+
+.gallery-marquee-track.reverse {
+  animation-direction: reverse;
+}
+
+.gallery-marquee:hover .gallery-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee-track {
+    animation: none;
+  }
+  .gallery-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
