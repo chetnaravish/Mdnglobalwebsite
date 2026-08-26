@@ -9,7 +9,6 @@ import Home from '@/pages/Home';
 import About from '@/pages/About';
 import Academics from '@/pages/Academics';
 import Facilities from '@/pages/Facilities';
-import Events from '@/pages/Events';
 import Contact from '@/pages/Contact';
 import Gallery from '@/pages/Gallery';
 
@@ -23,7 +22,6 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/academics" component={Academics} />
         <Route path="/facilities" component={Facilities} />
-        <Route path="/events" component={Events} />
         <Route path="/gallery" component={Gallery} />
         <Route path="/contact" component={Contact} />
         <Route component={NotFound} />

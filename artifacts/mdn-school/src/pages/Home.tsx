@@ -320,7 +320,7 @@ export default function Home() {
             {[
               { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
               { title: 'Facilities', icon: Trophy, image: '/images/classroom-students.jpg', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
-              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/events', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
