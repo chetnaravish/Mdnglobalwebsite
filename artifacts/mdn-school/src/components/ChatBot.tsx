@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Loader2, Mic, Square, Volume2, VolumeX } from 'lucide-react';
+import { X, Send, User, Loader2, Mic, Square, Volume2, VolumeX } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -218,28 +218,76 @@ export default function ChatBot() {
   return (
     <>
       {/* Floating Button */}
-      <motion.button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#1a3a6b] text-white shadow-xl flex items-center justify-center hover:bg-[#0f2557] transition-colors"
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Open chat"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {open ? (
-            <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X size={24} />
-            </motion.span>
-          ) : (
-            <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle size={24} />
-            </motion.span>
-          )}
-        </AnimatePresence>
-        {!open && (
-          <span className="absolute inset-0 rounded-full bg-[#1a3a6b] animate-ping opacity-25 pointer-events-none" />
-        )}
-      </motion.button>
+      {!open && (
+        <motion.button
+          onClick={() => setOpen(true)}
+          className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-2 group cursor-pointer"
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+          whileHover={{ scale: 1.12, y: -4 }}
+          whileTap={{ scale: 0.92 }}
+          aria-label="Open chat"
+        >
+          {/* Ask me anything animated pill */}
+          <motion.div
+            className="relative"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <span className="relative z-10 bg-white text-[#1a3a6b] font-extrabold text-[11px] tracking-wide px-4 py-2 rounded-2xl shadow-[0_4px_20px_rgba(26,58,107,0.25)] border-2 border-[#1a3a6b]/20 whitespace-nowrap block">
+              Ask me anything
+            </span>
+            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b-2 border-r-2 border-[#1a3a6b]/20 rotate-45" />
+          </motion.div>
+
+          {/* 3D Robot Image */}
+          <motion.div
+            className="relative"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+          >
+            {/* Outer glow ring */}
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-[#f5a623] via-[#1a3a6b] to-[#f5a623] opacity-60 blur-md animate-spin" style={{ animationDuration: '4s' }} />
+
+            {/* 3D shadow beneath */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[85%] h-4 bg-black/25 rounded-full blur-md" />
+
+            {/* Main robot container with 3D perspective */}
+            <div
+              className="relative w-24 h-24 rounded-full overflow-hidden border-[5px] border-white shadow-[0_8px_32px_rgba(26,58,107,0.45),0_2px_8px_rgba(0,0,0,0.3),inset_0_-3px_8px_rgba(0,0,0,0.15),inset_0_3px_8px_rgba(255,255,255,0.2)] group-hover:shadow-[0_12px_40px_rgba(245,166,35,0.5),0_4px_12px_rgba(0,0,0,0.35)] transition-shadow duration-300"
+              style={{ perspective: '500px', transformStyle: 'preserve-3d' }}
+            >
+              <img
+                src="/images/robot-image.avif"
+                alt="Chat Assistant"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3)) contrast(1.05) saturate(1.1)' }}
+              />
+
+              {/* 3D highlight overlay */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/25 via-transparent to-black/20 pointer-events-none" />
+
+              {/* Shine effect */}
+              <div className="absolute top-1 left-2 w-6 h-6 rounded-full bg-white/30 blur-[3px] pointer-events-none" />
+            </div>
+
+            {/* Pulsing ring animation */}
+            <div className="absolute inset-0 rounded-full border-2 border-[#1a3a6b] opacity-0 group-hover:opacity-40 group-hover:animate-ping pointer-events-none" />
+          </motion.div>
+        </motion.button>
+      )}
+      {open && (
+        <motion.button
+          onClick={() => setOpen(false)}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#1a3a6b] text-white shadow-xl flex items-center justify-center hover:bg-[#0f2557] transition-colors"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Close chat"
+        >
+          <X size={24} />
+        </motion.button>
+      )}
 
       {/* Chat Window */}
       <AnimatePresence>
@@ -254,8 +302,8 @@ export default function ChatBot() {
           >
             {/* Header */}
             <div className="bg-[#1a3a6b] px-4 py-3 flex items-center gap-3 shrink-0">
-              <div className="w-9 h-9 rounded-full bg-[#f5a623] flex items-center justify-center shrink-0">
-                <Bot size={20} className="text-[#1a3a6b]" />
+              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border-2 border-[#f5a623]">
+                <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm leading-tight">MDN School Assistant</p>
@@ -276,8 +324,12 @@ export default function ChatBot() {
             <div className="flex-1 overflow-y-auto bg-gray-50 px-3 py-4 space-y-3">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex gap-2 items-end ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'assistant' ? 'bg-[#1a3a6b]' : 'bg-[#f5a623]'}`}>
-                    {msg.role === 'assistant' ? <Bot size={14} className="text-white" /> : <User size={14} className="text-[#1a3a6b]" />}
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'assistant' ? 'overflow-hidden border border-[#1a3a6b]' : 'bg-[#f5a623]'}`}>
+                    {msg.role === 'assistant' ? (
+                      <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
+                    ) : (
+                      <User size={14} className="text-[#1a3a6b]" />
+                    )}
                   </div>
                   <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'assistant' ? 'bg-white text-gray-800 rounded-bl-sm shadow-sm border border-gray-100' : 'bg-[#1a3a6b] text-white rounded-br-sm'
@@ -303,8 +355,8 @@ export default function ChatBot() {
 
               {loading && (
                 <div className="flex gap-2 items-end">
-                  <div className="w-7 h-7 rounded-full bg-[#1a3a6b] flex items-center justify-center shrink-0">
-                    <Bot size={14} className="text-white" />
+                  <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-[#1a3a6b]">
+                    <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                     <div className="flex gap-1 items-center">

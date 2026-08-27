@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn, Images } from 'lucide-react';
 
@@ -9,14 +9,15 @@ const fadeUp = {
 
 /* ── Gallery data ─────────────────────────────────────── */
 type Photo = { src: string; caption: string; pos?: string };
-type Section = { id: string; label: string; color: string; count: number; photos: Photo[] };
+type Section = { id: string; label: string; desc: string; color: string; count: number; photos: Photo[] };
 
 const sections: Section[] = [
   {
     id: 'campus',
-    label: 'Campus Life',
+    label: 'Campus Images',
+    desc: 'Explore our sprawling campus with modern infrastructure and green surroundings',
     color: 'bg-blue-600',
-    count: 6,
+    count: 7,
     photos: [
       { src: '/images/mdn-building-2.png', caption: 'MDN Global School — Main Building', pos: 'center center' },
       { src: '/images/mdn-building-3.png', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
@@ -29,7 +30,8 @@ const sections: Section[] = [
   },
   {
     id: 'sports',
-    label: 'Sports',
+    label: 'Sports Images',
+    desc: 'Our students shine in cricket, football, basketball and athletics',
     color: 'bg-green-600',
     count: 6,
     photos: [
@@ -44,8 +46,9 @@ const sections: Section[] = [
   {
     id: 'cultural',
     label: 'Cultural Events',
+    desc: 'Vibrant cultural celebrations, annual functions and festive moments',
     color: 'bg-purple-600',
-    count: 6,
+    count: 7,
     photos: [
       { src: '/images/annual-function.png', caption: 'Annual Function — Cultural Dance Performance', pos: 'center center' },
       { src: '/images/events-annual.jpg', caption: 'Annual Day — Cultural Performances', pos: 'center center' },
@@ -59,6 +62,7 @@ const sections: Section[] = [
   {
     id: 'academics',
     label: 'Academic Life',
+    desc: 'Smart classrooms, science labs and dedicated learning spaces',
     color: 'bg-amber-600',
     count: 6,
     photos: [
@@ -73,8 +77,9 @@ const sections: Section[] = [
   {
     id: 'facilities',
     label: 'Facilities',
+    desc: 'World-class facilities including library, labs and activity rooms',
     color: 'bg-rose-600',
-    count: 6,
+    count: 7,
     photos: [
       { src: '/images/classroom-students.jpg', caption: 'Classroom — Students in Session', pos: 'center center' },
       { src: '/images/science-lab.png', caption: 'State-of-the-Art Science Laboratory', pos: 'center center' },
@@ -175,37 +180,113 @@ function ScrollingRows({ photos, onOpen }: {
   );
 }
 
-/* ── Photo card ───────────────────────────────────────── */
-function PhotoCard({ photo, index, onClick }: { photo: Photo & { sectionLabel?: string }; index: number; onClick: () => void }) {
+/* ── Single Image Slideshow (manual scroll with arrows) ─ */
+function SlideshowSection({ section, onOpen }: {
+  section: Section;
+  onOpen: (p: Photo & { sectionLabel?: string }) => void;
+}) {
+  const [current, setCurrent] = useState(0);
+  const total = section.photos.length;
+
+  const goNext = useCallback(() => setCurrent(p => (p + 1) % total), [total]);
+  const goPrev = useCallback(() => setCurrent(p => (p - 1 + total) % total), [total]);
+
+  const handleClick = useCallback(() => {
+    onOpen({ ...section.photos[current], sectionLabel: section.label });
+  }, [current, section, onOpen]);
+
+  const photo = section.photos[current];
+
   return (
-    <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={index % 6 * 0.07}
-      className="group rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
-      onClick={onClick}
+    <motion.section
+      variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
+      className="py-10 md:py-14"
     >
-      <div className="relative aspect-square overflow-hidden bg-gray-100">
-        <img src={photo.src} alt={photo.caption} loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          style={{ objectPosition: photo.pos || 'center' }} />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">
-          <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={26} />
+      <div className="container mx-auto px-6">
+        {/* Centered Section Heading */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#1a3a6b]">{section.label}</h2>
+          <p className="text-gray-500 text-sm mt-2 max-w-md mx-auto">{section.desc}</p>
+        </div>
+
+        {/* Slideshow with arrows */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Left Arrow */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 border border-gray-200"
+            aria-label="Previous image"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#1a3a6b]">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all hover:scale-110 border border-gray-200"
+            aria-label="Next image"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#1a3a6b]">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+
+          {/* Image Container */}
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-xl cursor-pointer bg-gray-100"
+            style={{ aspectRatio: '16/9' }}
+            onClick={handleClick}
+          >
+            {section.photos.map((p, i) => (
+              <img
+                key={`${section.id}-${i}`}
+                src={p.src}
+                alt={p.caption}
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out"
+                style={{
+                  objectPosition: p.pos || 'center',
+                  opacity: i === current ? 1 : 0,
+                }}
+              />
+            ))}
+
+            {/* Caption overlay */}
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-5 md:p-6 z-10">
+              <p className="text-white font-semibold text-base md:text-lg leading-snug drop-shadow-lg">{photo.caption}</p>
+              <p className="text-white/60 text-xs mt-1">{current + 1} / {total}</p>
+            </div>
+
+            {/* Zoom icon on hover */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/20 transition-colors duration-300 z-10">
+              <div className="opacity-0 hover:opacity-100 transition-opacity bg-white/20 backdrop-blur-sm rounded-full p-3">
+                <ZoomIn className="text-white" size={28} />
+              </div>
+            </div>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {section.photos.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === current ? 'w-6 h-1.5 bg-[#f5a623]' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <div className="p-3">
-        {photo.sectionLabel && (
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#f5a623]">{photo.sectionLabel}</p>
-        )}
-        <p className="text-sm font-semibold text-gray-800 leading-snug mt-0.5 line-clamp-2">{photo.caption}</p>
-      </div>
-    </motion.div>
+    </motion.section>
   );
 }
 
 export default function Gallery() {
-  const [activeFilter, setActiveFilter] = useState('all');
   const [lightboxPhoto, setLightboxPhoto] = useState<(Photo & { sectionLabel?: string }) | null>(null);
-
-  const activeSection = activeFilter === 'all' ? null : sections.find(s => s.id === activeFilter);
-  const displayPhotos = activeFilter === 'all' ? ALL_PHOTOS : (activeSection?.photos.map(p => ({ ...p, sectionLabel: activeSection.label })) ?? []);
 
   return (
     <div className="flex flex-col">
@@ -232,7 +313,6 @@ export default function Gallery() {
             Moments that define us — from classrooms to sports fields, cultural stages to campus corridors.
           </motion.p>
 
-          {/* Stats row */}
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={3}
             className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
             {sections.map(s => (
@@ -242,128 +322,32 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* ── Section Overview Cards ─────────────────────────── */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
-            <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Browse by Category</p>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a3a6b]">Gallery Sections</h2>
+      {/* ── All Photos Scrolling Marquee (2 rows) ──────────── */}
+      <section className="py-14 md:py-20 bg-white">
+        <div className="container mx-auto px-6 mb-10">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-[#1a3a6b]/10 rounded-full px-4 py-1.5 mb-4">
+              <Images size={16} className="text-[#1a3a6b]" />
+              <span className="text-[#1a3a6b] text-xs font-bold uppercase tracking-widest">Auto Scrolling</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a3a6b]">All Gallery Images</h2>
           </motion.div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {sections.map((s, i) => (
-              <motion.button key={s.id} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.1}
-                onClick={() => { setActiveFilter(s.id); document.getElementById('gallery-grid')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className={`group relative rounded-2xl overflow-hidden aspect-square cursor-pointer border-2 transition-all duration-300 hover:scale-105 hover:shadow-xl ${activeFilter === s.id ? 'border-[#f5a623] ring-2 ring-[#f5a623]/30' : 'border-transparent'}`}>
-                <img src={s.photos[0].src} alt={s.label}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  style={{ objectPosition: s.photos[0].pos || 'center' }} />
-                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-black/20`} />
-                <div className={`absolute inset-x-0 bottom-0 p-4`}>
-                  <p className="text-white font-serif font-bold text-base leading-tight">{s.label}</p>
-                  <p className="text-white/60 text-xs mt-0.5">{s.count} Photos</p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
         </div>
+        <ScrollingRows photos={ALL_PHOTOS} onOpen={setLightboxPhoto} />
       </section>
 
-      {/* ── Photo Grid ───────────────────────────────────────── */}
-      <section id="gallery-grid" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-3 mb-12 justify-center">
-            <button
-              onClick={() => setActiveFilter('all')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-200 ${
-                activeFilter === 'all'
-                  ? 'bg-[#1a3a6b] text-white shadow-lg shadow-[#1a3a6b]/20'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#1a3a6b] hover:text-[#1a3a6b]'
-              }`}
-            >
-              <Images size={15} /> All Photos <span className="opacity-60">({ALL_PHOTOS.length})</span>
-            </button>
-            {sections.map(s => (
-              <button key={s.id}
-                onClick={() => setActiveFilter(s.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-200 ${
-                  activeFilter === s.id
-                    ? 'bg-[#1a3a6b] text-white shadow-lg shadow-[#1a3a6b]/20'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-[#1a3a6b] hover:text-[#1a3a6b]'
-                }`}
-              >
-                {s.label} <span className="opacity-60">({s.count})</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Section Title */}
-          {activeFilter !== 'all' && activeSection && (
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
-              <h3 className="text-2xl font-serif font-bold text-[#1a3a6b]">{activeSection.label}</h3>
-              <p className="text-gray-500 text-sm mt-1">{activeSection.count} photos</p>
-            </motion.div>
-          )}
-
-          {/* Photos — scrolling rows for All, grid for a category */}
-          <AnimatePresence mode="wait">
-            <motion.div key={activeFilter}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              {activeFilter === 'all' ? (
-                <ScrollingRows photos={displayPhotos} onOpen={setLightboxPhoto} />
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {displayPhotos.map((photo, i) => (
-                    <PhotoCard key={`${activeFilter}-${i}`} photo={photo} index={i}
-                      onClick={() => setLightboxPhoto(photo)} />
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+      {/* ── Individual Sections — One image at a time ──────── */}
+      <section className="py-10 md:py-16 bg-gray-50">
+        <div className="container mx-auto px-6 mb-8">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a3a6b]">Browse by Category</h2>
+          </motion.div>
         </div>
-      </section>
 
-      {/* ── Section-by-Section Showcase ──────────────────────── */}
-      {activeFilter === 'all' && sections.map((section, si) => (
-        <section key={section.id} className={si % 2 === 0 ? 'py-16 bg-white' : 'py-16 bg-gray-50'}>
-          <div className="container mx-auto px-6">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <h3 className="text-2xl font-serif font-bold text-[#1a3a6b]">{section.label}</h3>
-                <span className="text-gray-400 text-sm">·  {section.count} Photos</span>
-              </div>
-              <button
-                onClick={() => { setActiveFilter(section.id); document.getElementById('gallery-grid')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="text-sm font-semibold text-[#1a3a6b] hover:text-[#f5a623] transition-colors flex items-center gap-1"
-              >
-                View all →
-              </button>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {section.photos.map((photo, i) => (
-                <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.07}
-                  className={`group rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 bg-white border border-gray-100 ${
-                    i === 0 ? 'col-span-2 row-span-1' : ''
-                  }`}
-                  onClick={() => setLightboxPhoto({ ...photo, sectionLabel: section.label })}
-                >
-                  <div className={`relative overflow-hidden bg-gray-100 ${i === 0 ? 'aspect-video' : 'aspect-square'}`}>
-                    <img src={photo.src} alt={photo.caption} loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      style={{ objectPosition: photo.pos || 'center' }} />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                      <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={22} />
-                    </div>
-                  </div>
-                  <p className="px-3 py-2 text-xs font-semibold text-gray-700 leading-snug">{photo.caption}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
+        {sections.map((section) => (
+          <SlideshowSection key={section.id} section={section} onOpen={setLightboxPhoto} />
+        ))}
+      </section>
 
       {/* ── CTA ─────────────────────────────────────────────── */}
       <section className="py-20 bg-[#1a3a6b]">
