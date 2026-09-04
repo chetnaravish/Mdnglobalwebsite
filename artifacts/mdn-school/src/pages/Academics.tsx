@@ -225,6 +225,7 @@ export default function Academics() {
                         <img
                           src={stage.image}
                           alt={stage.label}
+                          loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           style={{ objectPosition: stage.imagePos }}
                         />
@@ -382,7 +383,7 @@ export default function Academics() {
             <motion.div variants={{ hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               className="rounded-3xl overflow-hidden shadow-2xl aspect-video">
-              <img src="/images/academics.jpg" alt="Smart Classroom" className="w-full h-full object-cover" />
+              <img src="/images/academics.jpg" alt="Smart Classroom" loading="lazy" className="w-full h-full object-cover" />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
               initial="hidden" whileInView="visible" viewport={{ once: true }}>

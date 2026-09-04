@@ -34,8 +34,8 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
   { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
-  { src: '/images/mdn-building-3.png', pos: 'center center', filter: '' },
-  { src: '/images/mdn-building-2.png', pos: 'center 40%',    filter: '' },
+  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: '' },
+  { src: '/images/mdn-building-2.jfif', pos: 'center 40%',    filter: '' },
 ];
 const SLIDE_MS = 3500;
 
@@ -295,7 +295,7 @@ export default function Home() {
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 1.04 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.8 }}>
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl group relative">
-                <img src="/images/skating.jpg" alt="MDN Global School Students Skating" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/images/skating.jpg" alt="MDN Global School Students Skating" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
                   <div className="text-white">
                     <div className="text-4xl font-serif font-bold mb-1 text-[#f5a623]">100%</div>
@@ -325,7 +325,7 @@ export default function Home() {
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                 <div className="relative h-52 overflow-hidden">
-                  <img src={f.image} alt={f.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={f.image} alt={f.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/80 to-transparent" />
                   <div className={`absolute top-4 left-4 w-11 h-11 ${f.bg} rounded-xl flex items-center justify-center ${f.accent}`}>
                     <f.icon size={22} />
@@ -394,6 +394,7 @@ export default function Home() {
                   <img
                     src="/images/mdn-school-app-dashboard.webp"
                     alt="MDN Global School app dashboard showing school services"
+                    loading="lazy"
                     className="mx-auto block max-h-[620px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                   <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a1c46]/85 to-transparent px-4 pb-4 pt-12 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">
@@ -480,7 +481,7 @@ export default function Home() {
             ].map((img, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.1}
                 className={`${img.mSpan} ${img.dSpan} rounded-2xl overflow-hidden group cursor-pointer`}>
-                <img src={img.src} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 brightness-90 hover:brightness-110"
+                <img src={img.src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 brightness-90 hover:brightness-110"
                   style={{ objectPosition: img.pos }} />
               </motion.div>
             ))}
@@ -732,7 +733,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-2 md:order-1">
-              <img src="/images/pre-primary-kids.png" alt="Happy Students" className="w-full rounded-3xl shadow-2xl" />
+              <img src="/images/pre-primary-kids.png" alt="Happy Students" loading="lazy" className="w-full rounded-3xl shadow-2xl" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-1 md:order-2 text-white">
               <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">A Community of<br />Happy Learners</h2>

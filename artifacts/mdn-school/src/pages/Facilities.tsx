@@ -152,7 +152,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition' },
       { src: '/images/academics.jpg', caption: 'Craft Studio — Clay Workshop' },
-      { src: '/images/mdn-building-3.png', caption: 'Student Artwork on Display' },
+      { src: '/images/mdn-building-3.jfif', caption: 'Student Artwork on Display' },
     ],
   },
   {
@@ -190,7 +190,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/school-buses.jpg', caption: 'MDN Global School Transport Fleet' },
       { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure' },
-      { src: '/images/mdn-building-3.png', caption: 'GPS-Tracked School Bus' },
+      { src: '/images/mdn-building-3.jfif', caption: 'GPS-Tracked School Bus' },
     ],
   },
   {
@@ -207,7 +207,7 @@ const facilities: Facility[] = [
       'Eco Club runs tree-plantation drives, awareness campaigns & monthly clean-campus challenges throughout the year.',
     ],
     images: [
-      { src: '/images/mdn-building-3.png', caption: 'MDN Global School Green Campus' },
+      { src: '/images/mdn-building-3.jfif', caption: 'MDN Global School Green Campus' },
       { src: '/images/students-happy.jpg', caption: 'Eco Club Tree Plantation Drive' },
       { src: '/images/academics.jpg', caption: 'Open-Air Amphitheatre' },
     ],
@@ -216,7 +216,7 @@ const facilities: Facility[] = [
     icon: Camera,
     title: 'CCTV Surveillance',
     desc: '360° CCTV monitoring across the campus ensures complete safety and security for all students and staff.',
-    image: '/images/mdn-building-2.png',
+    image: '/images/mdn-building-2.jfif',
     tag: 'Security', tagColor: 'bg-slate-100 text-slate-700',
     detail: [
       '120+ HD cameras installed across every corridor, classroom entrance, sports area, parking lot & campus gate.',
@@ -226,8 +226,8 @@ const facilities: Facility[] = [
       'Regular safety drills — fire evacuation, earthquake preparedness & anti-bullying protocols — conducted every term.',
     ],
     images: [
-      { src: '/images/mdn-building-2.png', caption: 'Campus Security Control Room' },
-      { src: '/images/mdn-building-3.png', caption: 'CCTV Coverage — Main Gate' },
+      { src: '/images/mdn-building-2.jfif', caption: 'Campus Security Control Room' },
+      { src: '/images/mdn-building-3.jfif', caption: 'CCTV Coverage — Main Gate' },
       { src: '/images/academics.jpg', caption: 'Secure Campus Entry System' },
     ],
   },
@@ -235,9 +235,8 @@ const facilities: Facility[] = [
 
 /* ── Inline detail view (same pattern as Academics page) ─── */
 function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () => void }) {
-  const [activeImg, setActiveImg] = React.useState<{ src: string; caption: string }>(
-    { src: facility.image, caption: facility.title }
-  );
+  const [activeIdx, setActiveIdx] = React.useState(0);
+  const activeFacilityImage = facility.images[activeIdx] || { src: facility.image, caption: facility.title };
   return (
     <motion.div
       key="detail"
@@ -295,9 +294,9 @@ function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () =
           <div className="relative flex-1 min-h-[280px] overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.img
-                key={activeImg}
-                src={facility.images[activeImg].src}
-                alt={facility.images[activeImg].caption}
+                key={activeIdx}
+                src={activeFacilityImage.src}
+                alt={activeFacilityImage.caption}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -307,7 +306,7 @@ function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () =
             </AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
             <p className="absolute bottom-3 left-4 text-white/80 text-xs font-semibold">
-              {facility.images[activeImg].caption}
+              {activeFacilityImage.caption}
             </p>
           </div>
           {/* Thumbnail strip */}
@@ -316,10 +315,10 @@ function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () =
               {facility.images.map((img, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setActiveImg(idx)}
-                  className={`flex-1 h-16 rounded-lg overflow-hidden border-2 transition-all ${activeImg === idx ? 'border-[#f5a623]' : 'border-transparent opacity-60 hover:opacity-90'}`}
+                  onClick={() => setActiveIdx(idx)}
+                  className={`flex-1 h-16 rounded-lg overflow-hidden border-2 transition-all ${activeIdx === idx ? 'border-[#f5a623]' : 'border-transparent opacity-60 hover:opacity-90'}`}
                 >
-                  <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
+                  <img src={img.src} alt={img.caption} loading="lazy" className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
@@ -415,7 +414,7 @@ export default function Facilities() {
                       className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group border border-gray-100 text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30"
                     >
                       <div className="relative h-48 overflow-hidden">
-                        <img src={f.image} alt={f.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <img src={f.image} alt={f.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/70 to-transparent" />
                         <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${f.tagColor}`}>{f.tag}</div>
                         <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
@@ -469,7 +468,7 @@ export default function Facilities() {
               variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               className="rounded-3xl overflow-hidden shadow-2xl aspect-video">
-              <img src="/images/facilities-sports.jpg" alt="Sports Facilities" className="w-full h-full object-cover" />
+              <img src="/images/facilities-sports.jpg" alt="Sports Facilities" loading="lazy" className="w-full h-full object-cover" />
             </motion.div>
           </div>
         </div>

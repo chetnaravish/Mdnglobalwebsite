@@ -19,8 +19,8 @@ const sections: Section[] = [
     color: 'bg-blue-600',
     count: 7,
     photos: [
-      { src: '/images/mdn-building-2.png', caption: 'MDN Global School — Main Building', pos: 'center center' },
-      { src: '/images/mdn-building-3.png', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
+      { src: '/images/mdn-building-2.jfif', caption: 'MDN Global School — Main Building', pos: 'center center' },
+      { src: '/images/mdn-building-3.jfif', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
       { src: '/images/mdn-building-1.avif', caption: 'MDN Global School — Campus Overview', pos: 'center center' },
       { src: '/images/mdn-building-4.avif', caption: 'School Building — Drone View', pos: 'center center' },
       { src: '/images/pre-primary-kids.png', caption: 'Pre-Primary Students — Classroom Learning', pos: 'center center' },
@@ -244,6 +244,7 @@ function SlideshowSection({ section, onOpen }: {
                 key={`${section.id}-${i}`}
                 src={p.src}
                 alt={p.caption}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out"
                 style={{
                   objectPosition: p.pos || 'center',
@@ -304,7 +305,7 @@ export default function Gallery() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623]" /> Life at MDN
           </motion.div>
           <motion.h1 variants={fadeUp} initial="hidden" animate="visible" custom={1}
-            className="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
+            className="text-3xl sm:text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-5"
             style={{ textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
             School <span className="text-[#f5a623]">Gallery</span>
           </motion.h1>
