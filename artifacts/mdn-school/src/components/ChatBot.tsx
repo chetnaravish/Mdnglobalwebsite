@@ -260,7 +260,7 @@ export default function ChatBot() {
             >
               <img
                 src="/images/robot-image.avif"
-                alt="Chat Assistant"
+                alt="MDN Global School AI chat assistant robot"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3)) contrast(1.05) saturate(1.1)' }}
               />
@@ -303,7 +303,7 @@ export default function ChatBot() {
             {/* Header */}
             <div className="bg-[#1a3a6b] px-4 py-3 flex items-center gap-3 shrink-0">
               <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border-2 border-[#f5a623]">
-                <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
+                <img src="/images/robot-image.avif" alt="MDN Global School AI chat assistant robot" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm leading-tight">MDN School Assistant</p>
@@ -326,7 +326,7 @@ export default function ChatBot() {
                 <div key={i} className={`flex gap-2 items-end ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'assistant' ? 'overflow-hidden border border-[#1a3a6b]' : 'bg-[#f5a623]'}`}>
                     {msg.role === 'assistant' ? (
-                      <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
+                      <img src="/images/robot-image.avif" alt="MDN Global School AI chat assistant robot" className="w-full h-full object-cover" />
                     ) : (
                       <User size={14} className="text-[#1a3a6b]" />
                     )}
@@ -356,7 +356,7 @@ export default function ChatBot() {
               {loading && (
                 <div className="flex gap-2 items-end">
                   <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-[#1a3a6b]">
-                    <img src="/images/robot-image.avif" alt="Bot" className="w-full h-full object-cover" />
+                    <img src="/images/robot-image.avif" alt="MDN Global School AI chat assistant robot" className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                     <div className="flex gap-1 items-center">

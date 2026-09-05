@@ -84,8 +84,8 @@ function VisionMissionCard({ delay, icon: Icon, iconBg, badge, title, text, item
 }
 
 const aboutSlides = [
-  { src: '/images/mdn-building-4.avif', pos: 'center center', filter: '' },
-  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
+  { src: '/images/mdn-building-4.avif', pos: 'center center', filter: '', alt: 'MDN Global School Kaithal campus building' },
+  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '', alt: 'MDN Global School Kaithal campus building overview' },
 ];
 const ABOUT_SLIDE_MS = 4000;
 
@@ -113,7 +113,7 @@ export default function About() {
             style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}>
             <img
               src={slide.src}
-              alt=""
+              alt={slide.alt}
               className="w-full h-full object-cover"
               style={{ objectPosition: slide.pos, filter: slide.filter || 'none' }}
             />
@@ -204,7 +204,7 @@ export default function About() {
             {/* Right — image stretches to match content column height */}
             <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="relative self-stretch flex flex-col">
               <div className="rounded-3xl overflow-hidden shadow-2xl flex-1 min-h-[420px]">
-                <img src="/images/skating.jpg" alt="MDN Global School Students Skating" loading="lazy" className="w-full h-full object-cover object-center" />
+                <img src="/images/skating.jpg" alt="Students skating at MDN Global School Kaithal sports ground" loading="lazy" className="w-full h-full object-cover object-center" />
               </div>
               <div className="absolute -bottom-5 -left-5 bg-[#1a3a6b] text-white rounded-2xl p-5 shadow-xl max-w-[200px]">
                 <Award className="text-[#f5a623] mb-2" size={28} />
@@ -358,7 +358,7 @@ export default function About() {
             {/* Right — image */}
             <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src="/images/director.png" alt="Director" loading="lazy" className="w-full h-full object-cover object-top" />
+                <img src="/images/director.png" alt="Dr. Vinod Kumar, Director and Chairman of MDN Global School Kaithal" loading="lazy" className="w-full h-full object-cover object-top" />
               </div>
               <div className="mt-4 bg-white border border-[#1a3a6b]/10 rounded-2xl p-5 shadow-sm flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#f5a623] flex items-center justify-center shrink-0">
@@ -429,7 +429,7 @@ export default function About() {
                   {member.photo ? (
                     <img
                       src={member.photo}
-                      alt={member.name}
+                      alt={`${member.name} — ${member.role}, MDN Global School Kaithal`}
                       className="w-full h-full object-cover object-top"
                     />
                   ) : (
@@ -466,7 +466,7 @@ export default function About() {
             <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative">
               {/* Square image — proportional to text column */}
               <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src="/images/principal.jpg" alt="Principal" loading="lazy" className="w-full h-full object-cover object-top" />
+                <img src="/images/principal.jpg" alt="Dr. Sant Ram, Principal of MDN Global School Kaithal" loading="lazy" className="w-full h-full object-cover object-top" />
               </div>
               {/* Name card — below image, not overlapping */}
               <div className="mt-4 bg-[#f8f9ff] border border-[#1a3a6b]/10 rounded-2xl p-5 shadow-sm flex items-center gap-4">

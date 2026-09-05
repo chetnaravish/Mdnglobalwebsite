@@ -300,7 +300,7 @@ export default function Gallery() {
 
       {/* ── Hero Banner ───────────────────────────────────── */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <img src="/images/events-annual.jpg" alt="MDN Global School Gallery"
+        <img src="/images/events-annual.jpg" alt="Annual day cultural celebration at MDN Global School Kaithal"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/65 via-[#0a1c46]/38 to-[#0a1c46]/12" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/45 via-transparent to-transparent" />

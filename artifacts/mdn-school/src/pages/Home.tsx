@@ -34,9 +34,9 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
-  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '' },
-  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: '' },
-  { src: '/images/mdn-building-2.jfif', pos: 'center 40%',    filter: '' },
+  { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '', alt: 'MDN Global School Kaithal campus building' },
+  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: '', alt: 'Front view of the MDN Global School Kaithal campus building' },
+  { src: '/images/mdn-building-2.jfif', pos: 'center 40%',    filter: '', alt: 'MDN Global School Kaithal campus entrance building' },
 ];
 const SLIDE_MS = 3500;
 
@@ -148,7 +148,7 @@ export default function Home() {
         {slides.map((slide, i) => (
           <div key={slide.src} className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}>
-            <img src={slide.src} alt="" className="w-full h-full object-cover"
+            <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover"
               style={{ objectPosition: slide.pos, filter: slide.filter || 'none' }} />
           </div>
         ))}
@@ -301,7 +301,7 @@ export default function Home() {
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 1.04 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.8 }}>
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl group relative">
-                <img src="/images/skating.jpg" alt="MDN Global School Students Skating" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/images/skating.jpg" alt="Students skating at MDN Global School Kaithal sports ground" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
                   <div className="text-white">
                     <div className="text-4xl font-serif font-bold mb-1 text-[#f5a623]">100%</div>
@@ -324,14 +324,14 @@ export default function Home() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
-              { title: 'Facilities', icon: Trophy, image: '/images/classroom-students.jpg', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
-              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', alt: 'Students learning in a smart classroom at MDN Global School Kaithal', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Facilities', icon: Trophy, image: '/images/classroom-students.jpg', alt: 'Students on the green campus of MDN Global School Kaithal', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
+              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', alt: 'Students performing at the annual function of MDN Global School Kaithal', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                 <div className="relative h-52 overflow-hidden">
-                  <img src={f.image} alt={f.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={f.image} alt={f.alt} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/80 to-transparent" />
                   <div className={`absolute top-4 left-4 w-11 h-11 ${f.bg} rounded-xl flex items-center justify-center ${f.accent}`}>
                     <f.icon size={22} />
@@ -384,7 +384,7 @@ export default function Home() {
                 <div className="flex h-28 items-center justify-center rounded-2xl bg-[#0a1c46] p-3">
                   <img
                     src="/images/mdn-logo.jfif"
-                    alt="MDN Global School logo"
+                    alt="MDN Global School Kaithal logo"
                     className="h-full w-auto object-contain"
                   />
                 </div>
@@ -479,15 +479,15 @@ export default function Home() {
           {/* Mobile: 2-col grid | Desktop: bento-style 4-col */}
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-2 md:h-[420px]">
             {[
-              { src: '/images/annual-function.png',   mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center' },
-              { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
-              { src: '/images/science-lab.png',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
-              { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
-              { src: '/images/computer-lab.png',       mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center' },
+              { src: '/images/annual-function.png',   mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center', alt: 'Annual function celebration at MDN Global School Kaithal' },
+              { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Students playing in the sports ground at MDN Global School Kaithal' },
+              { src: '/images/science-lab.png',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Students conducting experiments in the science lab at MDN Global School Kaithal' },
+              { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Sports day event at MDN Global School Kaithal' },
+              { src: '/images/computer-lab.png',       mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Computer lab at MDN Global School Kaithal' },
             ].map((img, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.1}
                 className={`${img.mSpan} ${img.dSpan} rounded-2xl overflow-hidden group cursor-pointer`}>
-                <img src={img.src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 brightness-90 hover:brightness-110"
+                <img src={img.src} alt={img.alt} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 brightness-90 hover:brightness-110"
                   style={{ objectPosition: img.pos }} />
               </motion.div>
             ))}
@@ -739,7 +739,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-2 md:order-1">
-              <img src="/images/pre-primary-kids.png" alt="Happy Students" loading="lazy" className="w-full rounded-3xl shadow-2xl" />
+              <img src="/images/pre-primary-kids.png" alt="Happy pre-primary students at MDN Global School Kaithal" loading="lazy" className="w-full rounded-3xl shadow-2xl" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-1 md:order-2 text-white">
               <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">A Community of<br />Happy Learners</h2>

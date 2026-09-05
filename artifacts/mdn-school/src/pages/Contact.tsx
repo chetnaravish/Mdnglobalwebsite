@@ -104,7 +104,7 @@ export default function Contact() {
       <section className="relative min-h-[65vh] flex items-center overflow-hidden">
         <img
           src="/images/students-happy.jpg"
-          alt="MDN Global School Students"
+          alt="Happy students at MDN Global School Kaithal"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/38 to-[#1e56a0]/10" />

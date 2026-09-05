@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Link href="/" className="flex items-center gap-3 z-50 shrink-0" data-testid="link-logo">
             <img
               src="/images/mdn-logo.jfif"
-              alt="MDN Global School Kaithal"
+              alt="MDN Global School Kaithal logo"
               className="h-16 md:h-20 w-auto object-contain"
               style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
             />
@@ -138,7 +138,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex items-center gap-3 mb-4">
                   <img
                     src="/images/mdn-logo.jfif"
-                    alt="MDN Global School Kaithal"
+                    alt="MDN Global School Kaithal logo"
                     className="h-20 w-auto object-contain shrink-0"
                     style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }}
                   />

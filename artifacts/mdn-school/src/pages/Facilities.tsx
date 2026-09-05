@@ -38,7 +38,7 @@ type Facility = {
   tag: string;
   tagColor: string;
   detail: string[];
-  images: { src: string; caption: string }[];
+  images: { src: string; caption: string; alt: string }[];
 };
 
 const facilities: Facility[] = [
@@ -56,9 +56,9 @@ const facilities: Facility[] = [
       'Smart attendance & performance tracking tools help teachers identify learning gaps and provide timely personalised support.',
     ],
     images: [
-      { src: '/images/academics.jpg', caption: 'Interactive Digital Board in Action' },
-      { src: '/images/students-happy.jpg', caption: 'Students Engaged in Smart Learning' },
-      { src: '/images/science-lab.png', caption: 'Technology-Integrated Classroom' },
+      { src: '/images/academics.jpg', caption: 'Interactive Digital Board in Action', alt: 'Interactive digital board in a smart classroom at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Students Engaged in Smart Learning', alt: 'Students learning in a smart classroom at MDN Global School Kaithal' },
+      { src: '/images/science-lab.png', caption: 'Technology-Integrated Classroom', alt: 'Technology-integrated classroom at MDN Global School Kaithal' },
     ],
   },
   {
@@ -75,9 +75,9 @@ const facilities: Facility[] = [
       'All labs are maintained by qualified assistants with strict safety procedures, first-aid equipment & fire extinguishers.',
     ],
     images: [
-      { src: '/images/science-lab.png', caption: 'Students in the Chemistry Lab' },
-      { src: '/images/academics.jpg', caption: 'Biology Lab — Microscope Session' },
-      { src: '/images/students-happy.jpg', caption: 'Physics Practical Experiment' },
+      { src: '/images/science-lab.png', caption: 'Students in the Chemistry Lab', alt: 'Students experimenting in the Chemistry lab at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Biology Lab — Microscope Session', alt: 'Biology lab microscope session at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Physics Practical Experiment', alt: 'Physics practical experiment at MDN Global School Kaithal' },
     ],
   },
   {
@@ -94,9 +94,9 @@ const facilities: Facility[] = [
       'Trained librarian curates fresh additions every term based on curriculum requirements & student reading preferences.',
     ],
     images: [
-      { src: '/images/facilities-library.jpg', caption: 'Library — Main Reading Hall' },
-      { src: '/images/students-happy.jpg', caption: 'Students Exploring Books' },
-      { src: '/images/academics.jpg', caption: 'Digital Research Corner' },
+      { src: '/images/facilities-library.jpg', caption: 'Library — Main Reading Hall', alt: 'Library main reading hall at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Students Exploring Books', alt: 'Students exploring books in the MDN Global School Kaithal library' },
+      { src: '/images/academics.jpg', caption: 'Digital Research Corner', alt: 'Digital research corner in the MDN Global School Kaithal library' },
     ],
   },
   {
@@ -113,9 +113,9 @@ const facilities: Facility[] = [
       'Complex has produced state-level champions in cricket, athletics & kabaddi — annual inter-school tournaments hosted on campus.',
     ],
     images: [
-      { src: '/images/facilities-sports.jpg', caption: 'School Sports Complex — Aerial View' },
-      { src: '/images/students-happy.jpg', caption: 'Inter-School Athletics Meet' },
-      { src: '/images/academics.jpg', caption: 'Indoor Multi-Purpose Sports Hall' },
+      { src: '/images/facilities-sports.jpg', caption: 'School Sports Complex — Aerial View', alt: 'Sports complex aerial view at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Inter-School Athletics Meet', alt: 'Inter-school athletics meet at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Indoor Multi-Purpose Sports Hall', alt: 'Indoor multi-purpose sports hall at MDN Global School Kaithal' },
     ],
   },
   {
@@ -132,9 +132,9 @@ const facilities: Facility[] = [
       'Lab open during lunch & free periods for senior students working on projects, college applications & self-directed learning.',
     ],
     images: [
-      { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Session' },
-      { src: '/images/students-happy.jpg', caption: 'Students at Individual Workstations' },
-      { src: '/images/science-lab.png', caption: 'IT Lab — Digital Learning' },
+      { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Session', alt: 'Coding session in the computer lab at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Students at Individual Workstations', alt: 'Students at computer workstations at MDN Global School Kaithal' },
+      { src: '/images/science-lab.png', caption: 'IT Lab — Digital Learning', alt: 'Digital learning in the IT lab at MDN Global School Kaithal' },
     ],
   },
   {
@@ -151,9 +151,9 @@ const facilities: Facility[] = [
       'Trained art teachers with professional practice guide students & prepare them for national-level art competitions.',
     ],
     images: [
-      { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition' },
-      { src: '/images/academics.jpg', caption: 'Craft Studio — Clay Workshop' },
-      { src: '/images/mdn-building-3.jfif', caption: 'Student Artwork on Display' },
+      { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition', alt: 'Annual art exhibition at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Craft Studio — Clay Workshop', alt: 'Clay workshop in the craft studio at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.jfif', caption: 'Student Artwork on Display', alt: 'Student artwork on display at MDN Global School Kaithal' },
     ],
   },
   {
@@ -170,9 +170,9 @@ const facilities: Facility[] = [
       'Performing arts programme culminates in the Annual Cultural Gala — a fully staged production anticipated every year.',
     ],
     images: [
-      { src: '/images/events-annual.jpg', caption: 'Annual Cultural Gala Performance' },
-      { src: '/images/students-happy.jpg', caption: 'Classical Dance Practice' },
-      { src: '/images/academics.jpg', caption: 'Music Room — Instrument Session' },
+      { src: '/images/events-annual.jpg', caption: 'Annual Cultural Gala Performance', alt: 'Annual cultural gala performance at MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Classical Dance Practice', alt: 'Students practicing classical dance at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Music Room — Instrument Session', alt: 'Instrument session in the music room at MDN Global School Kaithal' },
     ],
   },
   {
@@ -189,9 +189,9 @@ const facilities: Facility[] = [
       'Routes reviewed annually; new routes added to ensure maximum coverage without excessive travel time for any child.',
     ],
     images: [
-      { src: '/images/school-buses.jpg', caption: 'MDN Global School Transport Fleet' },
-      { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure' },
-      { src: '/images/mdn-building-3.jfif', caption: 'GPS-Tracked School Bus' },
+      { src: '/images/school-buses.jpg', caption: 'MDN Global School Transport Fleet', alt: 'MDN Global School Kaithal school transport fleet' },
+      { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure', alt: 'Students boarding a school bus at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.jfif', caption: 'GPS-Tracked School Bus', alt: 'GPS-tracked school bus at MDN Global School Kaithal' },
     ],
   },
   {
@@ -208,9 +208,9 @@ const facilities: Facility[] = [
       'Eco Club runs tree-plantation drives, awareness campaigns & monthly clean-campus challenges throughout the year.',
     ],
     images: [
-      { src: '/images/mdn-building-3.jfif', caption: 'MDN Global School Green Campus' },
-      { src: '/images/students-happy.jpg', caption: 'Eco Club Tree Plantation Drive' },
-      { src: '/images/academics.jpg', caption: 'Open-Air Amphitheatre' },
+      { src: '/images/mdn-building-3.jfif', caption: 'MDN Global School Green Campus', alt: 'Green campus of MDN Global School Kaithal' },
+      { src: '/images/students-happy.jpg', caption: 'Eco Club Tree Plantation Drive', alt: 'Eco club tree plantation drive at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Open-Air Amphitheatre', alt: 'Open-air amphitheatre at MDN Global School Kaithal' },
     ],
   },
   {
@@ -227,9 +227,9 @@ const facilities: Facility[] = [
       'Regular safety drills — fire evacuation, earthquake preparedness & anti-bullying protocols — conducted every term.',
     ],
     images: [
-      { src: '/images/mdn-building-2.jfif', caption: 'Campus Security Control Room' },
-      { src: '/images/mdn-building-3.jfif', caption: 'CCTV Coverage — Main Gate' },
-      { src: '/images/academics.jpg', caption: 'Secure Campus Entry System' },
+      { src: '/images/mdn-building-2.jfif', caption: 'Campus Security Control Room', alt: 'Security control room at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.jfif', caption: 'CCTV Coverage — Main Gate', alt: 'CCTV monitored main gate at MDN Global School Kaithal' },
+      { src: '/images/academics.jpg', caption: 'Secure Campus Entry System', alt: 'Secure campus entry system at MDN Global School Kaithal' },
     ],
   },
 ];
@@ -237,7 +237,7 @@ const facilities: Facility[] = [
 /* ── Inline detail view (same pattern as Academics page) ─── */
 function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () => void }) {
   const [activeIdx, setActiveIdx] = React.useState(0);
-  const activeFacilityImage = facility.images[activeIdx] || { src: facility.image, caption: facility.title };
+  const activeFacilityImage = facility.images[activeIdx] || { src: facility.image, caption: facility.title, alt: `${facility.title} at MDN Global School Kaithal` };
   return (
     <motion.div
       key="detail"
@@ -297,7 +297,7 @@ function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () =
               <motion.img
                 key={activeIdx}
                 src={activeFacilityImage.src}
-                alt={activeFacilityImage.caption}
+                alt={activeFacilityImage.alt}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -319,7 +319,7 @@ function FacilityDetail({ facility, onBack }: { facility: Facility; onBack: () =
                   onClick={() => setActiveIdx(idx)}
                   className={`flex-1 h-16 rounded-lg overflow-hidden border-2 transition-all ${activeIdx === idx ? 'border-[#f5a623]' : 'border-transparent opacity-60 hover:opacity-90'}`}
                 >
-                  <img src={img.src} alt={img.caption} loading="lazy" className="w-full h-full object-cover" />
+                  <img src={img.src} alt={img.alt} loading="lazy" className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
@@ -343,7 +343,7 @@ export default function Facilities() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/skating.jpg" alt="MDN Global School Facilities"
+        <img src="/images/skating.jpg" alt="Students skating at MDN Global School Kaithal sports ground"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/62 via-[#0a1c46]/32 to-[#0a1c46]/8" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/42 via-transparent to-transparent" />
@@ -420,7 +420,7 @@ export default function Facilities() {
                       className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group border border-gray-100 text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a3a6b]/30"
                     >
                       <div className="relative h-48 overflow-hidden">
-                        <img src={f.image} alt={f.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <img src={f.image} alt={`${f.title} at MDN Global School Kaithal`} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a6b]/70 to-transparent" />
                         <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${f.tagColor}`}>{f.tag}</div>
                         <div className="absolute bottom-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white">
@@ -474,7 +474,7 @@ export default function Facilities() {
               variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               className="rounded-3xl overflow-hidden shadow-2xl aspect-video">
-              <img src="/images/facilities-sports.jpg" alt="Sports Facilities" loading="lazy" className="w-full h-full object-cover" />
+              <img src="/images/facilities-sports.jpg" alt="Sports ground and sports facilities at MDN Global School Kaithal" loading="lazy" className="w-full h-full object-cover" />
             </motion.div>
           </div>
         </div>
