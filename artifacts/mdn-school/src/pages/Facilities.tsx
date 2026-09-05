@@ -23,6 +23,7 @@ function StatCounter({ end, suffix = '', duration = 1800 }: { end: number; suffi
 }
 import { Monitor, FlaskConical, BookOpen, Dumbbell, Bus, Palette, Wifi, Music, TreePine, Camera, ArrowLeft, CheckCircle, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -334,6 +335,11 @@ export default function Facilities() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="Facilities"
+        path="/facilities"
+        description="Discover the world-class facilities at MDN Global School Kaithal — smart classrooms, science labs, library, sports complex, computer lab, safe GPS transport, and a 10-acre green campus."
+      />
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">

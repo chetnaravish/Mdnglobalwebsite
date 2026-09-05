@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, BookOpen, Heart, Star, Users, Target, Eye, Lightbulb, Shield, CheckCircle, GraduationCap, Trophy } from 'lucide-react';
 import { Link } from 'wouter';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -97,6 +98,11 @@ export default function About() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="About Us"
+        path="/about"
+        description="Learn about MDN Global School Kaithal — our journey since 2018, vision & mission, core values, and the dedicated leadership team shaping future leaders in Haryana."
+      />
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden bg-[#0a1c46]">

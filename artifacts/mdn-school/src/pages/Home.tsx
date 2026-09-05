@@ -6,6 +6,7 @@ import {
   CalendarDays, MessageCircle, ShieldCheck, X
 } from 'lucide-react';
 import { Link } from 'wouter';
+import SEOHead from '@/components/SEOHead';
 
 const DEFAULT_APP_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.campuspro.mdngs';
 const appDownloadUrl = import.meta.env.VITE_MDN_APP_DOWNLOAD_URL || DEFAULT_APP_DOWNLOAD_URL;
@@ -135,6 +136,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="Home"
+        path="/"
+        description="MDN Global School Kaithal — CBSE Affiliated school with 20+ years of excellence. Explore our academics, facilities, and campus life. Admissions open for Nursery to Class XII."
+      />
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative min-h-[100dvh] flex items-center overflow-hidden bg-[#0a1c46]">

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn, Images } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -291,6 +292,11 @@ export default function Gallery() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="Gallery"
+        path="/gallery"
+        description="View the MDN Global School Kaithal photo gallery — campus, sports, cultural events, academic life, and world-class facilities captured in moments."
+      />
 
       {/* ── Hero Banner ───────────────────────────────────── */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">

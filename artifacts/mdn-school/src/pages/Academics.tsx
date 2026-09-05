@@ -5,6 +5,7 @@ import {
   GraduationCap, CheckCircle, ChevronRight, Palette, Cpu, HeartPulse, Atom, TrendingUp, ArrowLeft
 } from 'lucide-react';
 import { Link } from 'wouter';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -143,6 +144,11 @@ export default function Academics() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="Academics"
+        path="/academics"
+        description="Explore the academic structure at MDN Global School Kaithal — CBSE curriculum from Nursery to Class XII, Medical / Non-Medical / Commerce streams, and consistent 100% board results."
+      />
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">

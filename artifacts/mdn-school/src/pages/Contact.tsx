@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -93,6 +94,11 @@ export default function Contact() {
 
   return (
     <div className="flex flex-col">
+      <SEOHead
+        title="Contact Us"
+        path="/contact"
+        description="Contact MDN Global School Kaithal for admissions. Reach us by phone, email, or visit our campus at Deod Kheri Road, Kaithal, Haryana. Send an inquiry and we'll respond within 24 hours."
+      />
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[65vh] flex items-center overflow-hidden">
