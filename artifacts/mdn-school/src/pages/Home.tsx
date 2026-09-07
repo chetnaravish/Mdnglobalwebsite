@@ -59,7 +59,7 @@ const reviews = [
 
 function ReviewCard({ review }: { review: typeof reviews[0] }) {
   return (
-    <div className="flex-shrink-0 w-72 mx-3 bg-white rounded-2xl p-6 shadow-md border border-gray-100 flex flex-col gap-4">
+    <article className="flex-shrink-0 w-72 mx-3 bg-white rounded-2xl p-6 shadow-md border border-gray-100 flex flex-col gap-4">
       <div className="flex gap-0.5">
         {Array(review.rating).fill(0).map((_, i) => (
           <Star key={i} size={14} className="text-[#f5a623] fill-[#f5a623]" />
@@ -75,7 +75,7 @@ function ReviewCard({ review }: { review: typeof reviews[0] }) {
           <p className="text-gray-400 text-xs">{review.role}</p>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -328,7 +328,7 @@ export default function Home() {
               { title: 'Facilities', icon: Trophy, image: '/images/classroom-students.jpg', alt: 'Students on the green campus of MDN Global School Kaithal', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
               { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', alt: 'Students performing at the annual function of MDN Global School Kaithal', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
-              <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
+              <motion.article key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                 <div className="relative h-52 overflow-hidden">
                   <img src={f.image} alt={f.alt} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -344,7 +344,7 @@ export default function Home() {
                     Explore <ChevronRight size={16} />
                   </Link>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>

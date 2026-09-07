@@ -141,7 +141,7 @@ export default function Contact() {
                 <div className={`w-13 h-13 w-12 h-12 ${card.color} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
                   <card.icon size={24} />
                 </div>
-                <h3 className="font-serif font-bold text-[#1a3a6b] text-lg mb-3">{card.title}</h3>
+                <h2 className="font-serif font-bold text-[#1a3a6b] text-lg mb-3">{card.title}</h2>
                 <div className="space-y-1 mb-4">
                   {card.lines.map((line, j) => (
                     <p key={j} className="text-gray-600 text-sm">{line}</p>
