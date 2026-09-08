@@ -153,7 +153,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/students-happy.jpg', caption: 'Annual Art Exhibition', alt: 'Annual art exhibition at MDN Global School Kaithal' },
       { src: '/images/academics.jpg', caption: 'Craft Studio — Clay Workshop', alt: 'Clay workshop in the craft studio at MDN Global School Kaithal' },
-      { src: '/images/mdn-building-3.jfif', caption: 'Student Artwork on Display', alt: 'Student artwork on display at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.png', caption: 'Student Artwork on Display', alt: 'Student artwork on display at MDN Global School Kaithal' },
     ],
   },
   {
@@ -191,7 +191,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/school-buses.jpg', caption: 'MDN Global School Transport Fleet', alt: 'MDN Global School Kaithal school transport fleet' },
       { src: '/images/students-happy.jpg', caption: 'Safe Boarding Procedure', alt: 'Students boarding a school bus at MDN Global School Kaithal' },
-      { src: '/images/mdn-building-3.jfif', caption: 'GPS-Tracked School Bus', alt: 'GPS-tracked school bus at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.png', caption: 'GPS-Tracked School Bus', alt: 'GPS-tracked school bus at MDN Global School Kaithal' },
     ],
   },
   {
@@ -208,7 +208,7 @@ const facilities: Facility[] = [
       'Eco Club runs tree-plantation drives, awareness campaigns & monthly clean-campus challenges throughout the year.',
     ],
     images: [
-      { src: '/images/mdn-building-3.jfif', caption: 'MDN Global School Green Campus', alt: 'Green campus of MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.png', caption: 'MDN Global School Green Campus', alt: 'Green campus of MDN Global School Kaithal' },
       { src: '/images/students-happy.jpg', caption: 'Eco Club Tree Plantation Drive', alt: 'Eco club tree plantation drive at MDN Global School Kaithal' },
       { src: '/images/academics.jpg', caption: 'Open-Air Amphitheatre', alt: 'Open-air amphitheatre at MDN Global School Kaithal' },
     ],
@@ -217,7 +217,7 @@ const facilities: Facility[] = [
     icon: Camera,
     title: 'CCTV Surveillance',
     desc: '360° CCTV monitoring across the campus ensures complete safety and security for all students and staff.',
-    image: '/images/mdn-building-2.jfif',
+    image: '/images/mdn-building-2.png',
     tag: 'Security', tagColor: 'bg-slate-100 text-slate-700',
     detail: [
       '120+ HD cameras installed across every corridor, classroom entrance, sports area, parking lot & campus gate.',
@@ -227,8 +227,8 @@ const facilities: Facility[] = [
       'Regular safety drills — fire evacuation, earthquake preparedness & anti-bullying protocols — conducted every term.',
     ],
     images: [
-      { src: '/images/mdn-building-2.jfif', caption: 'Campus Security Control Room', alt: 'Security control room at MDN Global School Kaithal' },
-      { src: '/images/mdn-building-3.jfif', caption: 'CCTV Coverage — Main Gate', alt: 'CCTV monitored main gate at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-2.png', caption: 'Campus Security Control Room', alt: 'Security control room at MDN Global School Kaithal' },
+      { src: '/images/mdn-building-3.png', caption: 'CCTV Coverage — Main Gate', alt: 'CCTV monitored main gate at MDN Global School Kaithal' },
       { src: '/images/academics.jpg', caption: 'Secure Campus Entry System', alt: 'Secure campus entry system at MDN Global School Kaithal' },
     ],
   },

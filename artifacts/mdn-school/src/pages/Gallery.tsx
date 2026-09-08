@@ -20,8 +20,8 @@ const sections: Section[] = [
     color: 'bg-blue-600',
     count: 7,
     photos: [
-      { src: '/images/mdn-building-2.jfif', caption: 'MDN Global School — Main Building', pos: 'center center' },
-      { src: '/images/mdn-building-3.jfif', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
+      { src: '/images/mdn-building-2.png', caption: 'MDN Global School — Main Building', pos: 'center center' },
+      { src: '/images/mdn-building-3.png', caption: 'Aerial View — School Campus & Sports Ground', pos: 'center center' },
       { src: '/images/mdn-building-1.avif', caption: 'MDN Global School — Campus Overview', pos: 'center center' },
       { src: '/images/mdn-building-4.avif', caption: 'School Building — Drone View', pos: 'center center' },
       { src: '/images/pre-primary-kids.png', caption: 'Pre-Primary Students — Classroom Learning', pos: 'center center' },

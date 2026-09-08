@@ -35,8 +35,8 @@ function Counter({ end, suffix = '' }: { end: number; suffix?: string }) {
 /* ── Slide data ──────────────────────────────────────── */
 const slides = [
   { src: '/images/mdn-building-1.avif', pos: 'center 30%',    filter: '', alt: 'MDN Global School Kaithal campus building' },
-  { src: '/images/mdn-building-3.jfif', pos: 'center center', filter: '', alt: 'Front view of the MDN Global School Kaithal campus building' },
-  { src: '/images/mdn-building-2.jfif', pos: 'center 40%',    filter: '', alt: 'MDN Global School Kaithal campus entrance building' },
+  { src: '/images/mdn-building-3.png', pos: 'center center', filter: '', alt: 'Front view of the MDN Global School Kaithal campus building' },
+  { src: '/images/mdn-building-2.png', pos: 'center 40%',    filter: '', alt: 'MDN Global School Kaithal campus entrance building' },
 ];
 const SLIDE_MS = 3500;
 
