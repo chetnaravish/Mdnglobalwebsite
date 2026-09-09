@@ -359,7 +359,7 @@ export default function Facilities() {
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
             className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Modern infrastructure that supports every dimension of a child's growth — academic, physical, creative, and emotional.
+            Modern infrastructure that supports every dimension of a child's growth — academic, physical, creative, and emotional. As a leading English medium school in Kaithal, MDN Global School provides facilities that match the best educational institutions.
           </motion.p>
         </div>
       </section>

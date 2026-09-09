@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/</loc>
+    <loc>https://mdnglobalschool.vercel.app/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/about</loc>
+    <loc>https://mdnglobalschool.vercel.app/about</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/academics</loc>
+    <loc>https://mdnglobalschool.vercel.app/academics</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/facilities</loc>
+    <loc>https://mdnglobalschool.vercel.app/facilities</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/gallery</loc>
+    <loc>https://mdnglobalschool.vercel.app/gallery</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mdnglobalwebsite-frontend.vercel.app/contact</loc>
+    <loc>https://mdnglobalschool.vercel.app/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>

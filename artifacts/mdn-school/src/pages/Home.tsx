@@ -190,7 +190,7 @@ export default function Home() {
             className="text-white/85 text-lg md:text-xl leading-relaxed max-w-xl"
             style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
           >
-            Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana.
+            Over two decades of nurturing young minds, building character, and creating future leaders in the heart of Haryana. Recognised as one of the best CBSE schools in Kaithal, MDN Global School delivers academic excellence with a focus on values and holistic development.
           </motion.p>
 
           {/* School app CTAs */}

@@ -173,7 +173,7 @@ export default function Academics() {
           </motion.h1>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={2}
             className="text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
-            A rigorous CBSE curriculum enriched with modern pedagogy, smart technology, and educators who inspire every learner from Nursery to Class XII.
+            A rigorous CBSE curriculum enriched with modern pedagogy, smart technology, and educators who inspire every learner from Nursery to Class XII — making us a preferred CBSE affiliated school in Kaithal.
           </motion.p>
         </div>
       </section>

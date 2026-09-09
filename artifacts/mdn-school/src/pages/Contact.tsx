@@ -164,7 +164,7 @@ export default function Contact() {
                 <span className="w-10 h-px bg-[#f5a623]" /> Admissions Inquiry
               </p>
               <h2 className="text-4xl font-serif font-bold text-[#1a3a6b] mb-3">Send Us a Message</h2>
-              <p className="text-gray-500 mb-10">Fill the form below and our admissions team will contact you within 24 hours.</p>
+              <p className="text-gray-500 mb-10">Fill the form below and our admissions team will contact you within 24 hours. For school admission in Kaithal, MDN Global School is the trusted choice for parents seeking quality CBSE education.</p>
 
               {submitted ? (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}

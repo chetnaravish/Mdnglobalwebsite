@@ -163,7 +163,7 @@ export default function About() {
                 A Legacy of<br />Excellence & Values
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-5">
-                MDN Global School Kaithal, located behind Gulmohar City, Deod Kheri Road, Kaithal, Haryana, was established with a clear purpose — to deliver world-class, values-rooted education to the children of Haryana. Under the visionary leadership of Director & Chairman Dr. Vinod Kumar since February 2018, the school has grown into a landmark of academic excellence.
+                MDN Global School Kaithal, located behind Gulmohar City, Deod Kheri Road, Kaithal, Haryana, was established with a clear purpose — to deliver world-class, values-rooted education to the children of Haryana. Under the visionary leadership of Director & Chairman Dr. Vinod Kumar since February 2018, the school has grown into a landmark of academic excellence in the region.
               </p>
               <p className="text-gray-600 leading-relaxed mb-5">
                 Today, with hundreds of students and dedicated faculty members, we are one of the most trusted CBSE-affiliated schools in the region — recognised for academic rigour, holistic development, and a community that truly cares.
@@ -382,7 +382,7 @@ export default function About() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <p className="text-[#f5a623] font-bold tracking-widest uppercase text-sm mb-3">Our Leadership</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1a3a6b] mb-4">Head Staff</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">The dedicated leadership team guiding MDN Global School Kaithal</p>
+            <p className="text-gray-500 max-w-xl mx-auto">The dedicated leadership team guiding MDN Global School Kaithal — one of the top schools in Kaithal, Haryana</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
