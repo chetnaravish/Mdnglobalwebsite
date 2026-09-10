@@ -324,9 +324,9 @@ export default function Home() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: 'Academics', icon: BookOpen, image: '/images/classroom.png', alt: 'Students learning in a smart classroom at MDN Global School Kaithal', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Academics', icon: BookOpen, image: '/images/classroom.webp', alt: 'Students learning in a smart classroom at MDN Global School Kaithal', desc: 'Rigorous CBSE curriculum from Nursery to Class XII, with smart classrooms, experienced faculty, and a 100% board pass record.', link: '/academics', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
               { title: 'Facilities', icon: Trophy, image: '/images/classroom-students.jpg', alt: 'Students on the green campus of MDN Global School Kaithal', desc: 'A 10-acre green campus with advanced science labs, a 15,000-book library, sports complex, and GPS-enabled transport.', link: '/facilities', accent: 'text-[#f5a623]', bg: 'bg-amber-50' },
-              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.png', alt: 'Students performing at the annual function of MDN Global School Kaithal', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
+              { title: 'Events & Culture', icon: Star, image: '/images/annual-function.webp', alt: 'Students performing at the annual function of MDN Global School Kaithal', desc: 'A vibrant calendar of cultural fests, sports meets, science exhibitions, and national celebrations that bring the campus alive.', link: '/gallery', accent: 'text-[#1a3a6b]', bg: 'bg-blue-50' },
             ].map((f, i) => (
               <motion.article key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} custom={i * 0.15}
                 className="group rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
@@ -479,11 +479,11 @@ export default function Home() {
           {/* Mobile: 2-col grid | Desktop: bento-style 4-col */}
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-2 md:h-[420px]">
             {[
-              { src: '/images/annual-function.png',   mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center', alt: 'Annual function celebration at MDN Global School Kaithal' },
+              { src: '/images/annual-function.webp',   mSpan: 'col-span-2 aspect-[16/9]', dSpan: 'md:col-span-2 md:row-span-2 md:aspect-auto', pos: 'center center', alt: 'Annual function celebration at MDN Global School Kaithal' },
               { src: '/images/facilities-sports.jpg', mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Students playing in the sports ground at MDN Global School Kaithal' },
-              { src: '/images/science-lab.png',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Students conducting experiments in the science lab at MDN Global School Kaithal' },
+              { src: '/images/science-lab.webp',    mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Students conducting experiments in the science lab at MDN Global School Kaithal' },
               { src: '/images/events-sports.jpg',     mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Sports day event at MDN Global School Kaithal' },
-              { src: '/images/computer-lab.png',       mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Computer lab at MDN Global School Kaithal' },
+              { src: '/images/computer-lab.webp',       mSpan: 'aspect-video',              dSpan: 'md:col-span-1 md:row-span-1 md:aspect-auto', pos: 'center center', alt: 'Computer lab at MDN Global School Kaithal' },
             ].map((img, i) => (
               <motion.div key={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} custom={i * 0.1}
                 className={`${img.mSpan} ${img.dSpan} rounded-2xl overflow-hidden group cursor-pointer`}>
@@ -739,7 +739,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-2 md:order-1">
-              <img src="/images/pre-primary-kids.png" alt="Happy pre-primary students at MDN Global School Kaithal" loading="lazy" className="w-full rounded-3xl shadow-2xl" />
+              <img src="/images/pre-primary-kids.webp" alt="Happy pre-primary students at MDN Global School Kaithal" loading="lazy" className="w-full rounded-3xl shadow-2xl" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} className="order-1 md:order-2 text-white">
               <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">A Community of<br />Happy Learners</h2>

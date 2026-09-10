@@ -358,7 +358,7 @@ export default function About() {
             {/* Right — image */}
             <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src="/images/director.png" alt="Dr. Vinod Kumar, Director and Chairman of MDN Global School Kaithal" loading="lazy" className="w-full h-full object-cover object-top" />
+                <img src="/images/director.webp" alt="Dr. Vinod Kumar, Director and Chairman of MDN Global School Kaithal" loading="lazy" className="w-full h-full object-cover object-top" />
               </div>
               <div className="mt-4 bg-white border border-[#1a3a6b]/10 rounded-2xl p-5 shadow-sm flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#f5a623] flex items-center justify-center shrink-0">
@@ -391,7 +391,7 @@ export default function About() {
                 name: 'Dr. Vinod Kumar',
                 role: 'Director & Chairman',
                 desc: 'Visionary leader of MDN Global School since February 2018.',
-                photo: '/images/director.png',
+                photo: '/images/director.webp',
                 initials: 'VK',
                 grad: 'from-[#1a3a6b] to-[#0f2557]',
               },

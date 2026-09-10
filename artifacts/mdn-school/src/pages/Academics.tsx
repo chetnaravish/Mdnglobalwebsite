@@ -26,12 +26,12 @@ const stages: Stage[] = [
   {
     label: 'Pre-Primary',
     classes: 'Nursery – KG 2', age: '3–5 yrs',
-    image: '/images/pre-primary-kids.png', imagePos: 'center center',
+    image: '/images/pre-primary-kids.webp', imagePos: 'center center',
     alt: 'Pre-primary students learning through play at MDN Global School Kaithal',
     accentBg: 'bg-pink-500', accentText: 'text-pink-600',
     borderTop: 'border-t-4 border-pink-400',
     badgeBg: 'bg-pink-500', badgeText: 'text-white',
-    detailImage: '/images/pre-primary-kids.png',
+    detailImage: '/images/pre-primary-kids.webp',
     desc: 'Our Pre-Primary programme sparks curiosity through play, song, stories, and hands-on exploration. Every activity builds confidence, language skills, and a lifelong love for learning in a safe and nurturing environment.',
     highlights: [
       'Activity-based & Montessori-inspired learning',
@@ -44,12 +44,12 @@ const stages: Stage[] = [
   {
     label: 'Primary',
     classes: 'Class I – V', age: '6–10 yrs',
-    image: '/images/primary-kids.png', imagePos: 'center center',
+    image: '/images/primary-kids.webp', imagePos: 'center center',
     alt: 'Primary students in class at MDN Global School Kaithal',
     accentBg: 'bg-blue-500', accentText: 'text-blue-600',
     borderTop: 'border-t-4 border-blue-400',
     badgeBg: 'bg-blue-500', badgeText: 'text-white',
-    detailImage: '/images/primary-kids.png',
+    detailImage: '/images/primary-kids.webp',
     desc: 'The Primary stage builds a strong academic foundation in English, Hindi, Mathematics, EVS, and General Knowledge. Child-centred teaching ensures every student learns at their own pace through engaging, activity-based methods.',
     highlights: [
       'CBSE curriculum with child-centred pedagogy',
@@ -62,12 +62,12 @@ const stages: Stage[] = [
   {
     label: 'Middle School',
     classes: 'Class VI – VIII', age: '11–13 yrs',
-    image: '/images/science-lab.png', imagePos: 'center center',
+    image: '/images/science-lab.webp', imagePos: 'center center',
     alt: 'Students conducting a science experiment at MDN Global School Kaithal',
     accentBg: 'bg-purple-500', accentText: 'text-purple-600',
     borderTop: 'border-t-4 border-purple-400',
     badgeBg: 'bg-purple-500', badgeText: 'text-white',
-    detailImage: '/images/science-lab.png',
+    detailImage: '/images/science-lab.webp',
     desc: 'Middle School deepens subject exploration through labs, research projects, debate, and co-curricular activities that develop critical thinking, teamwork, and self-confidence in every student.',
     highlights: [
       'Subject specialisation begins with lab-based practicals',
@@ -80,12 +80,12 @@ const stages: Stage[] = [
   {
     label: 'Secondary',
     classes: 'Class IX – X', age: '14–15 yrs',
-    image: '/images/classroom.png', imagePos: 'center center',
+    image: '/images/classroom.webp', imagePos: 'center center',
     alt: 'Students studying in a classroom at MDN Global School Kaithal',
     accentBg: 'bg-amber-500', accentText: 'text-amber-600',
     borderTop: 'border-t-4 border-amber-400',
     badgeBg: 'bg-amber-500', badgeText: 'text-white',
-    detailImage: '/images/classroom.png',
+    detailImage: '/images/classroom.webp',
     desc: 'Classes IX and X prepare students for CBSE Board Examinations with focused academics, regular mock tests, individual counselling, and career awareness sessions to set a clear path ahead.',
     highlights: [
       'Rigorous CBSE Board preparation programme',
@@ -157,7 +157,7 @@ export default function Academics() {
 
       {/* ── Hero Banner ─────────────────────────────────────── */}
       <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-        <img src="/images/classroom.png" alt="Students in a smart classroom at MDN Global School Kaithal"
+        <img src="/images/classroom.webp" alt="Students in a smart classroom at MDN Global School Kaithal"
           className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1c46]/60 via-[#0a1c46]/35 to-[#1e56a0]/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1c46]/40 via-transparent to-transparent" />

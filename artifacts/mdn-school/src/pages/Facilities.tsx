@@ -58,14 +58,14 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/academics.jpg', caption: 'Interactive Digital Board in Action', alt: 'Interactive digital board in a smart classroom at MDN Global School Kaithal' },
       { src: '/images/students-happy.jpg', caption: 'Students Engaged in Smart Learning', alt: 'Students learning in a smart classroom at MDN Global School Kaithal' },
-      { src: '/images/science-lab.png', caption: 'Technology-Integrated Classroom', alt: 'Technology-integrated classroom at MDN Global School Kaithal' },
+      { src: '/images/science-lab.webp', caption: 'Technology-Integrated Classroom', alt: 'Technology-integrated classroom at MDN Global School Kaithal' },
     ],
   },
   {
     icon: FlaskConical,
     title: 'Science Laboratories',
     desc: 'State-of-the-art Physics, Chemistry, and Biology labs equipped with modern instruments for practical learning.',
-    image: '/images/science-lab.png',
+    image: '/images/science-lab.webp',
     tag: 'Science', tagColor: 'bg-purple-100 text-purple-700',
     detail: [
       'Separate, fully equipped labs for Physics, Chemistry & Biology — dedicated practical experience from Class VI onwards.',
@@ -75,7 +75,7 @@ const facilities: Facility[] = [
       'All labs are maintained by qualified assistants with strict safety procedures, first-aid equipment & fire extinguishers.',
     ],
     images: [
-      { src: '/images/science-lab.png', caption: 'Students in the Chemistry Lab', alt: 'Students experimenting in the Chemistry lab at MDN Global School Kaithal' },
+      { src: '/images/science-lab.webp', caption: 'Students in the Chemistry Lab', alt: 'Students experimenting in the Chemistry lab at MDN Global School Kaithal' },
       { src: '/images/academics.jpg', caption: 'Biology Lab — Microscope Session', alt: 'Biology lab microscope session at MDN Global School Kaithal' },
       { src: '/images/students-happy.jpg', caption: 'Physics Practical Experiment', alt: 'Physics practical experiment at MDN Global School Kaithal' },
     ],
@@ -84,7 +84,7 @@ const facilities: Facility[] = [
     icon: BookOpen,
     title: 'Library & Resource Centre',
     desc: 'Over 15,000 books, digital e-library access, research journals, and comfortable reading spaces for curious minds.',
-    image: '/images/classroom.png',
+    image: '/images/classroom.webp',
     tag: 'Knowledge', tagColor: 'bg-amber-100 text-amber-700',
     detail: [
       'Over 15,000 titles spanning fiction, non-fiction, reference books, encyclopaedias & subject-specific texts for all grades.',
@@ -122,7 +122,7 @@ const facilities: Facility[] = [
     icon: Wifi,
     title: 'Computer & IT Lab',
     desc: 'High-speed fibre internet, 100+ modern workstations, and coding programmes aligned with NEP 2020 guidelines.',
-    image: '/images/computer-lab.png',
+    image: '/images/computer-lab.webp',
     tag: 'IT & Coding', tagColor: 'bg-cyan-100 text-cyan-700',
     detail: [
       '100+ latest-generation computers with individual workstations — every student has personal access during lab sessions.',
@@ -134,7 +134,7 @@ const facilities: Facility[] = [
     images: [
       { src: '/images/academics.jpg', caption: 'Computer Lab — Coding Session', alt: 'Coding session in the computer lab at MDN Global School Kaithal' },
       { src: '/images/students-happy.jpg', caption: 'Students at Individual Workstations', alt: 'Students at computer workstations at MDN Global School Kaithal' },
-      { src: '/images/science-lab.png', caption: 'IT Lab — Digital Learning', alt: 'Digital learning in the IT lab at MDN Global School Kaithal' },
+      { src: '/images/science-lab.webp', caption: 'IT Lab — Digital Learning', alt: 'Digital learning in the IT lab at MDN Global School Kaithal' },
     ],
   },
   {
@@ -198,7 +198,7 @@ const facilities: Facility[] = [
     icon: TreePine,
     title: 'Eco-Friendly Campus',
     desc: '10-acre green campus with gardens, open-air amphitheatre, and eco-clubs promoting sustainable living.',
-    image: '/images/primary-kids.png',
+    image: '/images/primary-kids.webp',
     tag: 'Environment', tagColor: 'bg-lime-100 text-lime-700',
     detail: [
       '10-acre certified green zone with 500+ trees, seasonal flower gardens & a student-tended kitchen garden.',
