@@ -73,6 +73,7 @@ export default function ChatBot() {
 
   function speakText(text: string) {
     if (!voiceEnabledRef.current || !window.speechSynthesis) return;
+    if (text.toLowerCase().includes('network error')) return;
     window.speechSynthesis.cancel();
     const clean = text
       .replace(/[*_#`]/g, '')
@@ -197,11 +198,20 @@ export default function ChatBot() {
       }
 
       setMessages((prev) => [...prev, { role: 'assistant', content: reply, audioUrl }]);
-      if (voiceEnabledRef.current && audioUrl) {
+      if (voiceEnabledRef.current && audioUrl && !reply.toLowerCase().includes('network error')) {
         playAudio(audioUrl);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sorry, could not connect. Please try again.');
+      const isNetworkError = err instanceof TypeError && (
+        err.message.includes('Failed to fetch') ||
+        err.message.includes('NetworkError') ||
+        err.message.includes('network') ||
+        err.message.includes('ERR_NETWORK')
+      );
+      const msg = isNetworkError
+        ? 'Network error. Please check your network connection and try again.'
+        : err instanceof Error ? err.message : 'Sorry, could not connect. Please try again.';
+      setMessages((prev) => [...prev, { role: 'assistant', content: msg }]);
     } finally {
       setLoading(false);
     }
@@ -335,7 +345,7 @@ export default function ChatBot() {
                     msg.role === 'assistant' ? 'bg-white text-gray-800 rounded-bl-sm shadow-sm border border-gray-100' : 'bg-[#1a3a6b] text-white rounded-br-sm'
                   }`}>
                     {msg.content}
-                    {msg.role === 'assistant' && i > 0 && voiceEnabled && (
+                    {msg.role === 'assistant' && i > 0 && voiceEnabled && !msg.content.toLowerCase().includes('network error') && (
                       <button type="button"
                         onClick={() => {
                           if (msg.audioUrl) {
