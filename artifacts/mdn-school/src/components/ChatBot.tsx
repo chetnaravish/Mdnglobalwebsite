@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, User, Loader2, Mic, Square, Volume2, VolumeX } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { X, Send, User, Loader2, Mic, Square, Volume2, VolumeX, Play } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -34,8 +35,16 @@ declare global {
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
-  content: 'Namaste! \u{1F64F} I am the MDN Global School assistant. I can help you with information about admissions, academics, facilities, fee structure, and more.\n\nHow can I help you today?',
+  content: 'Namaste! I am the MDN Global School assistant. I can help you with information about admissions, academics, facilities, fee structure, and more.\n\nWould you like to take a full tour of our school website?',
 };
+
+const TOUR_PAGES = [
+  { path: '/', label: 'Home', audio: '/tour/home-tour.mp3' },
+  { path: '/about', label: 'About', audio: '/tour/about-tour.mp3' },
+  { path: '/academics', label: 'Academics', audio: '/tour/academics-tour.mp3' },
+  { path: '/facilities', label: 'Facilities', audio: '/tour/facilities-tour.mp3' },
+  { path: '/contact', label: 'Contact', audio: '/tour/contact-tour.mp3' },
+];
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
@@ -47,11 +56,18 @@ export default function ChatBot() {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [speaking, setSpeaking] = useState(false);
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
+  const [tourPromptDismissed, setTourPromptDismissed] = useState(false);
+  const [touring, setTouring] = useState(false);
+  const [tourLabel, setTourLabel] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const voiceEnabledRef = useRef(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const tourAudioRef = useRef<HTMLAudioElement | null>(null);
+  const tourStopRef = useRef(false);
+  const scrollRafRef = useRef<number | null>(null);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 300);
@@ -63,6 +79,9 @@ export default function ChatBot() {
 
   useEffect(() => {
     return () => {
+      tourStopRef.current = true;
+      tourAudioRef.current?.pause();
+      if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
       recognitionRef.current?.stop();
       audioRef.current?.pause();
       window.speechSynthesis?.cancel();
@@ -107,6 +126,112 @@ export default function ChatBot() {
     window.speechSynthesis?.cancel();
     setSpeaking(false);
     setPlayingUrl(null);
+  }
+
+  const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+  function clearScroll() {
+    if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
+    scrollRafRef.current = null;
+  }
+
+  function scrollPageGradually(durationMs: number) {
+    clearScroll();
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    if (maxScroll <= 0) return;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      if (tourStopRef.current) return;
+      const t = Math.min((now - startTime) / durationMs, 1);
+      window.scrollTo(0, maxScroll * t);
+      if (t < 1) scrollRafRef.current = requestAnimationFrame(step);
+    };
+    scrollRafRef.current = requestAnimationFrame(step);
+  }
+
+  function playTourAudio(src: string): Promise<void> {
+    return new Promise((resolve) => {
+      tourAudioRef.current?.pause();
+      const audio = new Audio(src);
+      tourAudioRef.current = audio;
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        clearScroll();
+        resolve();
+      };
+      const timeout = setTimeout(finish, 60000);
+      audio.onended = () => { clearTimeout(timeout); finish(); };
+      audio.onerror = () => { clearTimeout(timeout); finish(); };
+      audio.play()
+        .then(() => {
+          const dur = audio.duration && isFinite(audio.duration) ? audio.duration * 1000 : 20000;
+          scrollPageGradually(dur + 700);
+        })
+        .catch(() => { clearTimeout(timeout); finish(); });
+    });
+  }
+
+  async function startTour() {
+    if (touring) return;
+    window.speechSynthesis?.cancel();
+    audioRef.current?.pause();
+    setSpeaking(false);
+    setPlayingUrl(null);
+    tourStopRef.current = false;
+    setTouring(true);
+    setTourPromptDismissed(true);
+    setInput('');
+    setError('');
+    setMessages((prev) => [
+      ...prev,
+      { role: 'assistant', content: 'School tour shuru ho raha hai.\nOrder: Home -> About -> Academics -> Facilities -> Contact.\nTour rokne ke liye Stop Tour button dabayein.' },
+    ]);
+    try {
+      for (const page of TOUR_PAGES) {
+        if (tourStopRef.current) break;
+        setTourLabel(page.label);
+        setMessages((prev) => [...prev, { role: 'assistant', content: `Ab dekh rahe hain: ${page.label} page` }]);
+        setLocation(page.path);
+        await wait(1200);
+        await playTourAudio(page.audio);
+        await wait(900);
+      }
+      if (!tourStopRef.current) {
+        setMessages((prev) => [...prev, { role: 'assistant', content: 'Tour complete! Umeed hai aapko website pasand aayi. Kisi bhi page ke baare mein pooch sakte hain.' }]);
+      }
+    } finally {
+      tourAudioRef.current?.pause();
+      tourAudioRef.current = null;
+      clearScroll();
+      setTouring(false);
+      setTourLabel('');
+    }
+  }
+
+  function stopTour() {
+    tourStopRef.current = true;
+    tourAudioRef.current?.pause();
+    tourAudioRef.current = null;
+    clearScroll();
+    window.scrollTo(0, 0);
+    const wasTouring = touring;
+    setTouring(false);
+    setTourLabel('');
+    if (wasTouring) {
+      setMessages((prev) => [...prev, { role: 'assistant', content: 'Tour rok diya gaya hai. Kisi bhi cheez ke baare mein poochiye.' }]);
+    }
+  }
+
+  function startChat() {
+    setTourPromptDismissed(true);
+    setTimeout(() => inputRef.current?.focus(), 100);
+  }
+
+  function handleCloseChat() {
+    if (touring) stopTour();
+    setOpen(false);
   }
 
   function toggleVoice() {
@@ -312,19 +437,37 @@ export default function ChatBot() {
           >
             {/* Header */}
             <div className="bg-[#1a3a6b] px-4 py-3 flex items-center gap-3 shrink-0">
-              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border-2 border-[#f5a623]">
+              <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border-2 border-[#f5a623]">
                 <img src="/images/robot-image.avif" alt="MDN Global School AI chat assistant robot" className="w-full h-full object-cover" />
+                {touring && (
+                  <button
+                    type="button"
+                    onClick={stopTour}
+                    aria-label="Stop tour"
+                    className="absolute inset-0 bg-red-500/90 text-white flex items-center justify-center cursor-pointer hover:bg-red-600"
+                  >
+                    <Square size={12} />
+                  </button>
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm leading-tight">MDN School Assistant</p>
-                <p className="text-white/60 text-xs">{voiceEnabled ? 'Voice on' : 'Voice off'}</p>
+                <p className="text-white/60 text-xs">{touring ? `Tour: ${tourLabel}` : voiceEnabled ? 'Voice on' : 'Voice off'}</p>
               </div>
-              <button type="button" onClick={toggleVoice}
-                className={`p-1.5 rounded-lg transition-colors ${voiceEnabled ? 'text-[#f5a623] hover:bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
-                aria-label={voiceEnabled ? 'Turn voice off' : 'Turn voice on'}>
-                {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-              </button>
-              <button onClick={() => setOpen(false)}
+              {touring ? (
+                <button type="button" onClick={stopTour}
+                  className="p-1.5 rounded-lg bg-red-500 text-white text-[11px] font-bold px-2.5 hover:bg-red-600 transition-colors"
+                  aria-label="Stop tour">
+                  STOP
+                </button>
+              ) : (
+                <button type="button" onClick={toggleVoice}
+                  className={`p-1.5 rounded-lg transition-colors ${voiceEnabled ? 'text-[#f5a623] hover:bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                  aria-label={voiceEnabled ? 'Turn voice off' : 'Turn voice on'}>
+                  {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                </button>
+              )}
+              <button onClick={handleCloseChat}
                 className="text-white/60 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10" aria-label="Close chat">
                 <X size={18} />
               </button>
@@ -385,32 +528,48 @@ export default function ChatBot() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Quick suggestions */}
-            {messages.length === 1 && (
-              <div className="bg-gray-50 px-3 pb-2 flex flex-wrap gap-1.5">
-                {['Admission process?', 'Fee structure?', 'School timings?', 'Facilities?'].map((q) => (
-                  <button key={q}
-                    onClick={() => { setInput(q); setTimeout(() => sendMessage(), 50); }}
-                    className="text-xs bg-white border border-gray-200 text-[#1a3a6b] px-2.5 py-1.5 rounded-full hover:border-[#1a3a6b] hover:bg-[#1a3a6b]/5 transition-colors">
-                    {q}
+            {/* Tour start options */}
+            {messages.length === 1 && !tourPromptDismissed && !touring && (
+              <div className="bg-gray-50 px-3 pb-2 flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={startChat}
+                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a6b] text-white text-xs font-bold px-3 py-2.5 rounded-xl hover:bg-[#0f2557] transition-colors"
+                    aria-label="Start chat"
+                  >
+                    <img src="/images/robot-image.avif" alt="" className="w-5 h-5 rounded-full object-cover" />
+                    Start Chat
                   </button>
-                ))}
+                  <button
+                    type="button"
+                    onClick={startTour}
+                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#f5a623] text-[#1a3a6b] text-xs font-bold px-3 py-2.5 rounded-xl hover:bg-[#e39a17] transition-colors"
+                    aria-label="Start tour"
+                  >
+                    <Play size={15} />
+                    Start Tour
+                  </button>
+                </div>
+                <p className="text-[10px] text-[#1a3a6b]/60 text-center leading-snug">
+                  Start Chat = normal chat mode | Start Tour = robot website ka poora tour lega
+                </p>
               </div>
             )}
 
             {/* Input */}
             <form onSubmit={sendMessage} className="bg-white border-t border-gray-100 px-3 py-3 flex gap-2 items-center shrink-0">
               <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown} placeholder="Type your question..." disabled={loading}
+                onKeyDown={handleKeyDown} placeholder={touring ? 'Tour chal raha hai...' : 'Type your question...'} disabled={loading || touring}
                 className="flex-1 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:border-[#1a3a6b] focus:ring-2 focus:ring-[#1a3a6b]/10 outline-none transition-all text-gray-800 disabled:opacity-60" />
-              <button type="button" onClick={listening ? stopListening : startListening} disabled={loading}
+              <button type="button" onClick={listening ? stopListening : startListening} disabled={loading || touring}
                 className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shrink-0 ${
                   listening ? 'bg-red-500 text-white animate-pulse' : 'bg-[#f5a623] text-[#1a3a6b] hover:bg-[#e39a17]'
                 } disabled:opacity-40 disabled:cursor-not-allowed`}
                 aria-label={listening ? 'Stop voice input' : 'Use voice input'}>
                 {listening ? <Square size={15} /> : <Mic size={16} />}
               </button>
-              <button type="submit" disabled={!input.trim() || loading}
+              <button type="submit" disabled={!input.trim() || loading || touring}
                 className="w-9 h-9 rounded-xl bg-[#1a3a6b] text-white flex items-center justify-center hover:bg-[#0f2557] disabled:opacity-40 disabled:cursor-not-allowed transition-all shrink-0" aria-label="Send">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               </button>
