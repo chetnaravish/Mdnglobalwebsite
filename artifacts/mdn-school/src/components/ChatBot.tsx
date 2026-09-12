@@ -69,6 +69,7 @@ export default function ChatBot() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const tourAudioRef = useRef<HTMLAudioElement | null>(null);
   const tourStopRef = useRef(false);
+  const tourStopResolversRef = useRef<Array<() => void>>([]);
   const scrollRafRef = useRef<number | null>(null);
   const [, setLocation] = useLocation();
 
@@ -102,6 +103,8 @@ export default function ChatBot() {
   useEffect(() => {
     return () => {
       tourStopRef.current = true;
+      tourStopResolversRef.current.forEach((r) => r());
+      tourStopResolversRef.current = [];
       tourAudioRef.current?.pause();
       if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
       recognitionRef.current?.stop();
@@ -109,6 +112,7 @@ export default function ChatBot() {
       window.speechSynthesis?.cancel();
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
+      restoreScrollBehavior();
       messages.forEach((m) => { if (m.audioUrl) URL.revokeObjectURL(m.audioUrl); });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,50 +158,119 @@ export default function ChatBot() {
 
   const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+  function getScrollMax() {
+    return Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight,
+      document.body.scrollHeight - window.innerHeight,
+    );
+  }
+
+  function forceInstantScroll() {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+  }
+
+  function restoreScrollBehavior() {
+    document.documentElement.style.scrollBehavior = '';
+    document.body.style.scrollBehavior = '';
+  }
+
   function clearScroll() {
     if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
     scrollRafRef.current = null;
   }
 
-  function scrollPageGradually(durationMs: number) {
-    clearScroll();
-    const getMax = () => Math.max(
-      0,
-      document.documentElement.scrollHeight - window.innerHeight,
-      document.body.scrollHeight - window.innerHeight,
-    );
-    if (getMax() <= 0) return;
-    const startTime = performance.now();
-    const step = (now: number) => {
-      if (tourStopRef.current) return;
-      const t = Math.min((now - startTime) / durationMs, 1);
-      window.scrollTo({ top: getMax() * t, behavior: 'instant' });
-      if (t < 1) scrollRafRef.current = requestAnimationFrame(step);
-    };
-    scrollRafRef.current = requestAnimationFrame(step);
+  function waitForPageStable(maxWaitMs = 9000, settleMs = 400): Promise<void> {
+    return new Promise((resolve) => {
+      const start = performance.now();
+      let lastHeight = -1;
+      let lastSettled = start;
+      const tick = () => {
+        if (tourStopRef.current) { resolve(); return; }
+        const now = performance.now();
+        if (now - start >= maxWaitMs) { resolve(); return; }
+        const h = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight,
+        );
+        if (h === lastHeight) {
+          if (now - lastSettled >= settleMs) { resolve(); return; }
+        } else {
+          lastHeight = h;
+          lastSettled = now;
+        }
+        setTimeout(tick, 100);
+      };
+      tick();
+    });
   }
 
-  function playTourAudio(src: string): Promise<void> {
+  function playPageTour(src: string): Promise<void> {
     return new Promise((resolve) => {
       tourAudioRef.current?.pause();
       const audio = new Audio(src);
       tourAudioRef.current = audio;
-      let done = false;
+
+      let audioDone = false;
+      let scrollDone = false;
+      let finished = false;
+      let timeoutId: number | undefined;
+      let scrollStarted = false;
+
       const finish = () => {
-        if (done) return;
-        done = true;
+        if (finished) return;
+        finished = true;
+        const idx = tourStopResolversRef.current.indexOf(stopResolver);
+        if (idx !== -1) tourStopResolversRef.current.splice(idx, 1);
+        if (timeoutId !== undefined) window.clearTimeout(timeoutId);
         clearScroll();
         resolve();
       };
-      const timeout = setTimeout(finish, 60000);
-      audio.onended = () => { clearTimeout(timeout); finish(); };
-      audio.onerror = () => { clearTimeout(timeout); finish(); };
+
+      const stopResolver: () => void = () => finish();
+      tourStopResolversRef.current.push(stopResolver);
+
+      const finishAudio = () => {
+        audioDone = true;
+        if (scrollDone || tourStopRef.current) finish();
+      };
+
+      const startScroll = (durMs: number) => {
+        scrollStarted = true;
+        clearScroll();
+        if (tourStopRef.current) return;
+        const startTime = performance.now();
+        const total = durMs + 1200;
+        const step = (now: number) => {
+          if (tourStopRef.current) return;
+          const t = Math.min((now - startTime) / total, 1);
+          const max = getScrollMax();
+          window.scrollTo({ top: max * t, behavior: 'auto' });
+          if (t < 1) {
+            scrollRafRef.current = requestAnimationFrame(step);
+          } else {
+            scrollDone = true;
+            if (audioDone) finish();
+          }
+        };
+        scrollRafRef.current = requestAnimationFrame(step);
+      };
+
+      timeoutId = window.setTimeout(finishAudio, 90000);
+      audio.onended = finishAudio;
+      audio.onerror = finishAudio;
+
+      audio.addEventListener('loadedmetadata', () => {
+        const dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration * 1000 : 20000;
+        startScroll(dur);
+      });
+
       audio.play()
-        .then(() => {
-          const dur = audio.duration && isFinite(audio.duration) ? audio.duration * 1000 : 20000;
-          scrollPageGradually(dur + 700);
-        })
-        .catch(() => { clearTimeout(timeout); finish(); });
+        .catch(() => {
+          if (!scrollStarted) startScroll(20000);
+          finishAudio();
+        });
     });
   }
 
@@ -209,22 +282,28 @@ export default function ChatBot() {
     setPlayingUrl(null);
     tourStopRef.current = false;
     setTouring(true);
+    forceInstantScroll();
+    setTourLabel('Home');
+    setLocation('/');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     try {
       for (const page of TOUR_PAGES) {
         if (tourStopRef.current) break;
         setTourLabel(page.label);
         setLocation(page.path);
-        await wait(1200);
-        await playTourAudio(page.audio);
-        await wait(900);
+        await wait(1000);
+        await waitForPageStable();
+        if (tourStopRef.current) break;
+        await playPageTour(page.audio);
+        await wait(1000);
       }
     } finally {
       tourAudioRef.current?.pause();
       tourAudioRef.current = null;
       clearScroll();
+      restoreScrollBehavior();
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       setTouring(false);
@@ -234,9 +313,12 @@ export default function ChatBot() {
 
   function stopTour() {
     tourStopRef.current = true;
+    tourStopResolversRef.current.forEach((r) => r());
+    tourStopResolversRef.current = [];
     tourAudioRef.current?.pause();
     tourAudioRef.current = null;
     clearScroll();
+    restoreScrollBehavior();
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     setTouring(false);
