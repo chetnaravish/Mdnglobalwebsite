@@ -454,21 +454,22 @@ export default function ChatBot() {
           <motion.button
             type="button"
             onClick={stopTour}
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative z-10 bg-red-500 text-white font-extrabold text-[11px] tracking-wide px-4 py-2 rounded-2xl shadow-[0_4px_20px_rgba(220,38,38,0.35)] border-2 border-red-400 hover:bg-red-600 transition-colors"
+            animate={{ y: [0, -5, 1, 5, 0], scale: [1, 1.08, 1.04, 1.08, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative z-10 flex items-center gap-2 bg-red-500 text-white font-extrabold text-sm tracking-wide pl-4 pr-5 py-2.5 rounded-2xl shadow-[0_6px_24px_rgba(220,38,38,0.5)] border-2 border-red-300 hover:bg-red-600 transition-colors"
           >
+            <Square size={14} className="fill-current" />
             Stop Tour
           </motion.button>
 
           {/* Robot image */}
           <motion.div
             className="relative"
-            animate={{ y: [0, -6, 0] }}
+            animate={{ y: [0, -7, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
           >
             <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-[#f5a623] via-[#1a3a6b] to-[#f5a623] opacity-60 blur-md animate-spin" style={{ animationDuration: '4s' }} />
-            <div className="relative w-24 h-24 rounded-full overflow-hidden border-[5px] border-white shadow-[0_8px_32px_rgba(26,58,107,0.45),0_2px_8px_rgba(0,0,0,0.3)]">
+            <div className="relative w-32 h-32 rounded-full overflow-hidden border-[5px] border-white shadow-[0_8px_32px_rgba(26,58,107,0.45),0_2px_8px_rgba(0,0,0,0.3)]">
               <img
                 src="/images/robot-image.avif"
                 alt="MDN Global School AI chat assistant robot"
@@ -501,7 +502,7 @@ export default function ChatBot() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute inset-0 backdrop-blur-md bg-[#1a3a6b]/40" onClick={closeGreeting} />
+            <div className="absolute inset-0 bg-[#1a3a6b]/20" onClick={closeGreeting} />
             <motion.div
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
