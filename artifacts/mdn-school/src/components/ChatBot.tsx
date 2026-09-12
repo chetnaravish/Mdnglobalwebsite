@@ -107,6 +107,8 @@ export default function ChatBot() {
       recognitionRef.current?.stop();
       audioRef.current?.pause();
       window.speechSynthesis?.cancel();
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       messages.forEach((m) => { if (m.audioUrl) URL.revokeObjectURL(m.audioUrl); });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,13 +161,17 @@ export default function ChatBot() {
 
   function scrollPageGradually(durationMs: number) {
     clearScroll();
-    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    if (maxScroll <= 0) return;
+    const getMax = () => Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight,
+      document.body.scrollHeight - window.innerHeight,
+    );
+    if (getMax() <= 0) return;
     const startTime = performance.now();
     const step = (now: number) => {
       if (tourStopRef.current) return;
       const t = Math.min((now - startTime) / durationMs, 1);
-      window.scrollTo(0, maxScroll * t);
+      window.scrollTo({ top: getMax() * t, behavior: 'instant' });
       if (t < 1) scrollRafRef.current = requestAnimationFrame(step);
     };
     scrollRafRef.current = requestAnimationFrame(step);
@@ -203,6 +209,9 @@ export default function ChatBot() {
     setPlayingUrl(null);
     tourStopRef.current = false;
     setTouring(true);
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     try {
       for (const page of TOUR_PAGES) {
         if (tourStopRef.current) break;
@@ -216,6 +225,8 @@ export default function ChatBot() {
       tourAudioRef.current?.pause();
       tourAudioRef.current = null;
       clearScroll();
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       setTouring(false);
       setTourLabel('');
     }
@@ -226,6 +237,8 @@ export default function ChatBot() {
     tourAudioRef.current?.pause();
     tourAudioRef.current = null;
     clearScroll();
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     setTouring(false);
     setTourLabel('');
   }
