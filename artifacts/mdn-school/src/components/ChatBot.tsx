@@ -284,7 +284,7 @@ export default function ChatBot() {
     }
     setError('');
     const recognition = new SR();
-    recognition.lang = 'hi-IN';
+    recognition.lang = 'en-IN';
     recognition.continuous = false;
     recognition.interimResults = true;
     recognition.onresult = (event) => {
