@@ -35,8 +35,10 @@ declare global {
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
-  content: 'Namaste! I am the MDN Global School assistant. I can help you with information about admissions, academics, facilities, fee structure, and more.\n\nWould you like to take a full tour of our school website?',
+  content: 'Namaste!\n\nMain MDN Global School ka assistant hoon. Aap admissions, academics, facilities ya fee structure ke baare mein pooch sakte hain. Kaise madad karoon?',
 };
+
+const GREETING_TEXT = 'Namaste! Main MDN Global School ka assistant hoon.\nKya aap website ka tour karna chahte hain, ya kuch poochna chahte hain?';
 
 const TOUR_PAGES = [
   { path: '/', label: 'Home', audio: '/tour/home-tour.mp3' },
@@ -56,7 +58,8 @@ export default function ChatBot() {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [speaking, setSpeaking] = useState(false);
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
-  const [tourPromptDismissed, setTourPromptDismissed] = useState(false);
+  const [greetingOpen, setGreetingOpen] = useState(false);
+  const [typedText, setTypedText] = useState('');
   const [touring, setTouring] = useState(false);
   const [tourLabel, setTourLabel] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -72,6 +75,25 @@ export default function ChatBot() {
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 300);
   }, [open]);
+
+  useEffect(() => {
+    if (!greetingOpen) return;
+    setTypedText('');
+    let i = 0;
+    const interval = setInterval(() => {
+      i += 1;
+      setTypedText(GREETING_TEXT.slice(0, i));
+      if (i >= GREETING_TEXT.length) clearInterval(interval);
+    }, 35);
+    return () => clearInterval(interval);
+  }, [greetingOpen]);
+
+  useEffect(() => {
+    if (!greetingOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [greetingOpen]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -181,25 +203,14 @@ export default function ChatBot() {
     setPlayingUrl(null);
     tourStopRef.current = false;
     setTouring(true);
-    setTourPromptDismissed(true);
-    setInput('');
-    setError('');
-    setMessages((prev) => [
-      ...prev,
-      { role: 'assistant', content: 'School tour shuru ho raha hai.\nOrder: Home -> About -> Academics -> Facilities -> Contact.\nTour rokne ke liye Stop Tour button dabayein.' },
-    ]);
     try {
       for (const page of TOUR_PAGES) {
         if (tourStopRef.current) break;
         setTourLabel(page.label);
-        setMessages((prev) => [...prev, { role: 'assistant', content: `Ab dekh rahe hain: ${page.label} page` }]);
         setLocation(page.path);
         await wait(1200);
         await playTourAudio(page.audio);
         await wait(900);
-      }
-      if (!tourStopRef.current) {
-        setMessages((prev) => [...prev, { role: 'assistant', content: 'Tour complete! Umeed hai aapko website pasand aayi. Kisi bhi page ke baare mein pooch sakte hain.' }]);
       }
     } finally {
       tourAudioRef.current?.pause();
@@ -215,18 +226,23 @@ export default function ChatBot() {
     tourAudioRef.current?.pause();
     tourAudioRef.current = null;
     clearScroll();
-    window.scrollTo(0, 0);
-    const wasTouring = touring;
     setTouring(false);
     setTourLabel('');
-    if (wasTouring) {
-      setMessages((prev) => [...prev, { role: 'assistant', content: 'Tour rok diya gaya hai. Kisi bhi cheez ke baare mein poochiye.' }]);
-    }
   }
 
-  function startChat() {
-    setTourPromptDismissed(true);
-    setTimeout(() => inputRef.current?.focus(), 100);
+  function closeGreeting() {
+    setGreetingOpen(false);
+  }
+
+  function handleAskAnything() {
+    setGreetingOpen(false);
+    setOpen(true);
+    setTimeout(() => inputRef.current?.focus(), 300);
+  }
+
+  function handleStartTour() {
+    setGreetingOpen(false);
+    setTimeout(() => startTour(), 150);
   }
 
   function handleCloseChat() {
@@ -353,9 +369,9 @@ export default function ChatBot() {
   return (
     <>
       {/* Floating Button */}
-      {!open && (
+      {!open && !greetingOpen && !touring && (
         <motion.button
-          onClick={() => setOpen(true)}
+          onClick={() => setGreetingOpen(true)}
           className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-2 group cursor-pointer"
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -364,14 +380,14 @@ export default function ChatBot() {
           whileTap={{ scale: 0.92 }}
           aria-label="Open chat"
         >
-          {/* Ask me anything animated pill */}
+          {/* hey, i am here animated pill */}
           <motion.div
             className="relative"
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           >
             <span className="relative z-10 bg-white text-[#1a3a6b] font-extrabold text-[11px] tracking-wide px-4 py-2 rounded-2xl shadow-[0_4px_20px_rgba(26,58,107,0.25)] border-2 border-[#1a3a6b]/20 whitespace-nowrap block">
-              Ask me anything
+              hey, i am here
             </span>
             <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b-2 border-r-2 border-[#1a3a6b]/20 rotate-45" />
           </motion.div>
@@ -412,6 +428,45 @@ export default function ChatBot() {
           </motion.div>
         </motion.button>
       )}
+
+      {/* Tour Mode Robot */}
+      {touring && !open && (
+        <motion.div
+          className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-2"
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+        >
+          {/* Stop Tour button above the robot */}
+          <motion.button
+            type="button"
+            onClick={stopTour}
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative z-10 bg-red-500 text-white font-extrabold text-[11px] tracking-wide px-4 py-2 rounded-2xl shadow-[0_4px_20px_rgba(220,38,38,0.35)] border-2 border-red-400 hover:bg-red-600 transition-colors"
+          >
+            Stop Tour
+          </motion.button>
+
+          {/* Robot image */}
+          <motion.div
+            className="relative"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+          >
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-[#f5a623] via-[#1a3a6b] to-[#f5a623] opacity-60 blur-md animate-spin" style={{ animationDuration: '4s' }} />
+            <div className="relative w-24 h-24 rounded-full overflow-hidden border-[5px] border-white shadow-[0_8px_32px_rgba(26,58,107,0.45),0_2px_8px_rgba(0,0,0,0.3)]">
+              <img
+                src="/images/robot-image.avif"
+                alt="MDN Global School AI chat assistant robot"
+                className="w-full h-full object-cover"
+                style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3)) contrast(1.05) saturate(1.1)' }}
+              />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/25 via-transparent to-black/20 pointer-events-none" />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
       {open && (
         <motion.button
           onClick={() => setOpen(false)}
@@ -424,6 +479,74 @@ export default function ChatBot() {
         </motion.button>
       )}
 
+      {/* Greeting Overlay */}
+      <AnimatePresence>
+        {greetingOpen && (
+          <motion.div
+            className="fixed inset-0 z-[60] flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="absolute inset-0 backdrop-blur-md bg-[#1a3a6b]/40" onClick={closeGreeting} />
+            <motion.div
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+              className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 flex flex-col items-center text-center"
+            >
+              <button
+                type="button"
+                onClick={closeGreeting}
+                className="absolute top-3 right-3 p-1.5 rounded-full text-[#1a3a6b]/50 hover:text-[#1a3a6b] hover:bg-gray-100 transition-colors"
+                aria-label="Close greeting"
+              >
+                <X size={18} />
+              </button>
+
+              {/* Robot image */}
+              <motion.div
+                className="relative mt-2"
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-[#f5a623] via-[#1a3a6b] to-[#f5a623] opacity-50 blur-md animate-spin" style={{ animationDuration: '4s' }} />
+                <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-[0_8px_32px_rgba(26,58,107,0.35)]">
+                  <img src="/images/robot-image.avif" alt="MDN Global School AI chat assistant robot" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/25 via-transparent to-black/20 pointer-events-none" />
+                </div>
+              </motion.div>
+
+              {/* Message box with typewriter animation */}
+              <p className="mt-6 min-h-[88px] w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm text-gray-800 leading-relaxed whitespace-pre-line text-left shadow-sm">
+                {typedText}
+                <span className="inline-block w-0.5 h-4 bg-[#f5a623] align-middle ml-0.5 animate-pulse" />
+              </p>
+
+              {/* Buttons */}
+              <div className="mt-6 w-full flex gap-3">
+                <button
+                  type="button"
+                  onClick={handleStartTour}
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-[#f5a623] text-[#1a3a6b] text-sm font-bold px-4 py-3 rounded-xl hover:bg-[#e39a17] transition-colors"
+                >
+                  <Play size={16} />
+                  Start Tour
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAskAnything}
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a6b] text-white text-sm font-bold px-4 py-3 rounded-xl hover:bg-[#0f2557] transition-colors"
+                >
+                  Ask Anything
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Chat Window */}
       <AnimatePresence>
         {open && (
@@ -432,8 +555,8 @@ export default function ChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed bottom-24 right-6 z-50 w-[350px] sm:w-[380px] max-h-[540px] flex flex-col rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
-            style={{ maxHeight: 'calc(100vh - 140px)' }}
+            className={`fixed z-50 flex flex-col rounded-2xl shadow-2xl overflow-hidden border border-gray-100 transition-all duration-300 ${touring ? 'bottom-6 right-6 w-[calc(100vw-24px)] max-w-[540px]' : 'bottom-24 right-6 w-[350px] sm:w-[380px]'}`}
+            style={{ maxHeight: touring ? 'calc(100vh - 64px)' : 'calc(100vh - 140px)' }}
           >
             {/* Header */}
             <div className="bg-[#1a3a6b] px-4 py-3 flex items-center gap-3 shrink-0">
@@ -527,35 +650,6 @@ export default function ChatBot() {
 
               <div ref={bottomRef} />
             </div>
-
-            {/* Tour start options */}
-            {messages.length === 1 && !tourPromptDismissed && !touring && (
-              <div className="bg-gray-50 px-3 pb-2 flex flex-col gap-2">
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={startChat}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a6b] text-white text-xs font-bold px-3 py-2.5 rounded-xl hover:bg-[#0f2557] transition-colors"
-                    aria-label="Start chat"
-                  >
-                    <img src="/images/robot-image.avif" alt="" className="w-5 h-5 rounded-full object-cover" />
-                    Start Chat
-                  </button>
-                  <button
-                    type="button"
-                    onClick={startTour}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#f5a623] text-[#1a3a6b] text-xs font-bold px-3 py-2.5 rounded-xl hover:bg-[#e39a17] transition-colors"
-                    aria-label="Start tour"
-                  >
-                    <Play size={15} />
-                    Start Tour
-                  </button>
-                </div>
-                <p className="text-[10px] text-[#1a3a6b]/60 text-center leading-snug">
-                  Start Chat = normal chat mode | Start Tour = robot website ka poora tour lega
-                </p>
-              </div>
-            )}
 
             {/* Input */}
             <form onSubmit={sendMessage} className="bg-white border-t border-gray-100 px-3 py-3 flex gap-2 items-center shrink-0">
